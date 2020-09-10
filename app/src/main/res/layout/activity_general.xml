@@ -17,26 +17,29 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </com.google.android.material.appbar.AppBarLayout>
-    <ImageView
-        android:layout_width="400dp"
-        android:paddingRight="30dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:src="@drawable/vampire"/>
+    <fragment
+        android:name="com.example.dwo.FirstFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"/>
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:id="@+id/bottom"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="center"
+        app:fabAnimationMode="slide"
         app:backgroundTint="@color/colorPrimary"
         app:navigationContentDescription="@string/app_name"
         app:navigationIcon="@drawable/menu"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:id="@+id/play_fab"
+        android:backgroundTint="@color/colorPurple"
+        android:background="@color/colorPurple"
+        android:tint="@color/colorPurple"
+        app:borderWidth="0dp"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottom"
         android:src="@drawable/play"/>

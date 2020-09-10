@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -108,11 +109,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(result.equals("connection is success login success")){
+        if(result != null && result.equals("connection is success login success")){
             Intent intent = new Intent(context, General.class);
             intent.putExtra("username", user_name);
             context.startActivity(intent);
-        } else if(result.equals("connection is success login not success")) {
+        } else if(result != null && result.equals("connection is success login not success")) {
             alertDialog.setMessage(result);
             alertDialog.show();
         } else {
