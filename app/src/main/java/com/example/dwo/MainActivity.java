@@ -22,13 +22,19 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
     private EditText UsernameEt, PasswordEt;
     private String username, password, type;
     private Animation edit_text_anim;
     private ProgressBar bar;
+    private String imageAddress;
+    private int resourceId = R.drawable.knight;
+    private ImageView imageView;
+
 
     private CountService service;
     boolean mBound = false;
@@ -79,13 +85,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mBound) {
+                    bar.setVisibility(View.VISIBLE);
                     Snackbar.make(view, "Checking your connection..." + "{" + service.getCounter() + "}", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     //SecondMethod();
-                    bar.setVisibility(View.VISIBLE);
                     service.plusCounter();
-                    if (service.getCounter() == 100) {
-                        bar.setVisibility(View.INVISIBLE);
+                    if (service.getCounter() >= 100) {
                         TestMethod();
                     }
                 }
@@ -97,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
         edit_text_anim = AnimationUtils.loadAnimation(this, R.anim.edit_text_anim);
         UsernameEt = findViewById(R.id.login_edittext);
         PasswordEt = findViewById(R.id.password_edittext);
-        bar = findViewById(R.id.progress_bar);
+        bar = findViewById(R.id.fabProgress);
+        imageAddress = "android.resource://"  + this.getPackageName() + "/" + resourceId;
+        imageView = findViewById(R.id.image_knight);
+        Glide.with(this).load(imageAddress).into(imageView);
     }
 
     private void StartAnim() {
