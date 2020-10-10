@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".CountService"/>
+        <service android:name=".MyIntentService"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"

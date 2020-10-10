@@ -1,5 +1,6 @@
 package com.example.dwo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,12 +26,14 @@ public class First2Fragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        /*
         view.findViewById(R.id.button_first2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Button was pressed at the First2Fragment");
             }
-        });
+        });c
+
+         */
     }
 }
