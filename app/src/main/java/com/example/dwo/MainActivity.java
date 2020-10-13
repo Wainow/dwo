@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.IBinder;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 
 import android.view.Menu;
@@ -24,6 +26,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private String imageAddress;
     private int resourceId = R.drawable.knight;
     private ImageView imageView;
+    private RelativeLayout relative;
 
 
     private CountService service;
@@ -86,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(mBound) {
                     bar.setVisibility(View.VISIBLE);
-                    Snackbar.make(view, "Checking your connection..." + "{" + service.getCounter() + "}", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Checking your connection..." + "{" + service.getCounter() + "}", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM|Gravity.LEFT, 70, 120);
+                    //toast.setMargin(getDP(5, getApplicationContext()), getDP(5, getApplicationContext()));
+                    toast.show();
                     //SecondMethod();
                     service.plusCounter();
                     if (service.getCounter() >= 100) {
@@ -106,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         imageAddress = "android.resource://"  + this.getPackageName() + "/" + resourceId;
         imageView = findViewById(R.id.image_knight);
         Glide.with(this).load(imageAddress).into(imageView);
+        relative = findViewById(R.id.progress_fab_relative);
     }
 
     private void StartAnim() {
@@ -147,5 +156,11 @@ public class MainActivity extends AppCompatActivity {
     private void TestMethod(){
         Intent intent = new Intent(this, General.class);
         startActivity(intent);
+    }
+
+    public static final int getDP(int size, Context context){
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, size, context.getResources()
+                        .getDisplayMetrics());
     }
 }
