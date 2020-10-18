@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,8 @@ public class FirstFragment extends Fragment {
 
     private static final String TAG = "DebugLogs";
     private int step = 0;
-    private TextView textView;
+    public TextView textView;
+    private Button btn;
     private BroadcastReceiver myBroadcastReceiver;
 
     @Override
@@ -33,6 +35,7 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btn = view.findViewById(R.id.button_first);
         textView = view.findViewById(R.id.textview_first);
         final Intent intentMyIntentService = new Intent(getActivity(), MyIntentService.class);
 
@@ -62,5 +65,11 @@ public class FirstFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(myBroadcastReceiver);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        btn.setVisibility(View.INVISIBLE);
     }
 }
