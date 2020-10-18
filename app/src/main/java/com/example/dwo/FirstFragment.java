@@ -10,11 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.bumptech.glide.Glide;
 
 public class FirstFragment extends Fragment {
 
@@ -23,6 +27,10 @@ public class FirstFragment extends Fragment {
     public TextView textView;
     private Button btn;
     private BroadcastReceiver myBroadcastReceiver;
+    private int resourceId = R.drawable.bigmag;
+    private String imageAddress;
+    private ImageView imageView;
+    private RelativeLayout relative;
 
     @Override
     public View onCreateView(
@@ -37,6 +45,11 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btn = view.findViewById(R.id.button_first);
         textView = view.findViewById(R.id.textview_first);
+        imageAddress = "android.resource://"  + view.getContext().getPackageName() + "/" + resourceId;
+        imageView = view.findViewById(R.id.mag_img);
+        Glide.with(view.getContext()).load(imageAddress).into(imageView);
+        relative = view.findViewById(R.id.fragment_first);
+
         final Intent intentMyIntentService = new Intent(getActivity(), MyIntentService.class);
 
         view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
