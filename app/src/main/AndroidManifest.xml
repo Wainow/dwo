@@ -11,12 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".CountService"/>
-        <service android:name=".MyIntentService"/>
+        <activity
+            android:name=".CreateActivity"
+            android:label="@string/title_activity_create"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service android:name=".CountService" />
+        <service android:name=".MyIntentService" />
+
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".General"
             android:theme="@style/AppTheme.NoActionBar" />

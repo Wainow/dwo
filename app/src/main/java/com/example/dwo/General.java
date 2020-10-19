@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import java.util.List;
 public class General extends AppCompatActivity {
 
     private String type, username;
+    private int count = 0;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class General extends AppCompatActivity {
         setTitle("General Page");
 
         //FirstMethod();
-
+        intent = new Intent(this, CreateActivity.class);
         FloatingActionButton fab = findViewById(R.id.play_fab);
         fab.setBackgroundResource(R.drawable.play);
         /*
@@ -58,7 +61,12 @@ public class General extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //SecondMethod();
-                ChangeFragment(view);
+                if(count == 0){
+                    ChangeFragment(view);
+                    count++;
+                } else{
+                    startActivity(intent);
+                }
             }
         });
     }

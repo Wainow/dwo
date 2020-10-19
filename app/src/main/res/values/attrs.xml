@@ -3,4 +3,7 @@
     <declare-styleable name="TextViewPlus">
         <attr name="customFont" format="string"/>
     </declare-styleable>
+    <declare-styleable name="EditTextPlus">
+        <attr name="customFont1" format="string"/>
+    </declare-styleable>
 </resources>

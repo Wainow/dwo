@@ -22,20 +22,13 @@
         android:padding="14dp"
         app:customFont="fonts/Righteous-Regular.ttf"/>
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"/>
-
-    <ImageView
+    <ImageButton
         android:id="@+id/mag_img"
         android:layout_alignTop="@id/textview_first"
-        android:layout_width="250dp"
+        android:layout_width="230dp"
         android:layout_height="250dp"
         android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:background="@color/colorPrimaryDark"/>
 </RelativeLayout>

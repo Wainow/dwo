@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/colorPrimaryDark">
+    <com.example.dwo.EditTextPlus
+        android:layout_width="wrap_content"
+        android:text="Guest's Room"
+        android:textSize="20dp"
+        android:id="@+id/title_text"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/cloud_background3"
+        android:padding="15dp"
+        android:layout_marginLeft="15dp"
+        app:customFont1="fonts/Righteous-Regular.ttf"
+        android:textColor="@color/colorWhite"
+        android:layout_height="wrap_content"/>
+    <View
+        android:id="@+id/line"
+        android:background="#000000"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/title_text"
+        android:layout_width = "match_parent"
+        android:layout_height="1dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_hero"
+        android:layout_width="match_parent"
+        android:layout_below="@id/line"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

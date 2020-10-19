@@ -59,7 +59,7 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public int getRandomInt0_10(){
+    public static int getRandomInt0_10(){
         double num = (double) Math.random() * 10;
         return (int) num;
     }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,11 +26,10 @@ public class FirstFragment extends Fragment {
     private static final String TAG = "DebugLogs";
     private int step = 0;
     public TextView textView;
-    private Button btn;
     private BroadcastReceiver myBroadcastReceiver;
     private int resourceId = R.drawable.bigmag;
     private String imageAddress;
-    private ImageView imageView;
+    private ImageButton imageBtn;
     private RelativeLayout relative;
 
     @Override
@@ -43,16 +43,15 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btn = view.findViewById(R.id.button_first);
         textView = view.findViewById(R.id.textview_first);
         imageAddress = "android.resource://"  + view.getContext().getPackageName() + "/" + resourceId;
-        imageView = view.findViewById(R.id.mag_img);
-        Glide.with(view.getContext()).load(imageAddress).into(imageView);
+        imageBtn = view.findViewById(R.id.mag_img);
+        Glide.with(view.getContext()).load(imageAddress).into(imageBtn);
         relative = view.findViewById(R.id.fragment_first);
 
         final Intent intentMyIntentService = new Intent(getActivity(), MyIntentService.class);
 
-        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+        imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().startService(intentMyIntentService.putExtra("step", step));
@@ -83,6 +82,5 @@ public class FirstFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        btn.setVisibility(View.INVISIBLE);
     }
 }
