@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorAccent">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circle_image"
             android:layout_width="70dp"
@@ -36,7 +36,7 @@
             android:layout_toRightOf="@id/circle_image"
             android:layout_below="@id/text_item"
             android:maxLines="1"
-            android:text="Heath: 100, Strength 7, Agility 9, Intelligence 5, Money: 250"
+            android:text="Heath: 100, Strength 7, Agility 9, Intelligence 5 ..."
             android:textColor="@color/colorGray"/>
         <TextView
             android:paddingLeft="3dp"
@@ -45,7 +45,7 @@
             android:id="@+id/text_item3"
             android:layout_toRightOf="@id/circle_image"
             android:layout_below="@id/text_item2"
-            android:text="Inventory: ..."
+            android:text="Inventory: Armor, 250 Money, Bottle of Brown Water ..."
             android:textColor="@color/colorGray"
             android:textStyle="italic"/>
     </RelativeLayout>
