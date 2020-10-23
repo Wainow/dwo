@@ -15,13 +15,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
 public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final String TAG = "DebugLogs";
-    private int[] myDataset;
+    private ArrayList<Room> myDataset;
+    private Intent intent;
+    private String json;
 
     @Override
     public View onCreateView(
@@ -49,6 +55,8 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         mSwipeRefreshLayout = getActivity().findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        intent = getActivity().getIntent();
     }
 
     @Override
@@ -65,6 +73,11 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     public void setMyDataset() {
-        this.myDataset = new int[]{getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10(), getRandomInt0_10()};;
+        this.myDataset = new ArrayList<>();
+        FileWorker fileWorker = new FileWorker(getContext());
+        json = fileWorker.readFile();
+        Log.d(TAG, "json: " + json);
+        this.myDataset.add(new Gson().fromJson(json, Room.class));
+        Log.d(TAG, "MyDataset: " + this.myDataset.toString());
     }
 }

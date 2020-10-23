@@ -50,8 +50,8 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         switch(mDataset[position]){
-            default: holder.textView.setText("Knight");
-                holder.circleImageView.setImageResource(R.drawable.veryknight);
+            default: holder.textView.setText("Add hero");
+                holder.circleImageView.setImageResource(R.drawable.mini_q);
             case 1: holder.textView.setText("Knight");
                 holder.circleImageView.setImageResource(R.drawable.veryknight);
                 break;

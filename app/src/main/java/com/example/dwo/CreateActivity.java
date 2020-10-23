@@ -1,9 +1,11 @@
 package com.example.dwo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,11 +34,17 @@ public class CreateActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private int[] myDataset;
+    private String TAG = "DebugLogs";
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
     final String DIR_SD = "MyFiles";
     final String FILENAME_SD = "fileSD";
+
+    private Room room;
+    private EditTextPlus editTextPlus;
+    private Intent intent;
+    private String json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +60,8 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Writing your room...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                FileWorker fileWorker = new FileWorker(getApplicationContext());
-                fileWorker.writeFile();
-                fileWorker.readFile();
+                SecondMethod();
+                finish();
             }
         });
     }
@@ -69,6 +76,26 @@ public class CreateActivity extends AppCompatActivity {
 
         mAdapter = new My2Adapter(this, myDataset);
         recyclerView.setAdapter(mAdapter);
+
+        editTextPlus = findViewById(R.id.title_text);
+        intent = new Intent(this, General.class);
+    }
+
+    public void SecondMethod(){
+        this.room = new Room(
+                editTextPlus.getText().toString(),
+                new Hero[]{
+                        new Hero("Al Capelo", 1, new Specifications(9,9,9,9,9,9)),
+                        new Hero("Wainow", 2, new Specifications(9,9,9,9,9,9)),
+                        new Hero("Incast", 3, new Specifications(9,9,9,9,9,9)),
+                        new Hero("Ivan", 4, new Specifications(9,9,9,9,9,9)),
+                }
+        );
+
+        json = new Gson().toJson(this.room);
+        Log.d(TAG, "SecondMethod: " + json);
+        FileWorker fileWorker = new FileWorker(getApplicationContext());
+        fileWorker.writeFile(json);
     }
 
     public void setMyDataset() {

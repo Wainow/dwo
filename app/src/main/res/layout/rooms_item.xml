@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circle_image"
+            android:id="@+id/room_circle_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:padding="-100dp"
@@ -19,10 +19,10 @@
             app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"/>
         <com.example.dwo.TextViewPlus
-            android:layout_toRightOf="@id/circle_image"
+            android:layout_toRightOf="@id/room_circle_image"
             android:padding="3dp"
             android:textSize="14dp"
-            android:id="@+id/text_item"
+            android:id="@+id/room_text_item"
             android:text="Knight room"
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
@@ -32,18 +32,18 @@
             android:paddingLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_item2"
-            android:layout_toRightOf="@id/circle_image"
-            android:layout_below="@id/text_item"
+            android:id="@+id/room_text_item2"
+            android:layout_toRightOf="@id/room_circle_image"
+            android:layout_below="@id/room_text_item"
             android:text="Players : 4/6 - Knight, Mag, Warrior, Tree"
             android:textColor="@color/colorGray"/>
         <TextView
             android:paddingLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_item3"
-            android:layout_toRightOf="@id/circle_image"
-            android:layout_below="@id/text_item2"
+            android:id="@+id/room_text_item3"
+            android:layout_toRightOf="@id/room_circle_image"
+            android:layout_below="@id/room_text_item2"
             android:text="Starting from 5 min..."
             android:textColor="@color/colorGray"
             android:textStyle="italic"/>

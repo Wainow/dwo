@@ -19,6 +19,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class FileWorker {
 
     private Context context;
+    private String full_str = "";
     final String LOG_TAG = "FileLogs";
     final String FILENAME = "file";
     final String DIR_SD = "MyFiles";
@@ -28,13 +29,13 @@ public class FileWorker {
         this.context = context;
     }
 
-    void writeFile() {
+    void writeFile(String str) {
         try {
             // отрываем поток для записи
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
                     context.openFileOutput(FILENAME, MODE_PRIVATE)));
             // пишем данные
-            bw.write("Содержимое файла");
+            bw.write(str);
             // закрываем поток
             bw.close();
             Log.d(LOG_TAG, "Файл записан");
@@ -45,7 +46,7 @@ public class FileWorker {
         }
     }
 
-    void readFile() {
+    String readFile() {
         try {
             // открываем поток для чтения
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -53,13 +54,17 @@ public class FileWorker {
             String str = "";
             // читаем содержимое
             while ((str = br.readLine()) != null) {
+                full_str = full_str + str + " ";
                 Log.d(LOG_TAG, str);
             }
+            Log.d(LOG_TAG, "full str: " + full_str);
+            return full_str;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return full_str;
     }
 
     void writeFileSD() {
