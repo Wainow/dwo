@@ -1,10 +1,11 @@
 package com.example.dwo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Room {
     private String room_name;
-    private Hero[] heroes;
+    private ArrayList<Hero> heroes;
     private int number_of_players;
 
     public String getRoom_name() {
@@ -15,12 +16,12 @@ public class Room {
         this.room_name = room_name;
     }
 
-    public Hero[] getHeroes() {
+    public ArrayList<Hero> getHeroes() {
         return heroes;
     }
 
     public void setHeroes(Hero[] heroes) {
-        this.heroes = heroes;
+        this.heroes = (ArrayList<Hero>) Arrays.asList(heroes);;
     }
 
     public int getNumber_of_players() {
@@ -32,20 +33,22 @@ public class Room {
     }
 
     public Room(String room_name, Hero[] heroes){
-        this.heroes = heroes;
+        this.heroes = new ArrayList<>(Arrays.asList(heroes));
         this.room_name = room_name;
         this.number_of_players = heroes.length;
     }
 
-    public Room(String room){
-
+    public Room(String room_name, ArrayList<Hero> heroes){
+        this.heroes = heroes;
+        this.room_name = room_name;
+        this.number_of_players = heroes.size();
     }
 
     @Override
     public String toString() {
         return "Room{" +
                 "room_name='" + room_name + '\'' +
-                ", heroes=" + Arrays.toString(heroes) +
+                ", heroes=" + heroes.toString() +
                 ", number_of_players=" + number_of_players +
                 '}';
     }

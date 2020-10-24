@@ -5,13 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
-    private int[] mDataset;
+    private ArrayList<Hero> mDataset;
     LayoutInflater inflater;
 
     // Provide a reference to the views for each data item
@@ -29,7 +33,7 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public My2Adapter(Context context, int[] myDataset) {
+    public My2Adapter(Context context, ArrayList<Hero> myDataset) {
         mDataset = myDataset;
         this.inflater = LayoutInflater.from(context);
     }
@@ -46,34 +50,39 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(My2ViewHolder holder, int position) {
+    public void onBindViewHolder(final My2ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        switch(mDataset[position]){
-            default: holder.textView.setText("Add hero");
-                holder.circleImageView.setImageResource(R.drawable.mini_q);
-            case 1: holder.textView.setText("Knight");
-                holder.circleImageView.setImageResource(R.drawable.veryknight);
+        holder.textView.setText(mDataset.get(position).getName());
+        switch (mDataset.get(position).getRole()){
+            case "Knight":
+                holder.circleImageView.setImageResource(R.drawable.mini_knight);
                 break;
-            case 2: holder.textView.setText("Mag");
-                holder.circleImageView.setImageResource(R.drawable.veryminimag);
+            case "Mag":
+                holder.circleImageView.setImageResource(R.drawable.mini_mag);
                 break;
-            case 3: holder.textView.setText("Rower");
-                holder.circleImageView.setImageResource(R.drawable.veryrow);
+            case "Rower":
+                holder.circleImageView.setImageResource(R.drawable.mini_row);
                 break;
-            case 4: holder.textView.setText("Thief");
+            case "Thief":
                 holder.circleImageView.setImageResource(R.drawable.mini_thief);
                 break;
-            case 5: holder.textView.setText("Add hero");
+            default:
                 holder.circleImageView.setImageResource(R.drawable.mini_q);
                 break;
-        }
+        };
 
+        holder.itemView.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(holder.itemView.getContext(), "Congratulations", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }

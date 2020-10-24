@@ -7,6 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,15 +28,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 import static android.provider.Telephony.Mms.Part.FILENAME;
+import static com.example.dwo.First2Fragment.getMyDataset;
 import static com.example.dwo.First2Fragment.getRandomInt0_10;
 
 public class CreateActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private int[] myDataset;
+    private ArrayList<Hero> myDataset;
     private String TAG = "DebugLogs";
 
     final String LOG_TAG = "myLogs";
@@ -41,7 +46,7 @@ public class CreateActivity extends AppCompatActivity {
     final String DIR_SD = "MyFiles";
     final String FILENAME_SD = "fileSD";
 
-    private Room room;
+    private ArrayList<Room> room_array;
     private EditTextPlus editTextPlus;
     private Intent intent;
     private String json;
@@ -58,8 +63,6 @@ public class CreateActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Writing your room...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 SecondMethod();
                 finish();
             }
@@ -79,10 +82,11 @@ public class CreateActivity extends AppCompatActivity {
 
         editTextPlus = findViewById(R.id.title_text);
         intent = new Intent(this, General.class);
+        room_array = getMyDataset();
     }
 
     public void SecondMethod(){
-        this.room = new Room(
+        this.room_array.add(new Room(
                 editTextPlus.getText().toString(),
                 new Hero[]{
                         new Hero("Al Capelo", 1, new Specifications(9,9,9,9,9,9)),
@@ -90,15 +94,16 @@ public class CreateActivity extends AppCompatActivity {
                         new Hero("Incast", 3, new Specifications(9,9,9,9,9,9)),
                         new Hero("Ivan", 4, new Specifications(9,9,9,9,9,9)),
                 }
-        );
+        ));
 
-        json = new Gson().toJson(this.room);
+        json = new Gson().toJson(this.room_array);
         Log.d(TAG, "SecondMethod: " + json);
         FileWorker fileWorker = new FileWorker(getApplicationContext());
         fileWorker.writeFile(json);
     }
 
     public void setMyDataset() {
-        this.myDataset = new int[]{1,2,3,4,5};
+        this.myDataset = new ArrayList<>();
+        this.myDataset.add(new Hero());
     }
 }

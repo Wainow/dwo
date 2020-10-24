@@ -1,5 +1,6 @@
 package com.example.dwo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
@@ -25,9 +27,9 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final String TAG = "DebugLogs";
-    private ArrayList<Room> myDataset;
     private Intent intent;
     private String json;
+    public static ArrayList<Room> myDataset;
 
     @Override
     public View onCreateView(
@@ -73,11 +75,16 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     public void setMyDataset() {
-        this.myDataset = new ArrayList<>();
+        //this.myDataset = new ArrayList<>();
         FileWorker fileWorker = new FileWorker(getContext());
         json = fileWorker.readFile();
         Log.d(TAG, "json: " + json);
-        this.myDataset.add(new Gson().fromJson(json, Room.class));
+        //this.myDataset.add(new Gson().fromJson(json, Room.class));
+        myDataset = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, Room[].class)));
         Log.d(TAG, "MyDataset: " + this.myDataset.toString());
+    }
+
+    public static ArrayList<Room> getMyDataset(){
+        return myDataset;
     }
 }

@@ -72,7 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public String list_of_heroes_names(int position){
         String players = "";
         for(int i = 0; i < mDataset.get(position).getNumber_of_players(); i++){
-            players += mDataset.get(position).getHeroes()[i].getName() + ", ";
+            players += mDataset.get(position).getHeroes().get(i).getName() + ", ";
         }
         return players;
     }

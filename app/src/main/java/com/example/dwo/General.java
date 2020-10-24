@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class General extends AppCompatActivity {
@@ -28,7 +29,6 @@ public class General extends AppCompatActivity {
     private String type, username;
     private int count = 0;
     private Intent intent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
