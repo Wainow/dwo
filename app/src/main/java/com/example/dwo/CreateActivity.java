@@ -105,5 +105,6 @@ public class CreateActivity extends AppCompatActivity {
     public void setMyDataset() {
         this.myDataset = new ArrayList<>();
         this.myDataset.add(new Hero());
+        Log.d(TAG, "First hero: " + myDataset.get(0).toString());
     }
 }

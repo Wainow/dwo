@@ -24,11 +24,15 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
     public static class My2ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView textView;
+        public TextView inventory;
+        public TextView specifications;
         public CircleImageView circleImageView;
         public My2ViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.text_item);
             circleImageView = itemView.findViewById(R.id.circle_image);
+            inventory = itemView.findViewById(R.id.text_item3);
+            specifications = itemView.findViewById(R.id.text_item2);
         }
     }
 
@@ -53,7 +57,11 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
     public void onBindViewHolder(final My2ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset.get(position).getName());
+        Hero hero = mDataset.get(position);
+        holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
+        //holder.specifications.setText(mDataset.get(position).getSpecifications().toString());
+        holder.inventory.setText(mDataset.get(position).getInventory());
+        holder.specifications.setText(mDataset.get(position).getSpecifications().toString());
         switch (mDataset.get(position).getRole()){
             case "Knight":
                 holder.circleImageView.setImageResource(R.drawable.mini_knight);

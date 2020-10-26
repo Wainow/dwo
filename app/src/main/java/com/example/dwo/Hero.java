@@ -73,11 +73,11 @@ public class Hero {
     }
 
     public Hero(){
-        this.name = "Add hero";
-        this.specifications = new Specifications(0,0,0,0,0,0);
+        this.name = "";
+        this.specifications = new Specifications();
         this.role = "Add hero";
         this.inventory = "";
-        this.story = "";
+        this.story = "...";
         this.money = 0;
     }
 
@@ -87,6 +87,9 @@ public class Hero {
                 "name='" + name + '\'' +
                 ", specifications=" + specifications +
                 ", role='" + role + '\'' +
+                ", story='" + story + '\'' +
+                ", inventory='" + inventory + '\'' +
+                ", money=" + money +
                 '}';
     }
 

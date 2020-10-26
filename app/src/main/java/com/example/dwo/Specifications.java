@@ -7,6 +7,7 @@ public class Specifications {
     private int Charisma;
     private int Stamina;
     private int Health;
+    private boolean isNull = false;
 
     public int getStrength() {
         return Strength;
@@ -57,23 +58,31 @@ public class Specifications {
     }
 
     public Specifications(int strength, int agility, int intelligence, int charisma, int stamina, int health) {
-        Strength = strength;
-        Agility = agility;
-        Intelligence = intelligence;
-        Charisma = charisma;
-        Stamina = stamina;
-        Health = health;
+        this.Strength = strength;
+        this.Agility = agility;
+        this.Intelligence = intelligence;
+        this.Charisma = charisma;
+        this.Stamina = stamina;
+        this.Health = health;
+    }
+
+    public Specifications(){
+        this.isNull = true;
     }
 
     @Override
     public String toString() {
-        return "Specifications{" +
-                "Strength=" + Strength +
-                ", Agility=" + Agility +
-                ", Intelligence=" + Intelligence +
-                ", Charisma=" + Charisma +
-                ", Stamina=" + Stamina +
-                ", Health=" + Health +
-                '}';
+        if(!isNull){
+            return "Specifications{" +
+                    "Strength=" + Strength +
+                    ", Agility=" + Agility +
+                    ", Intelligence=" + Intelligence +
+                    ", Charisma=" + Charisma +
+                    ", Stamina=" + Stamina +
+                    ", Health=" + Health +
+                    '}';
+        } else{
+            return "  ...  ";
+        }
     }
 }
