@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Intent intent;
     private String json;
     public static ArrayList<Room> myDataset;
+    private NavController controller;
 
     @Override
     public View onCreateView(
@@ -42,9 +44,18 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FirstMethod();
+        /*
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+            public void onSwipeRight() {
+                controller.navigate(R.id.action_First2Fragment_to_FirstFragment);
+            }
+        });
+
+         */
     }
 
     private void FirstMethod() {
+        //controller = NavHostFragment.findNavController(First2Fragment.this);
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_rooms);
         recyclerView.setHasFixedSize(true);
 

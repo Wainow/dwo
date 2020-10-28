@@ -6,9 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".First2Fragment"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimaryPurpleDark"
     android:id="@+id/swipe_container">
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="55dp"
         android:id="@+id/recycler_rooms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

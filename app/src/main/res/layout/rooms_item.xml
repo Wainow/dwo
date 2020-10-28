@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryPurpleDark">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/room_circle_image"
             android:layout_width="70dp"

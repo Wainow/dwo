@@ -15,14 +15,13 @@
             android:id="@+id/toolbar_general"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPurpleDark"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
-    <fragment
-        android:name="com.example.dwo.FirstFragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_container"/>
+        android:layout_height="match_parent"/>
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:id="@+id/bottom"
@@ -30,7 +29,7 @@
         android:layout_gravity="bottom"
         app:fabAlignmentMode="center"
         app:fabAnimationMode="slide"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorPurpleDark"
         app:navigationContentDescription="@string/app_name"
         app:navigationIcon="@drawable/menu"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -14,9 +14,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +44,15 @@ public class FirstFragment extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        /*
+        final NavController controller = NavHostFragment.findNavController(FirstFragment.this);
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+            public void onSwipeLeft() {
+                controller.navigate(R.id.action_FirstFragment_to_First2Fragment);
+            }
+        });
+
+         */
         super.onViewCreated(view, savedInstanceState);
         textView = view.findViewById(R.id.textview_first);
         imageAddress = "android.resource://"  + view.getContext().getPackageName() + "/" + resourceId;
@@ -56,7 +67,7 @@ public class FirstFragment extends Fragment {
             public void onClick(View view) {
                 getActivity().startService(intentMyIntentService.putExtra("step", step));
                 step++;
-                Log.d("DeveloperLogs", "step is" + String.valueOf(step));
+                Log.d("DebugLogs", "step is" + String.valueOf(step));
             }
         });
         myBroadcastReceiver = new MyBroadcastReceiver();
