@@ -49,18 +49,22 @@ public class General extends AppCompatActivity {
         setContentView(R.layout.activity_general);
         Toolbar toolbar = findViewById(R.id.toolbar_general);
         setSupportActionBar(toolbar);
-        if(count == 0){
-            setTitle("General");
-        } else
-            setTitle("List of Rooms");
-
+        setTitle("General");
         //FirstMethod();
         intent = new Intent(this, CreateActivity.class);
         fab = findViewById(R.id.play_fab);
         fab.setBackgroundResource(R.drawable.play);
         bottomAppBar = findViewById(R.id.bottom);
         //final NavController controller = Navigation.findNavController(this, R.id.fragment_container);
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(count == 0){
+                    ChangeFragment();
+                    count++;
+                }
+            }
+        });
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pager = findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
@@ -77,6 +81,7 @@ public class General extends AppCompatActivity {
                         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                         fab.setImageResource(R.drawable.play);
                         setTitle("General");
+                        pager.setPadding(0, 0,0,0);
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

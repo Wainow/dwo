@@ -29,6 +29,7 @@
         android:layout_gravity="bottom"
         app:fabAlignmentMode="center"
         app:fabAnimationMode="slide"
+        app:hideOnScroll="true"
         app:backgroundTint="@color/colorPurpleDark"
         app:navigationContentDescription="@string/app_name"
         app:navigationIcon="@drawable/menu"/>
