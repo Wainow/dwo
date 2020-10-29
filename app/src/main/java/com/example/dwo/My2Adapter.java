@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,9 +21,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
+public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     private ArrayList<Hero> mDataset;
     private DataAdapter mAdapter;
+    private GridView g;
+    private ProgressBar progressBar;
     LayoutInflater inflater;
 
     // Provide a reference to the views for each data item
@@ -95,7 +98,8 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
                 View promptsView = li.inflate(R.layout.create_dialog, null);
                 AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(holder.itemView.getContext(), R.style.Dialog_PurpleAppTheme_NoActionBar);
                 mDialogBuilder.setView(promptsView);
-                final GridView g = promptsView.findViewById(R.id.gridView);
+                g = promptsView.findViewById(R.id.gridView);
+                progressBar = promptsView.findViewById(R.id.progress_creating);
                 mAdapter = new DataAdapter(mDialogBuilder.getContext());
                 g.setAdapter(mAdapter);
                 g.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -109,18 +113,17 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
 
                     }
                 });
+                g.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        progressBar.setProgress(progressBar.getProgress() + 10);
+                    }
+                });
                 //final EditText userInput = (EditText) promptsView.findViewById(R.id.edit_text_post);
                 //final ImageButton addImage = (ImageButton) promptsView.findViewById(R.id.add_image_button);
                 //Настраиваем сообщение в диалоговом окне:
                 mDialogBuilder
                         .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //Вводим текст и отображаем в строке ввода на основном экране:
-                                        //final_text.setText(userInput.getText());
-                                    }
-                                })
                         .setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {

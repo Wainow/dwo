@@ -14,9 +14,18 @@
         android:layout_centerHorizontal="true"
         android:textSize="20dp"
         android:padding="10dp"/>
-    <GridView
-        android:paddingTop="5dp"
+    <ProgressBar
+        android:id="@+id/progress_creating"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
         android:layout_below="@id/text_select"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:max="100"
+        android:background="@color/colorPrimaryPurpleDark"
+        android:progressDrawable="@color/colorWhite"/>
+    <GridView
+        android:paddingTop="10dp"
+        android:layout_below="@id/progress_creating"
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +33,7 @@
         android:gravity="center"
         android:horizontalSpacing="0dp"
         android:numColumns="2"
-        android:stretchMode="columnWidth"
+        android:stretchMode="spacingWidthUniform"
         android:verticalSpacing="35dp">
     </GridView>
 </RelativeLayout>
