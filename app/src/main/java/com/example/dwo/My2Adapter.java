@@ -1,13 +1,19 @@
 package com.example.dwo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,6 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
     private ArrayList<Hero> mDataset;
+    private DataAdapter mAdapter;
     LayoutInflater inflater;
 
     // Provide a reference to the views for each data item
@@ -83,7 +90,48 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder> {
         holder.itemView.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.itemView.getContext(), "Congratulations", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(holder.itemView.getContext(), "Congratulations", Toast.LENGTH_SHORT).show();
+                LayoutInflater li = LayoutInflater.from(holder.itemView.getContext());
+                View promptsView = li.inflate(R.layout.create_dialog, null);
+                AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(holder.itemView.getContext(), R.style.Dialog_PurpleAppTheme_NoActionBar);
+                mDialogBuilder.setView(promptsView);
+                final GridView g = promptsView.findViewById(R.id.gridView);
+                mAdapter = new DataAdapter(mDialogBuilder.getContext());
+                g.setAdapter(mAdapter);
+                g.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                //final EditText userInput = (EditText) promptsView.findViewById(R.id.edit_text_post);
+                //final ImageButton addImage = (ImageButton) promptsView.findViewById(R.id.add_image_button);
+                //Настраиваем сообщение в диалоговом окне:
+                mDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //Вводим текст и отображаем в строке ввода на основном экране:
+                                        //final_text.setText(userInput.getText());
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                //Создаем AlertDialog:
+                AlertDialog alertDialog = mDialogBuilder.create();
+
+                //и отображаем его:
+                alertDialog.show();
             }
         });
     }

@@ -44,14 +44,6 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FirstMethod();
-        /*
-        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
-            public void onSwipeRight() {
-                controller.navigate(R.id.action_First2Fragment_to_FirstFragment);
-            }
-        });
-
-         */
     }
 
     private void FirstMethod() {
@@ -86,11 +78,9 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     public void setMyDataset() {
-        //this.myDataset = new ArrayList<>();
         FileWorker fileWorker = new FileWorker(getContext());
         json = fileWorker.readFile();
         Log.d(TAG, "json: " + json);
-        //this.myDataset.add(new Gson().fromJson(json, Room.class));
         myDataset = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, Room[].class)));
         Log.d(TAG, "MyDataset: " + this.myDataset.toString());
     }

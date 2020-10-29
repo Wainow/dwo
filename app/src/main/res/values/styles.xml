@@ -14,6 +14,13 @@
         <item name="colorAccent">@color/colorPrimaryPurple</item>
     </style>
 
+    <style name="Dialog_PurpleAppTheme_NoActionBar" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:background">@color/colorPrimaryPurpleDark</item>
+        <item name="colorPrimary">@color/colorPurple</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryPurpleDark</item>
+        <item name="colorAccent">@color/colorPrimaryPurple</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

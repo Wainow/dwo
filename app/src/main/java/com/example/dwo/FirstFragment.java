@@ -44,15 +44,6 @@ public class FirstFragment extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        /*
-        final NavController controller = NavHostFragment.findNavController(FirstFragment.this);
-        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
-            public void onSwipeLeft() {
-                controller.navigate(R.id.action_FirstFragment_to_First2Fragment);
-            }
-        });
-
-         */
         super.onViewCreated(view, savedInstanceState);
         textView = view.findViewById(R.id.textview_first);
         imageAddress = "android.resource://"  + view.getContext().getPackageName() + "/" + resourceId;

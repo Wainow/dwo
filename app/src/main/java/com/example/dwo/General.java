@@ -50,12 +50,7 @@ public class General extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_general);
         setSupportActionBar(toolbar);
         setTitle("General");
-        //FirstMethod();
-        intent = new Intent(this, CreateActivity.class);
-        fab = findViewById(R.id.play_fab);
-        fab.setBackgroundResource(R.drawable.play);
-        bottomAppBar = findViewById(R.id.bottom);
-        //final NavController controller = Navigation.findNavController(this, R.id.fragment_container);
+        FirstMethod();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,14 +60,9 @@ public class General extends AppCompatActivity {
                 }
             }
         });
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        pager = findViewById(R.id.pager);
-        pager.setAdapter(pagerAdapter);
-        //pager.setCurrentItem(0);
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
@@ -105,41 +95,22 @@ public class General extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
-        /*
-        //final BottomAppBar bottomAppBar = findViewById(R.id.bottom);
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //fragmentTransaction.add(R.id.fragment_container, new FirstFragment()).commit();
-
-        bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
-                //fragmentTransaction.replace(R.id.fragment_container, new BlankFragment()).commit();
-            }
-        });
-
-        
-         */
     }
 
     private void FirstMethod() {
-        username = getIntent().getExtras().get("username").toString();
-    }
+        intent = new Intent(this, CreateActivity.class);
+        fab = findViewById(R.id.play_fab);
+        fab.setBackgroundResource(R.drawable.play);
+        bottomAppBar = findViewById(R.id.bottom);
 
-    private void SecondMethod() {
-        type = "general";
-
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, username);
+        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        pager = findViewById(R.id.pager);
+        pager.setAdapter(pagerAdapter);
     }
 
     private void ChangeFragment(){
-        //controller.navigate(R.id.action_FirstFragment_to_First2Fragment);
         pager.setCurrentItem(1);
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
         fab.setImageResource(R.drawable.plus);
