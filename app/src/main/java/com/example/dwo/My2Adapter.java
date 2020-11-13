@@ -13,6 +13,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,9 +25,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     private ArrayList<Hero> mDataset;
-    private DataAdapter mAdapter;
-    private GridView g;
-    private ProgressBar progressBar;
     LayoutInflater inflater;
 
     // Provide a reference to the views for each data item
@@ -93,48 +92,9 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         holder.itemView.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(holder.itemView.getContext(), "Congratulations", Toast.LENGTH_SHORT).show();
-                LayoutInflater li = LayoutInflater.from(holder.itemView.getContext());
-                View promptsView = li.inflate(R.layout.create_dialog, null);
-                AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(holder.itemView.getContext(), R.style.Dialog_PurpleAppTheme_NoActionBar);
-                mDialogBuilder.setView(promptsView);
-                g = promptsView.findViewById(R.id.gridView);
-                progressBar = promptsView.findViewById(R.id.progress_creating);
-                mAdapter = new DataAdapter(mDialogBuilder.getContext());
-                g.setAdapter(mAdapter);
-                g.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                g.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        progressBar.setProgress(progressBar.getProgress() + 10);
-                    }
-                });
-                //final EditText userInput = (EditText) promptsView.findViewById(R.id.edit_text_post);
-                //final ImageButton addImage = (ImageButton) promptsView.findViewById(R.id.add_image_button);
-                //Настраиваем сообщение в диалоговом окне:
-                mDialogBuilder
-                        .setCancelable(false)
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                //Создаем AlertDialog:
-                AlertDialog alertDialog = mDialogBuilder.create();
-
-                //и отображаем его:
-                alertDialog.show();
+                DialogFragment dialogFragment = new CreateDialog(holder.itemView.getContext());
+                FragmentManager fragmentManager = ((AppCompatActivity)holder.itemView.getContext()).getSupportFragmentManager();
+                dialogFragment.show(fragmentManager, "dlg");
             }
         });
     }

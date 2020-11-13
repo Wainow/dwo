@@ -3,30 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/First3Fragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.dwo.FirstFragment"
-        android:label="FirstFragment"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/First3Fragment"
+        android:name="com.example.dwo.First3Fragment"
+        android:label="First3Fragment"
+        tools:layout="@layout/fragment_first3">
 
         <action
-            android:id="@+id/action_FirstFragment_to_First2Fragment"
-            app:destination="@id/First2Fragment"
+            android:id="@+id/action_First3Fragment_to_SecondFragment"
+            app:destination="@id/SecondFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/First2Fragment"
-        android:name="com.example.dwo.First2Fragment"
-        android:label="First2Fragment"
-        tools:layout="@layout/fragment_first2">
+        android:id="@+id/SecondFragment"
+        android:name="com.example.dwo.SecondFragment"
+        android:label="SecondFragment"
+        tools:layout="@layout/fragment_second">
         <action
-            android:id="@+id/action_First2Fragment_to_FirstFragment"
-            app:destination="@id/FirstFragment"
+            android:id="@+id/action_SecondFragment_to_First3Fragment"
+            app:destination="@id/First3Fragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
