@@ -6,91 +6,100 @@
     android:layout_height="match_parent"
     android:id="@+id/relative_second"
     android:background="@color/colorPrimaryPurpleDark"
-    tools:context=".SecondFragment">
+    tools:context=".SecondFragment"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true">
     <TableRow>
     <com.example.dwo.TextViewPlus
         android:layout_marginTop="25dp"
         android:id="@+id/text_strength"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Strength:      0"
+        android:text=" Strength:      ?"
         android:padding="5dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         />
     <com.example.dwo.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_strength"
         android:id="@+id/text_agility"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Agility:       0"
+        android:text=" Agility:           ?"
         android:padding="5dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="20dp"/>
     </TableRow>
     <TableRow>
     <com.example.dwo.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_agility"
         android:id="@+id/text_intelligence"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Intelligence: 0"
+        android:text=" Intelligence: ?"
         android:padding="5dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="20dp"/>
     <com.example.dwo.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_intelligence"
         android:id="@+id/text_charisma"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Charisma: 0"
+        android:text=" Charisma:     ?"
         android:padding="5dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="20dp"/>
     </TableRow>
     <TableRow>
     <com.example.dwo.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_charisma"
         android:id="@+id/text_stamina"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Stamina:      0"
+        android:text=" Stamina:      ?"
         android:padding="5dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="20dp"/>
     <com.example.dwo.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_stamina"
         android:id="@+id/text_health"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Health:      0"
+        android:text=" Health:          ?"
         android:padding="5dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="20dp"/>
     </TableRow>
-    <TableRow>
-    </TableRow>
+    <Button
+        android:id="@+id/btn_second"
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/colorPurpleDark"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Generate"/>
 </TableLayout>
