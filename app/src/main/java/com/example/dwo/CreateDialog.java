@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,11 +27,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import org.w3c.dom.Text;
+
 public class CreateDialog extends DialogFragment {
     private GridView g;
     private ProgressBar progressBar;
     private DataAdapter mAdapter;
     private Context context;
+    private TextView textView;
 
     public CreateDialog(Context context){
         this.context = context;
@@ -49,10 +53,11 @@ public class CreateDialog extends DialogFragment {
         AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context, R.style.Dialog_PurpleAppTheme_NoActionBar);
         mDialogBuilder.setView(promptsView);
 
+        textView = promptsView.findViewById(R.id.text_select);
         progressBar = promptsView.findViewById(R.id.progress_creating);
         progressBar.setProgress(25);
-        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context);
         ViewPager pager = promptsView.findViewById(R.id.pager_dialog);
+        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context, pager);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(0);
 
@@ -66,8 +71,10 @@ public class CreateDialog extends DialogFragment {
             public void onPageSelected(int position) {
                 if(position == 0){
                     progressBar.setProgress(25);
+                    textView.setText("Select class of hero");
                 } else {
                     progressBar.setProgress(75);
+                    textView.setText("Generate specifications");
                 }
             }
 

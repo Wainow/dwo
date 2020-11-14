@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.dwo.First3Fragment;
 import com.example.dwo.SecondFragment;
@@ -24,9 +26,11 @@ import com.example.dwo.SecondFragment;
 public class MyFragmentPagerAdapter extends PagerAdapter {
     private Context context;
     private int resId = 0;
+    private ViewPager pager;
 
-    public MyFragmentPagerAdapter(Context context) {
+    public MyFragmentPagerAdapter(Context context, ViewPager pager) {
         this.context = context;
+        this.pager = pager;
     }
 
     public Object instantiateItem(ViewGroup collection, int position) {
@@ -43,20 +47,9 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
         if(resId == R.layout.fragment_first3) {
             GridView g = layout.findViewById(R.id.gridView);
-            DataAdapter mAdapter = new DataAdapter(layout.getContext());
+            DataAdapter mAdapter = new DataAdapter(layout.getContext(), pager);
             g.setAdapter(mAdapter);
             Log.d("DebugLogs", "First3Fragment: GridView created");
-            g.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
         } else {
         }
         collection.addView(layout);

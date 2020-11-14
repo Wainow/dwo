@@ -32,21 +32,6 @@ public class First3Fragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        g = getActivity().findViewById(R.id.gridView);
-        mAdapter = new DataAdapter(getContext());
-        g.setAdapter(mAdapter);
-        Log.d("DebugLogs", "First3Fragment: GridView created");
-        g.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         /*
         g.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
