@@ -64,6 +64,8 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             case 1:
                 resId = R.layout.fragment_second;
                 break;
+            case 2:
+                resId = R.layout.fragment_second2;
         }
         final ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
         if(resId == R.layout.fragment_first3) {
@@ -71,7 +73,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             DataAdapter mAdapter = new DataAdapter(layout.getContext(), pager);
             g.setAdapter(mAdapter);
             Log.d("DebugLogs", "First3Fragment: GridView created");
-        } else {
+        } else if(resId == R.layout.fragment_second){
             myBroadcastReceiver = new MyBroadcastReceiver();
             IntentFilter intentFilter = new IntentFilter(MyIntentService2.ACTION_MYINTENTSERVICE);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -105,8 +107,9 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         btn.setText("Next");
                         timer.cancel();
                         timer = null;
+                        layout.getContext().unregisterReceiver(myBroadcastReceiver);
                     } else if(count == 2){
-                        pager.setCurrentItem(0);
+                        pager.setCurrentItem(2);
                     }
                 }
             });
@@ -117,7 +120,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -128,22 +131,26 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        super.destroyItem(container, position, object);
-        container.getContext().unregisterReceiver(myBroadcastReceiver);
-        count = 0;
-        timer.cancel();
-        timer = null;
+        ((ViewPager) container).removeView((View) object);
     }
 
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            text_strength.setText(" Strength:      " + (int)(Math.random() * 10));
-            text_agility.setText(" Agility:           " + (int)(Math.random() * 10));
-            text_intelligence.setText(" Intelligence: " + (int)(Math.random() * 10));
-            text_charisma.setText(" Charisma:     " + (int)(Math.random() * 10));
-            text_stamina.setText(" Stamina:      " + (int)(Math.random() * 10));
-            text_health.setText(" Health:          " + (int)(Math.random() * 10));
+            Specifications specifications = new Specifications(
+                    (int)(Math.random() * 10),
+                    (int)(Math.random() * 10),
+                    (int)(Math.random() * 10),
+                    (int)(Math.random() * 10),
+                    (int)(Math.random() * 10),
+                    (int)(Math.random() * 10)
+            );
+            text_strength.setText(" Strength:      " + specifications.getStrength());
+            text_agility.setText(" Agility:           " + specifications.getAgility());
+            text_intelligence.setText(" Intelligence: " + specifications.getIntelligence());
+            text_charisma.setText(" Charisma:     " + specifications.getCharisma());
+            text_stamina.setText(" Stamina:      " + specifications.getStamina());
+            text_health.setText(" Health:          " + specifications.getHealth());
         }
     }
 }

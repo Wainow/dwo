@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -72,9 +73,12 @@ public class CreateDialog extends DialogFragment {
                 if(position == 0){
                     progressBar.setProgress(25);
                     textView.setText("Select class of hero");
-                } else {
-                    progressBar.setProgress(75);
+                } else if(position == 1) {
+                    progressBar.setProgress(50);
                     textView.setText("Generate specifications");
+                } else{
+                    progressBar.setProgress(75);
+                    textView.setText("Tell about new Hero");
                 }
             }
 
@@ -86,6 +90,8 @@ public class CreateDialog extends DialogFragment {
 
         AlertDialog alertDialog = mDialogBuilder.create();
         alertDialog.show();
+        alertDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         alertDialog.getWindow().setLayout(1000, 1100);
 
         return alertDialog;

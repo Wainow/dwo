@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private RelativeLayout relative;
 
-
+    /** Trying to use Bound Service
     private CountService service;
     boolean mBound = false;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -57,22 +57,26 @@ public class MainActivity extends AppCompatActivity {
             mBound = false;
         }
     };
+     */
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        /** Trying to use Bound Service
         Intent intent = new Intent(this, CountService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+         */
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        /** Trying to use Bound Service
         if(mBound){
             unbindService(mConnection);
             mBound = false;
         }
+         */
     }
 
     @Override
@@ -90,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                TestMethod();
+                /** Trying to use Bound Service
                 if(mBound) {
                     bar.setVisibility(View.VISIBLE);
                     Toast toast = Toast.makeText(getApplicationContext(), "Checking your connection..." + "{" + service.getCounter() + "}", Toast.LENGTH_SHORT);
@@ -102,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         TestMethod();
                     }
                 }
+                 */
             }
         });
     }
