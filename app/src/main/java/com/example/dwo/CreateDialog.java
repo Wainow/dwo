@@ -36,9 +36,11 @@ public class CreateDialog extends DialogFragment {
     private DataAdapter mAdapter;
     private Context context;
     private TextView textView;
+    private int RoomID;
 
-    public CreateDialog(Context context){
+    public CreateDialog(Context context, int RoomID){
         this.context = context;
+        this.RoomID = RoomID;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class CreateDialog extends DialogFragment {
         progressBar = promptsView.findViewById(R.id.progress_creating);
         progressBar.setProgress(25);
         ViewPager pager = promptsView.findViewById(R.id.pager_dialog);
-        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context, pager);
+        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context, pager, RoomID);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(0);
 

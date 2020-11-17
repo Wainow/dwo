@@ -46,11 +46,49 @@ public class FileWorker {
         }
     }
 
+    void writeFile(String Name, String str) {
+        try {
+            // отрываем поток для записи
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                    context.openFileOutput(Name, MODE_PRIVATE)));
+            // пишем данные
+            bw.write(str);
+            // закрываем поток
+            bw.close();
+            Log.d(LOG_TAG, "Файл записан");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     String readFile() {
         try {
             // открываем поток для чтения
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     context.openFileInput(FILENAME)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+                full_str = full_str + str + " ";
+                Log.d(LOG_TAG, str);
+            }
+            Log.d(LOG_TAG, "full str: " + full_str);
+            return full_str;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return full_str;
+    }
+
+    String readFile(String Name) {
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    context.openFileInput(Name)));
             String str = "";
             // читаем содержимое
             while ((str = br.readLine()) != null) {

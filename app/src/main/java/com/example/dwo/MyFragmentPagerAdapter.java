@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.dwo.First3Fragment;
 import com.example.dwo.SecondFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,6 +41,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private TimerTask timerTask;
     private MyBroadcastReceiver myBroadcastReceiver;
     private int count = 0;
+    private DataAdapter mAdapter;
 
     private Button btn;
     private TextView text_strength;
@@ -47,11 +51,16 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private TextView text_stamina;
     private TextView text_health;
 
+    private Specifications specifications;
+    private Hero hero;
+    private String json;
+    private int RoomID;
 
 
-    public MyFragmentPagerAdapter(Context context, ViewPager pager) {
+    public MyFragmentPagerAdapter(Context context, ViewPager pager, int RoomID) {
         this.context = context;
         this.pager = pager;
+        this.RoomID = RoomID;
     }
 
     public Object instantiateItem(final ViewGroup collection, int position) {
@@ -70,7 +79,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         final ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
         if(resId == R.layout.fragment_first3) {
             GridView g = layout.findViewById(R.id.gridView);
-            DataAdapter mAdapter = new DataAdapter(layout.getContext(), pager);
+            mAdapter = new DataAdapter(layout.getContext(), pager);
             g.setAdapter(mAdapter);
             Log.d("DebugLogs", "First3Fragment: GridView created");
         } else if(resId == R.layout.fragment_second){
@@ -87,7 +96,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             text_charisma = layout.findViewById(R.id.text_charisma);
             text_stamina = layout.findViewById(R.id.text_stamina);
             text_health = layout.findViewById(R.id.text_health);
-            final Intent intentMyIntentService = new Intent(layout.getContext(), MyIntentService2.class);
+            final Intent intentMyIntentService2 = new Intent(layout.getContext(), MyIntentService2.class);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,7 +107,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         timerTask = new TimerTask() {
                             @Override
                             public void run() {
-                                layout.getContext().startService(intentMyIntentService);
+                                layout.getContext().startService(intentMyIntentService2);
                             }
                         };
                         timer.schedule(timerTask, 1000, 10);
@@ -111,6 +120,32 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                     } else if(count == 2){
                         pager.setCurrentItem(2);
                     }
+                }
+            });
+        } else{
+            final EditText editName = layout.findViewById(R.id.create_name);
+            final EditText editStory = layout.findViewById(R.id.create_story);
+            final EditText editMoney = layout.findViewById(R.id.create_money);
+            FloatingActionButton fab = layout.findViewById(R.id.create_fab);
+            final Intent intentAddHeroService = new Intent(layout.getContext(), AddHeroService.class);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hero = new Hero(
+                            editName.getText().toString(),
+                            mAdapter.getRole(),
+                            specifications,
+                            "",
+                            editStory.getText().toString(),
+                            Double.parseDouble(editMoney.getText().toString())
+                    );
+                    json = new Gson().toJson(hero);
+                    Log.d("DebugLogs", "Second2Fragment: " + json);
+                    FileWorker fileWorker = new FileWorker(layout.getContext());
+                    Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
+                    fileWorker.writeFile(String.valueOf(RoomID), json);
+                    layout.getContext().startService(intentAddHeroService);
+
                 }
             });
         }
@@ -137,7 +172,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Specifications specifications = new Specifications(
+            specifications = new Specifications(
                     (int)(Math.random() * 10),
                     (int)(Math.random() * 10),
                     (int)(Math.random() * 10),
@@ -152,5 +187,9 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             text_stamina.setText(" Stamina:      " + specifications.getStamina());
             text_health.setText(" Health:          " + specifications.getHealth());
         }
+    }
+
+    public Hero getHero() {
+        return hero;
     }
 }

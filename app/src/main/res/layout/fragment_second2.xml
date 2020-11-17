@@ -60,6 +60,7 @@
         android:layout_marginRight="10dp"
         android:layout_below="@id/create_circle_image"/>
     <com.example.dwo.EditTextPlus
+        android:id="@+id/create_money"
         app:customFont1="fonts/PressStart2P-Regular.ttf"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

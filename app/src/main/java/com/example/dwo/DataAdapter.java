@@ -20,6 +20,7 @@ public class DataAdapter extends BaseAdapter {
 
     private Context mContext;
     private ViewPager pager;
+    private int role;
 
     public DataAdapter(Context c, ViewPager viewPager) {
         this.mContext = c;
@@ -59,18 +60,22 @@ public class DataAdapter extends BaseAdapter {
                 switch (position){
                     case 0:
                         Log.d("DebugLogs", "DataAdapter: Item knight selected!");
+                        role = 1;
                         pager.setCurrentItem(1);
                         break;
                     case 1:
                         Log.d("DebugLogs", "DataAdapter: Item mag selected!");
+                        role = 2;
                         pager.setCurrentItem(1);
                         break;
                     case 2:
                         Log.d("DebugLogs", "DataAdapter: Item rower selected!");
+                        role = 3;
                         pager.setCurrentItem(1);
                         break;
                     case 3:
                         Log.d("DebugLogs", "DataAdapter: Item thief selected!");
+                        role = 4;
                         pager.setCurrentItem(1);
                         break;
                 }
@@ -82,4 +87,7 @@ public class DataAdapter extends BaseAdapter {
     // references to our images
     public	Integer[] mThumbIds = { R.drawable.veryknight, R.drawable.veryminimag, R.drawable.veryrow, R.drawable.mini_thief};
 
+    public int getRole() {
+        return role;
+    }
 }

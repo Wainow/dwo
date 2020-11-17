@@ -34,4 +34,16 @@
         android:tint="@color/colorPurple"
         app:borderWidth="0dp"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/tt"
+        android:backgroundTint="@color/colorPurple"
+        android:background="@color/colorPurple"
+        android:tint="@color/colorPurple"
+        app:borderWidth="0dp"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -28,8 +28,19 @@ public class Hero {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(int role) {
+        switch (role){
+            case 1 : this.role = "Knight";
+                break;
+            case 2 : this.role = "Mag";
+                break;
+            case 3 : this.role = "Rower";
+                break;
+            case 4 : this.role = "Thief";
+                break;
+            default: this.role = "Add hero";
+                break;
+        }
     }
 
     public Hero(String name, int role, Specifications specifications) {

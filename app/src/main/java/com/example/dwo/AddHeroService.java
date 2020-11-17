@@ -2,14 +2,14 @@ package com.example.dwo;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
+import android.content.IntentSender;
 
 import androidx.annotation.Nullable;
 
-public class MyIntentService2  extends IntentService {
-    public static final String ACTION_MYINTENTSERVICE = "dwo.intentservice.GENERATE";
+public class AddHeroService extends IntentService {
+    public static final String ACTION_MYINTENTSERVICE = "dwo.intentservice.ADD_HERO";
 
-    public MyIntentService2() {
+    public AddHeroService() {
         super("my_name");
     }
 

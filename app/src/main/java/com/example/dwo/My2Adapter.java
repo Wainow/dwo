@@ -26,6 +26,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     private ArrayList<Hero> mDataset;
     LayoutInflater inflater;
+    private int RoomID;
+    private DialogFragment dialogFragment;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -46,9 +48,10 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public My2Adapter(Context context, ArrayList<Hero> myDataset) {
-        mDataset = myDataset;
+    public My2Adapter(Context context, ArrayList<Hero> myDataset, int RoomID) {
+        this.mDataset = myDataset;
         this.inflater = LayoutInflater.from(context);
+        this.RoomID = RoomID;
     }
 
     // Create new views (invoked by the layout manager)
@@ -67,10 +70,22 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Hero hero = mDataset.get(position);
-        holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
-        //holder.specifications.setText(mDataset.get(position).getSpecifications().toString());
-        holder.inventory.setText(mDataset.get(position).getInventory());
-        holder.specifications.setText(mDataset.get(position).getSpecifications().toString());
+        if(mDataset.get(position).getRole() != "Add hero") {
+            holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
+            holder.inventory.setText(mDataset.get(position).getInventory() + "Money: " + mDataset.get(position).getMoney());
+            holder.specifications.setText(
+                    "Health: " + mDataset.get(position).getSpecifications().getHealth() + ", " +
+                            "Strength: " + mDataset.get(position).getSpecifications().getStrength() + ", " +
+                            "Charisma: " + mDataset.get(position).getSpecifications().getCharisma() + ", " +
+                            "Intelligence" + mDataset.get(position).getSpecifications().getIntelligence() + ", " +
+                            "Agility: " + mDataset.get(position).getSpecifications().getAgility() + ", " +
+                            "Stamina: " + mDataset.get(position).getSpecifications().getStamina()
+            );
+        } else{
+            holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
+            holder.specifications.setText("...");
+            holder.inventory.setText("");
+        }
         switch (mDataset.get(position).getRole()){
             case "Knight":
                 holder.circleImageView.setImageResource(R.drawable.mini_knight);
@@ -92,7 +107,7 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         holder.itemView.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dialogFragment = new CreateDialog(holder.itemView.getContext());
+                dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID);
                 FragmentManager fragmentManager = ((AppCompatActivity)holder.itemView.getContext()).getSupportFragmentManager();
                 dialogFragment.show(fragmentManager, "dlg");
             }
@@ -103,5 +118,9 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public DialogFragment getDialogFragment() {
+        return dialogFragment;
     }
 }
