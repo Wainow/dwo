@@ -72,14 +72,14 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         Hero hero = mDataset.get(position);
         if(mDataset.get(position).getRole() != "Add hero") {
             holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
-            holder.inventory.setText(mDataset.get(position).getInventory() + "Money: " + mDataset.get(position).getMoney());
+            holder.inventory.setText(mDataset.get(position).getInventory() + "Money: " + mDataset.get(position).getMoney() + " ...");
             holder.specifications.setText(
                     "Health: " + mDataset.get(position).getSpecifications().getHealth() + ", " +
                             "Strength: " + mDataset.get(position).getSpecifications().getStrength() + ", " +
                             "Charisma: " + mDataset.get(position).getSpecifications().getCharisma() + ", " +
                             "Intelligence" + mDataset.get(position).getSpecifications().getIntelligence() + ", " +
                             "Agility: " + mDataset.get(position).getSpecifications().getAgility() + ", " +
-                            "Stamina: " + mDataset.get(position).getSpecifications().getStamina()
+                            "Stamina: " + mDataset.get(position).getSpecifications().getStamina() + " ..."
             );
         } else{
             holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
@@ -107,9 +107,11 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         holder.itemView.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID);
-                FragmentManager fragmentManager = ((AppCompatActivity)holder.itemView.getContext()).getSupportFragmentManager();
-                dialogFragment.show(fragmentManager, "dlg");
+                if (mDataset.get(position).getRole() == "Add hero") {
+                    dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID);
+                    FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
+                    dialogFragment.show(fragmentManager, "dlg");
+                }
             }
         });
     }

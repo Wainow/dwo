@@ -4,39 +4,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static android.provider.Telephony.Mms.Part.FILENAME;
 import static com.example.dwo.First2Fragment.getMyDataset;
-import static com.example.dwo.First2Fragment.getRandomInt0_10;
 
 public class CreateActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -53,10 +40,15 @@ public class CreateActivity extends AppCompatActivity {
 
     private ArrayList<Room> room_array;
     private EditTextPlus editTextPlus;
+    private FloatingActionButton fab;
     private Intent intent;
     private String json;
     private Hero[] heroes;
     private MyBroadcastReceiver myBroadcastReceiver;
+    private boolean isNull = true;
+    private ImageButton imageButton;
+    private ArrayList<Integer> images;
+    private Integer room_image_src;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,20 +57,17 @@ public class CreateActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FirstMethod();
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        FloatingActionButton fab_check = findViewById(R.id.fab_check);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SecondMethod();
-                finish();
             }
         });
-        fab_check.setOnClickListener(new View.OnClickListener() {
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RefreshHeroes();
+                room_image_src = images.get((int) (Math.random()*images.size()-1));
+                imageButton.setImageResource(room_image_src);
             }
         });
     }
@@ -95,6 +84,7 @@ public class CreateActivity extends AppCompatActivity {
         Log.d(TAG, "First hero: " + myDataset.get(0).toString());
         mAdapter.notifyDataSetChanged();
         mAdapter.getDialogFragment().dismiss();
+        isNull = false;
     }
 
     public void FirstMethod(){
@@ -112,23 +102,35 @@ public class CreateActivity extends AppCompatActivity {
         editTextPlus = findViewById(R.id.title_text);
         intent = new Intent(this, General.class);
         room_array = getMyDataset();
+        fab = findViewById(R.id.fab);
+        imageButton = findViewById(R.id.image_room);
 
         myBroadcastReceiver = new MyBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter(AddHeroService.ACTION_MYINTENTSERVICE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         getApplicationContext().registerReceiver(myBroadcastReceiver, intentFilter);
+
+        images = new ArrayList<>();
+        images.add(R.drawable.veryknight);
+        images.add(R.drawable.veryrow);
+        images.add(R.drawable.veryminimag);
+        images.add(R.drawable.mini_thief);
+        room_image_src = R.drawable.mini_q;
     }
 
     public void SecondMethod(){
-        if(heroes != null) {
+        if(!isNull) {
+            this.myDataset.remove(this.myDataset.size()-1);
             this.room_array.add(new Room(
                     editTextPlus.getText().toString(),
-                    heroes
+                    this.myDataset,
+                    room_image_src
             ));
             json = new Gson().toJson(this.room_array);
             Log.d(TAG, "SecondMethod: " + json);
             FileWorker fileWorker = new FileWorker(getApplicationContext());
             fileWorker.writeFile(json);
+            finish();
         } else {
             Toast.makeText(this, "Your room doesn't have any heroes!", Toast.LENGTH_LONG).show();
         }

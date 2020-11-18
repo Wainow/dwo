@@ -9,10 +9,10 @@
                 android:width="110dp"
                 android:height="27dp" />
             <solid
-                android:color="@color/colorPrimary" />
+                android:color="@color/colorPrimaryPurple" />
             <stroke
                 android:width="3dip"
-                android:color="@color/colorPrimary" />
+                android:color="@color/colorPrimaryPurple" />
         </shape>
     </item>
 </selector>
