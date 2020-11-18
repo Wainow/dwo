@@ -1,6 +1,7 @@
 package com.example.dwo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -60,12 +62,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.circle.setImageResource(mDataset.get(position).getRoom_image_src());
+        String imageAddress = "android.resource://"  + holder.itemView.getContext().getPackageName() + "/" + mDataset.get(position).getRoom_image_src();
+        Glide.with(holder.itemView.getContext()).load(imageAddress).into(holder.circle);
         holder.name_of_room.setText(mDataset.get(position).getRoom_name());
         holder.number_of_players.setText("Players : " + String.valueOf(mDataset.get(position).getNumber_of_players()) + " - " + list_of_heroes_names(position));
         holder.starting.setText("Starting from " + getRandomInt0_10() + " min...");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), RoomActivity.class);
+                intent.putExtra("position", position);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

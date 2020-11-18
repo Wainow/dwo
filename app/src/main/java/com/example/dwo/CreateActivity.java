@@ -56,6 +56,7 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Create your room");
         FirstMethod();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +112,9 @@ public class CreateActivity extends AppCompatActivity {
         getApplicationContext().registerReceiver(myBroadcastReceiver, intentFilter);
 
         images = new ArrayList<>();
-        images.add(R.drawable.veryknight);
-        images.add(R.drawable.veryrow);
-        images.add(R.drawable.veryminimag);
+        images.add(R.drawable.mini_knight);
+        images.add(R.drawable.mini_row);
+        images.add(R.drawable.mini_mag);
         images.add(R.drawable.mini_thief);
         room_image_src = R.drawable.mini_q;
     }

@@ -11,4 +11,5 @@
     <color name="colorPurpleDark">#201721</color>
     <color name="colorPrimaryPurpleDark">#140d14</color>
     <color name="colorGold">#FFD700</color>
+    <color name="colorRed">#ff0000</color>
 </resources>

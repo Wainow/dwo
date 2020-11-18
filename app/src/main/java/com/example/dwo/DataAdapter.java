@@ -16,6 +16,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+
 public class DataAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -49,11 +51,12 @@ public class DataAdapter extends BaseAdapter {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             int color = ContextCompat.getColor(mContext, R.color.colorPrimaryPurpleDark);
             imageView.setBackgroundColor(color);
-            //imageView.setPadding(2, 2, 2, 2);
         } else {
             imageView = (ImageButton) convertView;
         }
-        imageView.setImageResource(mThumbIds[position]);
+        String imageAddress = "android.resource://"  + mContext.getPackageName() + "/" + mThumbIds[position];
+        Glide.with(mContext).load(imageAddress).into(imageView);
+        //imageView.setImageResource(mThumbIds[position]);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +88,7 @@ public class DataAdapter extends BaseAdapter {
     }
 
     // references to our images
-    public	Integer[] mThumbIds = { R.drawable.veryknight, R.drawable.veryminimag, R.drawable.veryrow, R.drawable.mini_thief};
+    public	Integer[] mThumbIds = { R.drawable.mini_knight, R.drawable.mini_mag, R.drawable.mini_row, R.drawable.mini_thief};
 
     public int getRole() {
         return role;

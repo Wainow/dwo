@@ -1,44 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/colorPrimaryPurpleDark">
-    <com.example.dwo.TextViewPlus
-        android:layout_toRightOf="@id/image_room"
-        android:layout_width="wrap_content"
-        android:text="Guest's Room"
-        android:textSize="20dp"
-        android:id="@+id/title_text"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/cloud_background_purple4"
-        android:padding="15dp"
-        android:layout_marginLeft="15dp"
-        app:customFont1="fonts/Righteous-Regular.ttf"
-        android:textColor="@color/colorWhite"
-        android:layout_height="wrap_content"/>
-    <ImageButton
-        android:id="@+id/image_room"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:background="@color/colorAccent"
-        android:scaleType="fitXY"
-        android:padding="-100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:src="@drawable/mini_q"/>
-    <View
-        android:id="@+id/line"
-        android:background="#000000"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/title_text"
-        android:layout_width = "match_parent"
-        android:layout_height="1dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_hero"
+    tools:context=".RoomActivity"
+    android:focusableInTouchMode="true">
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_below="@id/line"
-        android:layout_height="wrap_content"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryPurple"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_room" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ok_img"
+        android:backgroundTint="@color/colorPurple"
+        android:background="@color/colorPurple"
+        android:tint="@color/colorPurple"
+        app:borderWidth="0dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
