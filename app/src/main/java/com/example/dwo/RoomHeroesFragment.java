@@ -1,5 +1,6 @@
 package com.example.dwo;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RoomHeroesFragment extends Fragment {
     private ArrayList<Hero> heroes;

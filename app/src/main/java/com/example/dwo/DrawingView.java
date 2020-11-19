@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,34 @@ public class DrawingView extends View{
     private ArrayList<Paint> paintLists = new ArrayList<>();
     private float startX = 0F;
     private float startY = 0F;
+    private int BackgroundColor = Color.WHITE;
+    private int GeneralColor = Color.parseColor("#000000");
+    private float sizePen = 3F;
+
+    public float getSizePen() {
+        return sizePen;
+    }
+
+    public void setSizePen(float sizePen) {
+        this.sizePen = sizePen;
+    }
+
+    public int getGeneralColor() {
+        return GeneralColor;
+    }
+
+    public void setGeneralColor(int generalColor) {
+        GeneralColor = generalColor;
+    }
+
+    public int getBackgroundColor() {
+        return BackgroundColor;
+    }
+
+    @Override
+    public void setBackgroundColor(int backgroundColor) {
+        BackgroundColor = backgroundColor;
+    }
 
     public DrawingView(Context context) {
         super(context);
@@ -37,8 +66,9 @@ public class DrawingView extends View{
 
     private Paint createPaint() {
         Paint paint = new Paint();
+        paint.setColor(GeneralColor);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(3F);
+        paint.setStrokeWidth(sizePen);
 
         return paint;
     }
@@ -46,7 +76,7 @@ public class DrawingView extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(BackgroundColor);
 
         for (int index = 0; index < pathIndex; index++) {
             Path path = pathLists.get(index);

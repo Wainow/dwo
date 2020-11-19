@@ -1,64 +1,110 @@
 package com.example.dwo;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MapFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FloatingActionButton fab_size;
+    private FloatingActionButton fab_background;
+    private FloatingActionButton fab_color;
+    private DrawingView drawingView;
+    private Integer[] colors = new Integer[9];
+    private int i, k;
+    private float m;
 
     public MapFragment() {
-        // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MapFragment newInstance(String param1, String param2) {
         MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FirstMethod();
+        fab_color.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawingView.setGeneralColor(colors[k]);
+                if(k != 8){
+                    k++;
+                } else
+                    k = 0;
+                Log.d("DebugLogs", "MapFragment: color:" + colors[i]);
+                Log.d("DebugLogs", "MapFragment: k:" + k);
+            }
+        });
+        fab_background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawingView.setBackgroundColor(colors[i]);
+                if(i != 8){
+                    i++;
+                } else
+                    i = 0;
+                Log.d("DebugLogs", "MapFragment: background:" + colors[i]);
+                Log.d("DebugLogs", "MapFragment: k:" + k);
+            }
+        });
+        fab_size.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(m < 200F){
+                    m *= 3;
+                    drawingView.setSizePen(m);
+                    fab_size.getBehavior();
+
+                } else
+                    m = 3F;
+                Log.d("DebugLogs", "MapFragment: size:" + m);
+            }
+        });
+    }
+
+    public void FirstMethod() {
+        fab_size = getActivity().findViewById(R.id.fab_brush_size);
+        fab_background = getActivity().findViewById(R.id.fab_background_color);
+        fab_color = getActivity().findViewById(R.id.fab_brush_color);
+        drawingView = getActivity().findViewById(R.id.DrawingView);
+        setColors();
+    }
+
+    private void setColors() {
+        i = 0;
+        k = 0;
+        m = 3F;
+        colors[0] = Color.BLUE;
+        colors[1] = Color.GREEN;
+        colors[2] = Color.YELLOW;
+        colors[3] = Color.RED;
+        colors[4] = Color.MAGENTA;
+        colors[5] = Color.CYAN;
+        colors[6] = Color.WHITE;
+        colors[7] = Color.GRAY;
+        colors[8] = Color.BLACK;
     }
 }
