@@ -22,7 +22,6 @@
 
         <service android:name=".CountService" />
         <service android:name=".MyIntentService" />
-        <service android:name=".MyIntentService2" />
         <service android:name=".AddHeroService" />
 
         <activity

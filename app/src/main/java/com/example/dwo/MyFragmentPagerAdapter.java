@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -39,7 +42,6 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private ViewPager pager;
     private Timer timer;
     private TimerTask timerTask;
-    private MyBroadcastReceiver myBroadcastReceiver;
     private int count = 0;
     private DataAdapter mAdapter;
 
@@ -55,6 +57,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private Hero hero;
     private String json;
     private int RoomID;
+    private SampleTask mSampleTask;
 
 
     public MyFragmentPagerAdapter(Context context, ViewPager pager, int RoomID) {
@@ -83,11 +86,14 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             g.setAdapter(mAdapter);
             Log.d("DebugLogs", "First3Fragment: GridView created");
         } else if(resId == R.layout.fragment_second){
+            /*
             myBroadcastReceiver = new MyBroadcastReceiver();
             IntentFilter intentFilter = new IntentFilter(MyIntentService2.ACTION_MYINTENTSERVICE);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             layout.getContext().registerReceiver(myBroadcastReceiver, intentFilter);
 
+             */
+            mSampleTask = new SampleTask();
             count = 0;
             btn = layout.findViewById(R.id.btn_second);
             text_strength = layout.findViewById(R.id.text_strength);
@@ -95,28 +101,14 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             text_intelligence = layout.findViewById(R.id.text_intelligence);
             text_charisma = layout.findViewById(R.id.text_charisma);
             text_stamina = layout.findViewById(R.id.text_stamina);
-            text_health = layout.findViewById(R.id.text_health);
-            final Intent intentMyIntentService2 = new Intent(layout.getContext(), MyIntentService2.class);
+            text_health = layout.findViewById(R.id.text_health);;
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(count == 0) {
-                        count++;
-                        btn.setText("Stop");
-                        timer = new Timer();
-                        timerTask = new TimerTask() {
-                            @Override
-                            public void run() {
-                                layout.getContext().startService(intentMyIntentService2);
-                            }
-                        };
-                        timer.schedule(timerTask, 1000, 10);
+                        mSampleTask.execute();
                     } else if(count == 1){
-                        count++;
-                        btn.setText("Next");
-                        timer.cancel();
-                        timer = null;
-                        layout.getContext().unregisterReceiver(myBroadcastReceiver);
+                        mSampleTask.cancel(true);
                     } else if(count == 2){
                         pager.setCurrentItem(2);
                     }
@@ -169,17 +161,43 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         ((ViewPager) container).removeView((View) object);
     }
 
-    public class MyBroadcastReceiver extends BroadcastReceiver {
+    public Hero getHero() {
+        return hero;
+    }
+
+    class SampleTask extends AsyncTask<Long, Specifications, Specifications> {
+
         @Override
-        public void onReceive(Context context, Intent intent) {
-            specifications = new Specifications(
-                    (int)(Math.random() * 10),
-                    (int)(Math.random() * 10),
-                    (int)(Math.random() * 10),
-                    (int)(Math.random() * 10),
-                    (int)(Math.random() * 10),
-                    (int)(Math.random() * 10)
-            );
+        protected void onPreExecute() {
+            btn.setText("Stop");
+            count++;
+        }
+
+        @Override
+        protected Specifications doInBackground(Long... longs) {
+
+            while(!isCancelled()){
+                specifications = new Specifications(
+                        (int)(Math.random() * 10),
+                        (int)(Math.random() * 10),
+                        (int)(Math.random() * 10),
+                        (int)(Math.random() * 10),
+                        (int)(Math.random() * 10),
+                        (int)(Math.random() * 10)
+                );
+                publishProgress(specifications);
+                try{
+                    TimeUnit.MILLISECONDS.sleep(10);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+            Log.d("DebugLogs", "AsyncTask: process is cancelled");
+            return specifications;
+        }
+
+        @Override
+        protected void onProgressUpdate(Specifications... values) {
             text_strength.setText(" Strength:      " + specifications.getStrength());
             text_agility.setText(" Agility:           " + specifications.getAgility());
             text_intelligence.setText(" Intelligence: " + specifications.getIntelligence());
@@ -187,9 +205,13 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             text_stamina.setText(" Stamina:      " + specifications.getStamina());
             text_health.setText(" Health:          " + specifications.getHealth());
         }
-    }
 
-    public Hero getHero() {
-        return hero;
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            btn.setText("Next");
+            count++;
+            Log.d("DebugLogs", "AsyncTask: OnCancelled: process is cancelled");
+        }
     }
 }

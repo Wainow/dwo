@@ -81,8 +81,11 @@ public class First2Fragment extends Fragment implements SwipeRefreshLayout.OnRef
         FileWorker fileWorker = new FileWorker(getContext());
         json = fileWorker.readFile();
         Log.d(TAG, "json: " + json);
-        myDataset = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, Room[].class)));
-        Log.d(TAG, "MyDataset: " + this.myDataset.toString());
+        if(!json.equals("")) {
+            myDataset = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, Room[].class)));
+            Log.d(TAG, "MyDataset: " + this.myDataset.toString());
+        } else
+            myDataset = new ArrayList<>();
     }
 
     public static ArrayList<Room> getMyDataset(){

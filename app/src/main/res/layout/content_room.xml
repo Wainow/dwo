@@ -36,7 +36,7 @@
         android:layout_below="@+id/room_description"
         android:layout_width = "match_parent"
         android:layout_height="1dp"/>
-    <androidx.viewpager.widget.ViewPager
+    <com.example.dwo.CustomViewPager
         android:id="@+id/room_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

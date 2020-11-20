@@ -11,24 +11,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MapFragment extends Fragment {
 
-    private FloatingActionButton fab_size;
-    private FloatingActionButton fab_background;
-    private FloatingActionButton fab_color;
+    private ImageButton fab_size;
+    private ImageButton fab_background;
+    private ImageButton fab_color;
+    private ImageButton fab_lock;
     private DrawingView drawingView;
     private Integer[] colors = new Integer[9];
+    private Integer[] backgrounds = new Integer[9];
     private int i, k;
     private float m;
+    private int padding = 80;
+    private CustomViewPager pager;
 
-    public MapFragment() {
-    }
-    public static MapFragment newInstance(String param1, String param2) {
-        MapFragment fragment = new MapFragment();
-        return fragment;
+    public MapFragment(CustomViewPager pager) {
+        this.pager = pager;
     }
 
     @Override
@@ -46,14 +48,31 @@ public class MapFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FirstMethod();
+        final boolean[] isPressed = {false};
+        fab_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setPagingEnabled(isPressed[0]);
+                if (isPressed[0] == false) {
+                    fab_lock.setImageResource(R.drawable.lock);
+                    isPressed[0] = true;
+                } else{
+                    fab_lock.setImageResource(R.drawable.unlock);
+                    isPressed[0] = false;
+                }
+            }
+        });
         fab_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawingView.setGeneralColor(colors[k]);
                 if(k != 8){
+                    fab_color.setBackgroundResource(backgrounds[k+1]);
                     k++;
-                } else
+                } else {
                     k = 0;
+                    fab_color.setBackgroundResource(backgrounds[k]);
+                }
                 Log.d("DebugLogs", "MapFragment: color:" + colors[i]);
                 Log.d("DebugLogs", "MapFragment: k:" + k);
             }
@@ -75,11 +94,18 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 if(m < 200F){
                     m *= 3;
+                    Log.d("DebugLogs", "MapFragment: padding:" + padding);
+                    padding -= 20;
                     drawingView.setSizePen(m);
-                    fab_size.getBehavior();
+                    fab_size.setPadding(padding,padding,padding,padding);
 
-                } else
+                } else{
                     m = 3F;
+                    drawingView.setSizePen(m);
+                    padding = 80;
+                    fab_size.setPadding(padding,padding,padding,padding);
+                    Log.d("DebugLogs", "MapFragment: padding:" + padding);
+                }
                 Log.d("DebugLogs", "MapFragment: size:" + m);
             }
         });
@@ -89,6 +115,7 @@ public class MapFragment extends Fragment {
         fab_size = getActivity().findViewById(R.id.fab_brush_size);
         fab_background = getActivity().findViewById(R.id.fab_background_color);
         fab_color = getActivity().findViewById(R.id.fab_brush_color);
+        fab_lock = getActivity().findViewById(R.id.fab_lock);
         drawingView = getActivity().findViewById(R.id.DrawingView);
         setColors();
     }
@@ -106,5 +133,15 @@ public class MapFragment extends Fragment {
         colors[6] = Color.WHITE;
         colors[7] = Color.GRAY;
         colors[8] = Color.BLACK;
+
+        backgrounds[0] = R.drawable.round_button;
+        backgrounds[1] = R.drawable.round_circle1;
+        backgrounds[2] = R.drawable.round_circle2;
+        backgrounds[3] = R.drawable.round_circle3;
+        backgrounds[4] = R.drawable.round_circle4;
+        backgrounds[5] = R.drawable.round_circle5;
+        backgrounds[6] = R.drawable.round_circle6;
+        backgrounds[7] = R.drawable.round_circle7;
+        backgrounds[8] = R.drawable.round_circle8;
     }
 }

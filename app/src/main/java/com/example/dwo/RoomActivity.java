@@ -25,7 +25,7 @@ public class RoomActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private EditTextPlus editTextPlus;
     private ImageButton imageButton;
-    private ViewPager pager;
+    private CustomViewPager pager;
     private PagerAdapter pagerAdapter;
     private int position;
     private ArrayList<Room> myDataset;
@@ -75,7 +75,7 @@ public class RoomActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 1:
-                    return new MapFragment();
+                    return new MapFragment(pager);
                 case 2:
                     return new RoomVillainsFragment();
                 default:
