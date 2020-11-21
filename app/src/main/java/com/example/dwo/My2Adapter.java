@@ -28,6 +28,7 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     LayoutInflater inflater;
     private int RoomID;
     private DialogFragment dialogFragment;
+    private boolean isEvil;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -48,10 +49,11 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public My2Adapter(Context context, ArrayList<Hero> myDataset, int RoomID) {
+    public My2Adapter(Context context, ArrayList<Hero> myDataset, int RoomID, boolean isEvil) {
         this.mDataset = myDataset;
         this.inflater = LayoutInflater.from(context);
         this.RoomID = RoomID;
+        this.isEvil = isEvil;
     }
 
     // Create new views (invoked by the layout manager)
@@ -85,6 +87,9 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
             holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
             holder.specifications.setText("...");
             holder.inventory.setText("");
+            if (isEvil){
+                holder.textView.setText(" [" + "Add villain" + "]");
+            }
         }
         switch (mDataset.get(position).getRole()){
             case "Knight":
@@ -108,7 +113,7 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
             @Override
             public void onClick(View v) {
                 if (mDataset.get(position).getRole() == "Add hero") {
-                    dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID);
+                    dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID, isEvil);
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
                 }

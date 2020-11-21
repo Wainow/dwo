@@ -37,10 +37,12 @@ public class CreateDialog extends DialogFragment {
     private Context context;
     private TextView textView;
     private int RoomID;
+    private boolean isEvil;
 
-    public CreateDialog(Context context, int RoomID){
+    public CreateDialog(Context context, int RoomID, boolean isEvil){
         this.context = context;
         this.RoomID = RoomID;
+        this.isEvil = isEvil;
     }
 
     @Override
@@ -60,36 +62,38 @@ public class CreateDialog extends DialogFragment {
         progressBar = promptsView.findViewById(R.id.progress_creating);
         progressBar.setProgress(25);
         ViewPager pager = promptsView.findViewById(R.id.pager_dialog);
-        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context, pager, RoomID);
+        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context, pager, RoomID, isEvil);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(0);
+        if(!isEvil) {
+            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if(position == 0){
-                    progressBar.setProgress(25);
-                    textView.setText("Select class of hero");
-                } else if(position == 1) {
-                    progressBar.setProgress(50);
-                    textView.setText("Generate specifications");
-                } else{
-                    progressBar.setProgress(75);
-                    textView.setText("Tell about new Hero");
                 }
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                @Override
+                public void onPageSelected(int position) {
+                    if (position == 0) {
+                        progressBar.setProgress(25);
+                        textView.setText("Select class of hero");
+                    } else if (position == 1) {
+                        progressBar.setProgress(50);
+                        textView.setText("Generate specifications");
+                    } else {
+                        progressBar.setProgress(75);
+                        textView.setText("Tell about new Hero");
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
+                }
+            });
+        } else{
+
+        }
         AlertDialog alertDialog = mDialogBuilder.create();
         alertDialog.show();
         alertDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);

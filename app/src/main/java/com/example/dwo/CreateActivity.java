@@ -97,7 +97,7 @@ public class CreateActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         setMyDataset();
 
-        mAdapter = new My2Adapter(this, myDataset, RoomID);
+        mAdapter = new My2Adapter(this, myDataset, RoomID, false);
         recyclerView.setAdapter(mAdapter);
 
         editTextPlus = findViewById(R.id.title_text);
@@ -116,6 +116,12 @@ public class CreateActivity extends AppCompatActivity {
         images.add(R.drawable.mini_row);
         images.add(R.drawable.mini_mag);
         images.add(R.drawable.mini_thief);
+        images.add(R.drawable.mini_evil1);
+        images.add(R.drawable.mini_evil2);
+        images.add(R.drawable.mini_evil3);
+        images.add(R.drawable.mini_evil4);
+        images.add(R.drawable.mini_evil5);
+        images.add(R.drawable.mini_evil6);
         room_image_src = R.drawable.mini_q;
     }
 

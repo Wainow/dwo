@@ -54,7 +54,7 @@ public class RoomHeroesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new My2Adapter(getContext(), heroes, RoomID);
+        mAdapter = new My2Adapter(getContext(), heroes, RoomID, false);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

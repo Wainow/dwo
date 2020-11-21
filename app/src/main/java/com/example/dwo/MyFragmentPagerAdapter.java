@@ -40,10 +40,9 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private Context context;
     private int resId = 0;
     private ViewPager pager;
-    private Timer timer;
-    private TimerTask timerTask;
     private int count = 0;
     private DataAdapter mAdapter;
+    private boolean isEvil;
 
     private Button btn;
     private TextView text_strength;
@@ -60,10 +59,11 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private SampleTask mSampleTask;
 
 
-    public MyFragmentPagerAdapter(Context context, ViewPager pager, int RoomID) {
+    public MyFragmentPagerAdapter(Context context, ViewPager pager, int RoomID, boolean isEvil) {
         this.context = context;
         this.pager = pager;
         this.RoomID = RoomID;
+        this.isEvil = isEvil;
     }
 
     public Object instantiateItem(final ViewGroup collection, int position) {
@@ -82,17 +82,10 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         final ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
         if(resId == R.layout.fragment_first3) {
             GridView g = layout.findViewById(R.id.gridView);
-            mAdapter = new DataAdapter(layout.getContext(), pager);
+            mAdapter = new DataAdapter(layout.getContext(), pager, isEvil);
             g.setAdapter(mAdapter);
             Log.d("DebugLogs", "First3Fragment: GridView created");
         } else if(resId == R.layout.fragment_second){
-            /*
-            myBroadcastReceiver = new MyBroadcastReceiver();
-            IntentFilter intentFilter = new IntentFilter(MyIntentService2.ACTION_MYINTENTSERVICE);
-            intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-            layout.getContext().registerReceiver(myBroadcastReceiver, intentFilter);
-
-             */
             mSampleTask = new SampleTask();
             count = 0;
             btn = layout.findViewById(R.id.btn_second);

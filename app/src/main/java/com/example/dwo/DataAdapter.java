@@ -23,10 +23,17 @@ public class DataAdapter extends BaseAdapter {
     private Context mContext;
     private ViewPager pager;
     private int role;
-
-    public DataAdapter(Context c, ViewPager viewPager) {
+    private boolean isEvil;
+    public	Integer[] mThumbIds;
+    public DataAdapter(Context c, ViewPager viewPager, boolean isEvil) {
         this.mContext = c;
         this.pager = viewPager;
+        this.isEvil = isEvil;
+        if(!isEvil){
+            mThumbIds = new Integer[]{R.drawable.mini_knight, R.drawable.mini_mag, R.drawable.mini_row, R.drawable.mini_thief};
+        } else{
+            mThumbIds = new Integer[]{R.drawable.mini_evil1, R.drawable.mini_evil2, R.drawable.mini_evil3, R.drawable.mini_evil4, R.drawable.mini_evil5, R.drawable.mini_evil6};
+        }
     }
 
     public int getCount() {
@@ -54,7 +61,9 @@ public class DataAdapter extends BaseAdapter {
         } else {
             imageView = (ImageButton) convertView;
         }
-        String imageAddress = "android.resource://"  + mContext.getPackageName() + "/" + mThumbIds[position];
+        String imageAddress;
+        Log.d("DebugLogs", "DataAdapter: " + position);
+        imageAddress = "android.resource://" + mContext.getPackageName() + "/" + mThumbIds[position];
         Glide.with(mContext).load(imageAddress).into(imageView);
         //imageView.setImageResource(mThumbIds[position]);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -86,9 +95,6 @@ public class DataAdapter extends BaseAdapter {
         });
         return imageView;
     }
-
-    // references to our images
-    public	Integer[] mThumbIds = { R.drawable.mini_knight, R.drawable.mini_mag, R.drawable.mini_row, R.drawable.mini_thief};
 
     public int getRole() {
         return role;
