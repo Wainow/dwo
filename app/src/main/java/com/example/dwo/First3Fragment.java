@@ -1,5 +1,6 @@
 package com.example.dwo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import static com.example.dwo.CreateDialog.photoUri;
 
 public class First3Fragment extends Fragment {
     private GridView g;
@@ -32,14 +35,14 @@ public class First3Fragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /*
-        g.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                progressBar.setProgress(progressBar.getProgress() + 10);
-            }
-        });
+    }
 
-         */
+    @Override
+    public void startActivityForResult(Intent data, int requestCode) {
+        if(requestCode == DataAdapter.REQUEST_CODE_GET_PHOTOS && data != null){
+            photoUri = data.getData();
+            Log.d("DebugLogs", "First3Fragment: photoUri:" + photoUri.toString());
+        }
+        super.startActivityForResult(data, requestCode);
     }
 }

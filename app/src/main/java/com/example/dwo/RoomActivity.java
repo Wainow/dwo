@@ -1,5 +1,7 @@
 package com.example.dwo;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +22,8 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static com.example.dwo.CreateDialog.photoUri;
 
 public class RoomActivity extends AppCompatActivity {
     private FloatingActionButton fab;
@@ -97,4 +101,15 @@ public class RoomActivity extends AppCompatActivity {
         myDataset = new ArrayList<>(Arrays.asList(new Gson().fromJson(json, Room[].class)));
         Log.d("DebugLogs", "MyDataset: " + this.myDataset.toString());
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == DataAdapter.REQUEST_CODE_GET_PHOTOS && data != null && resultCode == Activity.RESULT_OK){
+            photoUri = data.getData();
+            Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.toString());
+        }
+    }
+
+
 }

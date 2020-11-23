@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,6 +40,8 @@ public class CreateDialog extends DialogFragment {
     private TextView textView;
     private int RoomID;
     private boolean isEvil;
+    private MyFragmentPagerAdapter pagerAdapter;
+    public static Uri photoUri;
 
     public CreateDialog(Context context, int RoomID, boolean isEvil){
         this.context = context;
@@ -62,7 +66,7 @@ public class CreateDialog extends DialogFragment {
         progressBar = promptsView.findViewById(R.id.progress_creating);
         progressBar.setProgress(25);
         ViewPager pager = promptsView.findViewById(R.id.pager_dialog);
-        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(this.context, pager, RoomID, isEvil);
+        pagerAdapter = new MyFragmentPagerAdapter(this.context, pager, RoomID, isEvil);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(0);
         if(!isEvil) {
@@ -76,7 +80,7 @@ public class CreateDialog extends DialogFragment {
                 public void onPageSelected(int position) {
                     if (position == 0) {
                         progressBar.setProgress(25);
-                        textView.setText("Select class of hero");
+                        textView.setText("Select class");
                     } else if (position == 1) {
                         progressBar.setProgress(50);
                         textView.setText("Generate specifications");
@@ -105,5 +109,15 @@ public class CreateDialog extends DialogFragment {
 
     public void setProgress(int x){
         this.progressBar.setProgress(x);
+    }
+
+    @Override
+    public void startActivityForResult(Intent data, int requestCode) {
+        if(requestCode == DataAdapter.REQUEST_CODE_GET_PHOTOS && data != null){
+            photoUri = data.getData();
+            Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.toString());
+            pagerAdapter.setRoleImage();
+        }
+        super.startActivityForResult(data, requestCode);
     }
 }

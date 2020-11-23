@@ -1,5 +1,7 @@
 package com.example.dwo;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -25,6 +28,8 @@ public class DataAdapter extends BaseAdapter {
     private int role;
     private boolean isEvil;
     public	Integer[] mThumbIds;
+    public static final int REQUEST_CODE_GET_PHOTOS = 101;
+
     public DataAdapter(Context c, ViewPager viewPager, boolean isEvil) {
         this.mContext = c;
         this.pager = viewPager;
@@ -32,7 +37,7 @@ public class DataAdapter extends BaseAdapter {
         if(!isEvil){
             mThumbIds = new Integer[]{R.drawable.mini_knight, R.drawable.mini_mag, R.drawable.mini_row, R.drawable.mini_thief};
         } else{
-            mThumbIds = new Integer[]{R.drawable.mini_evil1, R.drawable.mini_evil2, R.drawable.mini_evil3, R.drawable.mini_evil4, R.drawable.mini_evil5, R.drawable.mini_evil6};
+            mThumbIds = new Integer[]{R.drawable.mini_evil1, R.drawable.mini_download, R.drawable.mini_evil2, R.drawable.mini_evil3, R.drawable.mini_evil4, R.drawable.mini_evil6};
         }
     }
 
@@ -65,38 +70,84 @@ public class DataAdapter extends BaseAdapter {
         Log.d("DebugLogs", "DataAdapter: " + position);
         imageAddress = "android.resource://" + mContext.getPackageName() + "/" + mThumbIds[position];
         Glide.with(mContext).load(imageAddress).into(imageView);
+
         //imageView.setImageResource(mThumbIds[position]);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (position){
-                    case 0:
-                        Log.d("DebugLogs", "DataAdapter: Item knight selected!");
-                        role = 1;
-                        pager.setCurrentItem(1);
-                        break;
-                    case 1:
-                        Log.d("DebugLogs", "DataAdapter: Item mag selected!");
-                        role = 2;
-                        pager.setCurrentItem(1);
-                        break;
-                    case 2:
-                        Log.d("DebugLogs", "DataAdapter: Item rower selected!");
-                        role = 3;
-                        pager.setCurrentItem(1);
-                        break;
-                    case 3:
-                        Log.d("DebugLogs", "DataAdapter: Item thief selected!");
-                        role = 4;
-                        pager.setCurrentItem(1);
-                        break;
+        if(!isEvil) {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (position) {
+                        case 0:
+                            Log.d("DebugLogs", "DataAdapter: Item knight selected!");
+                            role = 1;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 1:
+                            Log.d("DebugLogs", "DataAdapter: Item mag selected!");
+                            role = 2;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 2:
+                            Log.d("DebugLogs", "DataAdapter: Item rower selected!");
+                            role = 3;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 3:
+                            Log.d("DebugLogs", "DataAdapter: Item thief selected!");
+                            role = 4;
+                            pager.setCurrentItem(1);
+                            break;
+                    }
                 }
-            }
-        });
+            });
+        } else{
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (position) {
+                        case 0:
+                            role = 5;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 1:
+                            openGallery();
+                            role = 10;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 2:
+                            role = 6;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 3:
+                            role = 7;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 4:
+                            role = 8;
+                            pager.setCurrentItem(1);
+                            break;
+                        case 5:
+                            role = 9  ;
+                            pager.setCurrentItem(1);
+                            break;
+                    }
+                }
+            });
+        }
         return imageView;
     }
 
     public int getRole() {
         return role;
     }
+
+    private void openGallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_GET_PHOTOS);
+        Log.d("DebugLogs", "DataAdapter : ((Activity) mContext).getLocalClassName(): " + ((Activity) mContext).getLocalClassName());
+    }
+
+
 }

@@ -104,6 +104,24 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
             case "Thief":
                 holder.circleImageView.setImageResource(R.drawable.mini_thief);
                 break;
+            case "Evil1":
+                holder.circleImageView.setImageResource(R.drawable.mini_evil1);
+                break;
+            case "Evil2":
+                holder.circleImageView.setImageResource(R.drawable.mini_evil2);
+                break;
+            case "Evil3":
+                holder.circleImageView.setImageResource(R.drawable.mini_evil3);
+                break;
+            case "Evil4":
+                holder.circleImageView.setImageResource(R.drawable.mini_evil4);
+                break;
+            case "Evil6":
+                holder.circleImageView.setImageResource(R.drawable.mini_evil6);
+                break;
+            case "Evil_download":
+                holder.circleImageView.setImageResource(R.drawable.mini_download);
+                break;
             default:
                 holder.circleImageView.setImageResource(R.drawable.mini_q);
                 break;

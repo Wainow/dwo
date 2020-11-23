@@ -36,6 +36,8 @@ import com.google.gson.Gson;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyFragmentPagerAdapter extends PagerAdapter {
     private Context context;
     private int resId = 0;
@@ -51,6 +53,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private TextView text_charisma;
     private TextView text_stamina;
     private TextView text_health;
+    public CircleImageView imageView;
 
     private Specifications specifications;
     private Hero hero;
@@ -64,6 +67,10 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         this.pager = pager;
         this.RoomID = RoomID;
         this.isEvil = isEvil;
+    }
+
+    public DataAdapter getmAdapter() {
+        return mAdapter;
     }
 
     public Object instantiateItem(final ViewGroup collection, int position) {
@@ -104,10 +111,13 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         mSampleTask.cancel(true);
                     } else if(count == 2){
                         pager.setCurrentItem(2);
+                        setRoleImage();
                     }
                 }
             });
         } else{
+            imageView = layout.findViewById(R.id.create_circle_image);
+            setRoleImage();
             final EditText editName = layout.findViewById(R.id.create_name);
             final EditText editStory = layout.findViewById(R.id.create_story);
             final EditText editMoney = layout.findViewById(R.id.create_money);
@@ -116,6 +126,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("DebugLogs", "Second2Fragment: Click!");
                     hero = new Hero(
                             editName.getText().toString(),
                             mAdapter.getRole(),
@@ -124,18 +135,56 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                             editStory.getText().toString(),
                             Double.parseDouble(editMoney.getText().toString())
                     );
-                    json = new Gson().toJson(hero);
-                    Log.d("DebugLogs", "Second2Fragment: " + json);
-                    FileWorker fileWorker = new FileWorker(layout.getContext());
-                    Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
-                    fileWorker.writeFile(String.valueOf(RoomID), json);
-                    layout.getContext().startService(intentAddHeroService);
-
+                    if(!isEvil) {
+                        json = new Gson().toJson(hero);
+                        Log.d("DebugLogs", "Second2Fragment: " + json);
+                        FileWorker fileWorker = new FileWorker(layout.getContext());
+                        Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
+                        fileWorker.writeFile(String.valueOf(RoomID), json);
+                        layout.getContext().startService(intentAddHeroService);
+                    } else{
+                        Toast.makeText(layout.getContext(), "Congratulations", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
         collection.addView(layout);
         return layout;
+    }
+
+    public void setRoleImage() {
+        switch (mAdapter.getRole()){
+            case 1 : imageView.setImageResource(R.drawable.mini_knight);
+                break;
+            case 2 : imageView.setImageResource(R.drawable.mini_mag);
+                break;
+            case 3 : imageView.setImageResource(R.drawable.mini_row);
+                break;
+            case 4: imageView.setImageResource(R.drawable.mini_thief);
+                break;
+            case 5 : imageView.setImageResource(R.drawable.mini_evil1);
+                break;
+            case 6 : imageView.setImageResource(R.drawable.mini_evil2);
+                break;
+            case 7 : imageView.setImageResource(R.drawable.mini_evil3);
+                break;
+            case 8 : imageView.setImageResource(R.drawable.mini_evil4);
+                break;
+            case 9 : imageView.setImageResource(R.drawable.mini_evil6);
+                break;
+            case 10 :
+                if(CreateDialog.photoUri != null) {
+                    Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is not null");
+                    imageView.setImageURI(CreateDialog.photoUri);
+                }
+                else {
+                    Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is null");
+                    imageView.setImageResource(R.drawable.mini_download);
+                }
+                break;
+            default: imageView.setImageResource(R.drawable.mini_q);
+                break;
+        }
     }
 
     @Override
