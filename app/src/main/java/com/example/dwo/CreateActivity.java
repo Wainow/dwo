@@ -131,7 +131,8 @@ public class CreateActivity extends AppCompatActivity {
             this.room_array.add(new Room(
                     editTextPlus.getText().toString(),
                     this.myDataset,
-                    room_image_src
+                    room_image_src,
+                    RoomID
             ));
             json = new Gson().toJson(this.room_array);
             Log.d(TAG, "SecondMethod: " + json);

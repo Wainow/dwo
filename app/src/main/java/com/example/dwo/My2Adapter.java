@@ -2,6 +2,7 @@ package com.example.dwo;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -72,7 +74,7 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Hero hero = mDataset.get(position);
-        if(mDataset.get(position).getRole() != "Add hero") {
+        if(!mDataset.get(position).getRole().equals("Add hero")) {
             holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
             holder.inventory.setText(mDataset.get(position).getInventory() + "Money: " + mDataset.get(position).getMoney() + " ...");
             holder.specifications.setText(
@@ -130,11 +132,22 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         holder.itemView.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataset.get(position).getRole() == "Add hero") {
+                if (mDataset.get(position).getRole().equals("Add hero")) {
+                    Log.d("DebugLogs", "My2Adapter: DialogFragment is created");
                     dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID, isEvil);
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
                 }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(isEvil) {
+                    new SharedPreferencesHelper(holder.itemView.getContext(), RoomID).deleteOneVillain(position);
+                    notifyDataSetChanged();
+                }
+                return true;
             }
         });
     }

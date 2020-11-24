@@ -65,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         String imageAddress = "android.resource://"  + holder.itemView.getContext().getPackageName() + "/" + mDataset.get(position).getRoom_image_src();
         Glide.with(holder.itemView.getContext()).load(imageAddress).into(holder.circle);
         holder.name_of_room.setText(mDataset.get(position).getRoom_name());
-        holder.number_of_players.setText("Players : " + String.valueOf(mDataset.get(position).getNumber_of_players()) + " - " + list_of_heroes_names(position));
+        //holder.number_of_players.setText("Players : " + String.valueOf(mDataset.get(position).getNumber_of_players()) + " - " + list_of_heroes_names(position));
         holder.starting.setText("Starting from " + getRandomInt0_10() + " min...");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +79,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public boolean onLongClick(View v) {
                 Log.d("DebugLogs", "Some Room has been removed");
+                new SharedPreferencesHelper(holder.itemView.getContext(), mDataset.get(position).getRoomID()).deleteVillains();
                 myDataset.remove(position);
                 String json = new Gson().toJson(myDataset);
                 FileWorker fileWorker = new FileWorker(holder.itemView.getContext());

@@ -81,7 +81,7 @@ public class RoomActivity extends AppCompatActivity {
                 case 1:
                     return new MapFragment(pager);
                 case 2:
-                    return new RoomVillainsFragment();
+                    return new RoomVillainsFragment(myDataset.get(getPosition()).getRoomID());
                 default:
                     return new RoomHeroesFragment(myDataset.get(getPosition()).getHeroes());
             }

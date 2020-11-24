@@ -8,23 +8,31 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class RoomVillainsFragment extends Fragment {
     private RecyclerView recyclerView;
     private My2Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Hero> myDataset;
+    private ArrayList<Hero> myDataset = new ArrayList<>();;
 
     private String TAG = "DebugLogs";
     private int RoomID;
+    public static Observer<List<Hero>> observer;
+    private SharedPreferencesHelper preferencesHelper;
 
-    public RoomVillainsFragment() {
-        // Required empty public constructor
+    public RoomVillainsFragment(int RoomID) {
+        this.RoomID = RoomID;
     }
 
     @Override
@@ -40,15 +48,46 @@ public class RoomVillainsFragment extends Fragment {
         FirstMethod();
     }
 
-    public void FirstMethod() {
+    public void FirstMethod(){
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_room_villain);
-        this.myDataset = new ArrayList<>();
-        this.myDataset.add(new Hero());
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        mAdapter = new My2Adapter(getContext(), myDataset, RoomID, true);
+        recyclerView.setAdapter(mAdapter);
+        observer =  new Observer<List<Hero>>() {
+            @Override
+            public void onSubscribe(Disposable d) { }
+
+            @Override
+            public void onNext(List<Hero> heroes) {
+                Log.d("DebugLogs", "RoomVillainsFragment: onNext is working");
+                myDataset = (ArrayList<Hero>) heroes;
+                if (mAdapter.getDialogFragment() != null) {
+                    mAdapter.getDialogFragment().dismiss();
+                } else
+                    Log.d("DebugLogs", "RoomVillainsFragment: DialogFragment is null");
+                RefreshVillains();
+                mAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onError(Throwable e) { }
+
+            @Override
+            public void onComplete() {
+            }
+        };
+        preferencesHelper = new SharedPreferencesHelper(getActivity(), RoomID);
+        preferencesHelper.sendVillains();
+    }
+
+    public void RefreshVillains(){
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_room_villain);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
         mAdapter = new My2Adapter(getContext(), myDataset, RoomID, true);
         recyclerView.setAdapter(mAdapter);
     }

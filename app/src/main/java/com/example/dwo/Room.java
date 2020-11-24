@@ -8,6 +8,7 @@ public class Room {
     private ArrayList<Hero> heroes;
     private int number_of_players;
     private Integer room_image_src;
+    private int RoomID;
 
     public Integer getRoom_image_src() {
         return room_image_src;
@@ -22,6 +23,18 @@ public class Room {
         this.heroes = heroes;
         this.number_of_players = heroes.size();
         this.room_image_src = room_image_src;
+    }
+
+    public int getRoomID() {
+        return RoomID;
+    }
+
+    public Room(String room_name, ArrayList<Hero> heroes, Integer room_image_src, int RoomID) {
+        this.room_name = room_name;
+        this.heroes = heroes;
+        this.number_of_players = heroes.size();
+        this.room_image_src = room_image_src;
+        this.RoomID = RoomID;
     }
 
     public Room(String room_name) {

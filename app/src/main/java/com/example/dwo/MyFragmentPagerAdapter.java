@@ -17,6 +17,8 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -60,6 +62,8 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private String json;
     private int RoomID;
     private SampleTask mSampleTask;
+
+    private SharedPreferencesHelper preferencesHelper;
 
 
     public MyFragmentPagerAdapter(Context context, ViewPager pager, int RoomID, boolean isEvil) {
@@ -127,23 +131,33 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                 @Override
                 public void onClick(View v) {
                     Log.d("DebugLogs", "Second2Fragment: Click!");
-                    hero = new Hero(
-                            editName.getText().toString(),
-                            mAdapter.getRole(),
-                            specifications,
-                            "",
-                            editStory.getText().toString(),
-                            Double.parseDouble(editMoney.getText().toString())
-                    );
-                    if(!isEvil) {
-                        json = new Gson().toJson(hero);
-                        Log.d("DebugLogs", "Second2Fragment: " + json);
-                        FileWorker fileWorker = new FileWorker(layout.getContext());
-                        Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
-                        fileWorker.writeFile(String.valueOf(RoomID), json);
-                        layout.getContext().startService(intentAddHeroService);
-                    } else{
-                        Toast.makeText(layout.getContext(), "Congratulations", Toast.LENGTH_LONG).show();
+                    try {
+                        hero = new Hero(
+                                editName.getText().toString(),
+                                mAdapter.getRole(),
+                                specifications,
+                                "",
+                                editStory.getText().toString(),
+                                Double.parseDouble(editMoney.getText().toString())
+                        );
+                        if (!isEvil) {
+                            json = new Gson().toJson(hero);
+                            Log.d("DebugLogs", "Second2Fragment: " + json);
+                            FileWorker fileWorker = new FileWorker(layout.getContext());
+                            Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
+                            fileWorker.writeFile(String.valueOf(RoomID), json);
+                            layout.getContext().startService(intentAddHeroService);
+                        } else {
+                            Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
+                            preferencesHelper = new SharedPreferencesHelper(context, RoomID);
+                            try {
+                                preferencesHelper.addVillain(hero);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (java.lang.NumberFormatException e){
+                        Toast.makeText(layout.getContext(), "Not enough money", Toast.LENGTH_LONG).show();
                     }
                 }
             });
