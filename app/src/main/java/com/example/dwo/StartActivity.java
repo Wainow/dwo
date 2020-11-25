@@ -124,7 +124,7 @@ public class StartActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onAnimationEnd(Animation animation) {
-                                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                                            Intent intent = new Intent(StartActivity.this, General.class);
                                             startActivity(intent);
                                         }
 

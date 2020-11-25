@@ -137,6 +137,10 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
                     dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID, isEvil);
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
+                } else{
+                    dialogFragment = new ShowHeroDialog(holder.itemView.getContext(), mDataset.get(position));
+                    FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
+                    dialogFragment.show(fragmentManager, "dlg");
                 }
             }
         });

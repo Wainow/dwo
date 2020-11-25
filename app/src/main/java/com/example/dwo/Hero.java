@@ -6,7 +6,8 @@ public class Hero {
     private String role;
     private String story;
     private String inventory;
-    private double money;
+    private int money;
+    private Integer resID;
 
     public String getName() {
         return name;
@@ -31,26 +32,37 @@ public class Hero {
     public void setRole(int role) {
         switch (role){
             case 1 : this.role = "Knight";
+                resID = R.drawable.mini_knight;
                 break;
             case 2 : this.role = "Mag";
+                resID = R.drawable.mini_mag;
                 break;
             case 3 : this.role = "Rower";
+                resID = R.drawable.mini_row;
                 break;
             case 4 : this.role = "Thief";
+                resID = R.drawable.mini_thief;
                 break;
             case 5 : this.role = "Evil1";
+                resID = R.drawable.mini_evil1;
                 break;
             case 6 : this.role = "Evil2";
+                resID = R.drawable.mini_evil2;
                 break;
             case 7 : this.role = "Evil3";
+                resID = R.drawable.mini_evil3;
                 break;
             case 8 : this.role = "Evil4";
+                resID = R.drawable.mini_evil4;
                 break;
             case 9 : this.role = "Evil6";
+                resID = R.drawable.mini_evil6;
                 break;
             case 10 : this.role = "Evil_download";
+                resID = R.drawable.mini_download;
                 break;
             default: this.role = "Add hero";
+                resID = R.drawable.mini_q;
                 break;
         }
     }
@@ -60,26 +72,37 @@ public class Hero {
         this.specifications = specifications;
         switch (role){
             case 1 : this.role = "Knight";
+                resID = R.drawable.mini_knight;
                 break;
             case 2 : this.role = "Mag";
+                resID = R.drawable.mini_mag;
                 break;
             case 3 : this.role = "Rower";
+                resID = R.drawable.mini_row;
                 break;
             case 4 : this.role = "Thief";
+                resID = R.drawable.mini_thief;
                 break;
             case 5 : this.role = "Evil1";
+                resID = R.drawable.mini_evil1;
                 break;
             case 6 : this.role = "Evil2";
+                resID = R.drawable.mini_evil2;
                 break;
             case 7 : this.role = "Evil3";
+                resID = R.drawable.mini_evil3;
                 break;
             case 8 : this.role = "Evil4";
+                resID = R.drawable.mini_evil4;
                 break;
             case 9 : this.role = "Evil6";
+                resID = R.drawable.mini_evil6;
                 break;
             case 10 : this.role = "Evil_download";
+                resID = R.drawable.mini_download;
                 break;
             default: this.role = "Add hero";
+                resID = R.drawable.mini_q;
                 break;
         }
         this.story = "";
@@ -87,31 +110,54 @@ public class Hero {
         this.money = 0;
     }
 
-    public Hero(String name, int role, Specifications specifications, String inventory, String story, double money) {
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Integer getResID() {
+        return resID;
+    }
+
+    public void setResID(Integer resID) {
+        this.resID = resID;
+    }
+
+    public Hero(String name, int role, Specifications specifications, String inventory, String story, int money) {
         this.name = name;
         this.specifications = specifications;
         switch (role){
             case 1 : this.role = "Knight";
+                resID = R.drawable.mini_knight;
                 break;
             case 2 : this.role = "Mag";
+                resID = R.drawable.mini_mag;
                 break;
             case 3 : this.role = "Rower";
+                resID = R.drawable.mini_row;
                 break;
             case 4 : this.role = "Thief";
+                resID = R.drawable.mini_thief;
                 break;
             case 5 : this.role = "Evil1";
+                resID = R.drawable.mini_evil1;
                 break;
             case 6 : this.role = "Evil2";
+                resID = R.drawable.mini_evil2;
                 break;
             case 7 : this.role = "Evil3";
+                resID = R.drawable.mini_evil3;
                 break;
             case 8 : this.role = "Evil4";
+                resID = R.drawable.mini_evil4;
                 break;
             case 9 : this.role = "Evil6";
+                resID = R.drawable.mini_evil6;
                 break;
             case 10 : this.role = "Evil_download";
+                resID = R.drawable.mini_download;
                 break;
             default: this.role = "Add hero";
+                resID = R.drawable.mini_q;
                 break;
         }
         this.inventory = inventory;
@@ -144,11 +190,11 @@ public class Hero {
         return story;
     }
 
-    public double getMoney() {
+    public int getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(int money) {
         this.money = money;
     }
 

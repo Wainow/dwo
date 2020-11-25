@@ -138,7 +138,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                                 specifications,
                                 "",
                                 editStory.getText().toString(),
-                                Double.parseDouble(editMoney.getText().toString())
+                                Integer.parseInt(editMoney.getText().toString())
                         );
                         if (!isEvil) {
                             json = new Gson().toJson(hero);
@@ -234,13 +234,76 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
 
             while(!isCancelled()){
                 specifications = new Specifications(
-                        (int)(Math.random() * 10),
-                        (int)(Math.random() * 10),
-                        (int)(Math.random() * 10),
-                        (int)(Math.random() * 10),
-                        (int)(Math.random() * 10),
-                        (int)(Math.random() * 10)
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10)
                 );
+                if(!isEvil) {
+                    Log.d("DebugLogs", "MyFragmentPagerAdapter: if(!isEvil)");
+                    int sum = specifications.getAgility()
+                            + specifications.getCharisma()
+                            + specifications.getHealth()
+                            + specifications.getStrength()
+                            + specifications.getIntelligence()
+                            + specifications.getStamina();
+                    while(sum != 30) {
+                        Log.d("DebugLogs", "MyFragmentPagerAdapter: while(sum != 30)");
+                        int addTo = (int) (Math.random() * 5);
+                        if (sum < 30) {
+                            Log.d("DebugLogs", "MyFragmentPagerAdapter: if(sum < 30)");
+                            switch (addTo) {
+                                case 0:
+                                    specifications.setAgility(specifications.getAgility() + 1);
+                                    break;
+                                case 1:
+                                    specifications.setCharisma(specifications.getCharisma() + 1);
+                                    break;
+                                case 2:
+                                    specifications.setHealth(specifications.getHealth() + 1);
+                                    break;
+                                case 3:
+                                    specifications.setIntelligence(specifications.getIntelligence() + 1);
+                                    break;
+                                case 4:
+                                    specifications.setStrength(specifications.getStrength() + 1);
+                                    break;
+                                case 5:
+                                    specifications.setStamina(specifications.getStamina() + 1);
+                                    break;
+                            }
+                        } else{
+                            switch (addTo) {
+                                case 0:
+                                    specifications.setAgility(specifications.getAgility() - 1);
+                                    break;
+                                case 1:
+                                    specifications.setCharisma(specifications.getCharisma() - 1);
+                                    break;
+                                case 2:
+                                    specifications.setHealth(specifications.getHealth() - 1);
+                                    break;
+                                case 3:
+                                    specifications.setIntelligence(specifications.getIntelligence() - 1);
+                                    break;
+                                case 4:
+                                    specifications.setStrength(specifications.getStrength() - 1);
+                                    break;
+                                case 5:
+                                    specifications.setStamina(specifications.getStamina() - 1);
+                                    break;
+                            }
+                        }
+                        sum = specifications.getAgility()
+                                + specifications.getCharisma()
+                                + specifications.getHealth()
+                                + specifications.getStrength()
+                                + specifications.getIntelligence()
+                                + specifications.getStamina();
+                    }
+                }
                 publishProgress(specifications);
                 try{
                     TimeUnit.MILLISECONDS.sleep(10);

@@ -17,7 +17,7 @@
         app:civ_border_color="#FF000000"/>
     <com.example.dwo.EditTextPlus
         android:textSize="19sp"
-        app:customFont1="fonts/UnifrakturMaguntia-Regular.ttf"
+        app:customFont1="fonts/Righteous-Regular.ttf"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:id="@+id/create_name"
