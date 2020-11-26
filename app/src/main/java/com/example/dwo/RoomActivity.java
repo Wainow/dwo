@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -33,6 +34,7 @@ public class RoomActivity extends AppCompatActivity {
     private PagerAdapter pagerAdapter;
     private int position;
     private ArrayList<Room> myDataset;
+    private DialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +47,17 @@ public class RoomActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Log.d("DebugLogs", "My2Adapter: DialogFragment is created");
+                //dialogFragment = new RollingDialog(RoomActivity.this, new String[]{"yes", "no", "after", "get"});
+                dialogFragment = new RollingDialog(RoomActivity.this, 6);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                dialogFragment.show(fragmentManager, "dlg");
             }
         });
     }
 
     private void FirstMethod() {
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.room_fab);
         imageButton = findViewById(R.id.room_image);
         pager = findViewById(R.id.room_pager);
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());

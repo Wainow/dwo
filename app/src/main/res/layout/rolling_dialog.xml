@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_rounded"
+    android:focusableInTouchMode="true">
+    <View
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/text_rolling"
+        android:id="@+id/shadow"
+        android:visibility="invisible" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#800020"
+        android:layout_marginTop="9dp"
+        android:layout_toLeftOf="@id/shadow"
+        android:id="@+id/shadow_rolling1"
+        android:layout_marginRight="2dp"
+        android:typeface="serif"
+        android:textSize="60dp"
+        android:text="Rolling"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_centerHorizontal="true"
+        android:typeface="serif"
+        android:textSize="60dp"
+        android:layout_marginLeft="85dp"
+        android:id="@+id/text_rolling"
+        android:text="Rolling"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:shadowColor="@color/colorAccent"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_banner_foreground"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:id="@+id/icon_roll1"
+        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="50dp"
+        android:textColor="#121212"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:id="@+id/start_number1" />
+    <TextView
+        android:visibility="invisible"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="        "
+        android:textSize="10dp"
+        android:textColor="#121212"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp"
+        android:id="@+id/start_number_fake1" />
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@drawable/circle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="122dp"
+        android:id="@+id/circle_white1"/>
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@drawable/circle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="122dp"
+        android:id="@+id/circe_alpha1"/>
+    <TextView
+        android:visibility="invisible"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="80dp"
+        android:background="@drawable/cloud_background"
+        android:id="@+id/roll_text1"
+        android:text="The program is developing right now"
+        android:textSize="30dp"
+        android:padding="15dp"
+        android:textStyle="italic"
+        android:typeface="serif"/>
+</RelativeLayout>

@@ -233,15 +233,14 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         protected Specifications doInBackground(Long... longs) {
 
             while(!isCancelled()){
-                specifications = new Specifications(
-                        (int) (Math.random() * 10),
-                        (int) (Math.random() * 10),
-                        (int) (Math.random() * 10),
-                        (int) (Math.random() * 10),
-                        (int) (Math.random() * 10),
-                        (int) (Math.random() * 10)
-                );
-                if(!isEvil) {
+                    specifications = new Specifications(
+                            (int) (Math.random() * 10),
+                            (int) (Math.random() * 10),
+                            (int) (Math.random() * 10),
+                            (int) (Math.random() * 10),
+                            (int) (Math.random() * 10),
+                            (int) (Math.random() * 10)
+                    );
                     Log.d("DebugLogs", "MyFragmentPagerAdapter: if(!isEvil)");
                     int sum = specifications.getAgility()
                             + specifications.getCharisma()
@@ -303,13 +302,98 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                                 + specifications.getIntelligence()
                                 + specifications.getStamina();
                     }
-                }
-                publishProgress(specifications);
-                try{
-                    TimeUnit.MILLISECONDS.sleep(10);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
+                    if(!isEvil){
+                        switch (mAdapter.getRole()){
+                            case 1:
+                                specifications.setStrength(
+                                        specifications.getStrength() + 3
+                                );
+                                specifications.setStamina(
+                                        specifications.getStamina() + 2
+                                );
+                                specifications.setHealth(
+                                        specifications.getHealth() + 1
+                                );
+                                 specifications.setIntelligence(
+                                         specifications.getIntelligence() - 3
+                                 );
+                                 specifications.setAgility(
+                                         specifications.getAgility() - 2
+                                 );
+                                 specifications.setCharisma(
+                                         specifications.getCharisma() - 1
+                                 );
+                                break;
+                            case 4:
+                                specifications.setStrength(
+                                        specifications.getStrength() - 3
+                                );
+                                specifications.setStamina(
+                                        specifications.getStamina() - 2
+                                );
+                                specifications.setHealth(
+                                        specifications.getHealth() - 1
+                                );
+                                specifications.setIntelligence(
+                                        specifications.getIntelligence() + 1
+                                );
+                                specifications.setAgility(
+                                        specifications.getAgility() + 3
+                                );
+                                specifications.setCharisma(
+                                        specifications.getCharisma() + 2
+                                );
+                                break;
+                            case 3:
+                                specifications.setStrength(
+                                        specifications.getStrength() - 3
+                                );
+                                specifications.setStamina(
+                                        specifications.getStamina() + 1
+                                );
+                                specifications.setHealth(
+                                        specifications.getHealth() + 1
+                                );
+                                specifications.setIntelligence(
+                                        specifications.getIntelligence() + 3
+                                );
+                                specifications.setAgility(
+                                        specifications.getAgility() - 1
+                                );
+                                specifications.setCharisma(
+                                        specifications.getCharisma() - 1
+                                );
+                                break;
+                            case 2:
+                                specifications.setStrength(
+                                        specifications.getStrength() - 3
+                                );
+                                specifications.setStamina(
+                                        specifications.getStamina() + 3
+                                );
+                                specifications.setHealth(
+                                        specifications.getHealth() + 2
+                                );
+                                specifications.setIntelligence(
+                                        specifications.getIntelligence() + 1
+                                );
+                                specifications.setAgility(
+                                        specifications.getAgility() - 2
+                                );
+                                specifications.setCharisma(
+                                        specifications.getCharisma() - 1
+                                );
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    publishProgress(specifications);
+                    try{
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
             }
             Log.d("DebugLogs", "AsyncTask: process is cancelled");
             return specifications;
