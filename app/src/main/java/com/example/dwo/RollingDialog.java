@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -48,7 +50,7 @@ public class RollingDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.rolling_dialog, null);
-        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context, R.style.Dialog_PurpleAppTheme_NoActionBar);
+        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context, R.style.Dialog_AppTheme_NoActionBar_Rounded);
         mDialogBuilder.setView(promptsView);
 
         FirstMethod(promptsView);
@@ -58,8 +60,10 @@ public class RollingDialog extends DialogFragment {
         alertDialog.show();
         alertDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = alertDialog.getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
+        alertDialog.getWindow().setLayout(915, 700);
         return alertDialog;
     }
 
@@ -98,7 +102,7 @@ public class RollingDialog extends DialogFragment {
                     general_number = (int) num;
                     String s = String.valueOf(general_number);
                     numbers.setText(s);
-                    shadow_rolling.setTextColor(Color.parseColor(colors[general_number]));
+                    shadow_rolling.setTextColor(Color.parseColor(colors[(int) Math.random() * 10]));
                     if(words != null){
                         text_roll.setText(words[general_number]);
                     } else{

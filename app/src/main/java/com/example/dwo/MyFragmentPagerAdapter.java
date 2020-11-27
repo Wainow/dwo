@@ -306,59 +306,47 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         switch (mAdapter.getRole()){
                             case 1:
                                 specifications.setStrength(
-                                        specifications.getStrength() + 3
-                                );
-                                specifications.setStamina(
-                                        specifications.getStamina() + 2
+                                        specifications.getStrength() + 1
                                 );
                                 specifications.setHealth(
                                         specifications.getHealth() + 1
                                 );
                                  specifications.setIntelligence(
-                                         specifications.getIntelligence() - 3
+                                         specifications.getIntelligence() - 1
                                  );
                                  specifications.setAgility(
-                                         specifications.getAgility() - 2
-                                 );
-                                 specifications.setCharisma(
-                                         specifications.getCharisma() - 1
+                                         specifications.getAgility() - 1
                                  );
                                 break;
                             case 4:
                                 specifications.setStrength(
-                                        specifications.getStrength() - 3
-                                );
-                                specifications.setStamina(
-                                        specifications.getStamina() - 2
-                                );
-                                specifications.setHealth(
-                                        specifications.getHealth() - 1
-                                );
-                                specifications.setIntelligence(
-                                        specifications.getIntelligence() + 1
-                                );
-                                specifications.setAgility(
-                                        specifications.getAgility() + 3
-                                );
-                                specifications.setCharisma(
-                                        specifications.getCharisma() + 2
-                                );
-                                break;
-                            case 3:
-                                specifications.setStrength(
-                                        specifications.getStrength() - 3
+                                        specifications.getStrength() - 1
                                 );
                                 specifications.setStamina(
                                         specifications.getStamina() + 1
                                 );
                                 specifications.setHealth(
-                                        specifications.getHealth() + 1
+                                        specifications.getHealth() - 1
                                 );
                                 specifications.setIntelligence(
-                                        specifications.getIntelligence() + 3
+                                        specifications.getIntelligence() - 1
                                 );
                                 specifications.setAgility(
-                                        specifications.getAgility() - 1
+                                        specifications.getAgility() + 1
+                                );
+                                specifications.setCharisma(
+                                        specifications.getCharisma() + 1
+                                );
+                                break;
+                            case 3:
+                                specifications.setStrength(
+                                        specifications.getStrength() - 1
+                                );
+                                specifications.setStamina(
+                                        specifications.getStamina() + 1
+                                );
+                                specifications.setIntelligence(
+                                        specifications.getIntelligence() + 1
                                 );
                                 specifications.setCharisma(
                                         specifications.getCharisma() - 1
@@ -366,22 +354,16 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                                 break;
                             case 2:
                                 specifications.setStrength(
-                                        specifications.getStrength() - 3
+                                        specifications.getStrength() - 1
                                 );
                                 specifications.setStamina(
-                                        specifications.getStamina() + 3
-                                );
-                                specifications.setHealth(
-                                        specifications.getHealth() + 2
+                                        specifications.getStamina() + 1
                                 );
                                 specifications.setIntelligence(
                                         specifications.getIntelligence() + 1
                                 );
                                 specifications.setAgility(
-                                        specifications.getAgility() - 2
-                                );
-                                specifications.setCharisma(
-                                        specifications.getCharisma() - 1
+                                        specifications.getAgility() - 1
                                 );
                                 break;
                             default:

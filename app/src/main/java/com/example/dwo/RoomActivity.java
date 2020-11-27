@@ -35,6 +35,9 @@ public class RoomActivity extends AppCompatActivity {
     private int position;
     private ArrayList<Room> myDataset;
     private DialogFragment dialogFragment;
+    private int[] range;
+    private int range_index;
+    private Integer[] roll_backgrounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,26 @@ public class RoomActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FirstMethod();
 
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                range_index++;
+                if(range_index == 6)
+                    range_index = 0;
+                fab.setImageResource(roll_backgrounds[range_index]);
+                Snackbar.make(findViewById(R.id.coordinator),
+                        "Rolling D" + range[range_index   ], Snackbar.LENGTH_SHORT)
+                        .show();
+                return  true;
+            }
+        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("DebugLogs", "My2Adapter: DialogFragment is created");
                 //dialogFragment = new RollingDialog(RoomActivity.this, new String[]{"yes", "no", "after", "get"});
-                dialogFragment = new RollingDialog(RoomActivity.this, 6);
+                dialogFragment = new RollingDialog(RoomActivity.this, range[range_index]);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 dialogFragment.show(fragmentManager, "dlg");
             }
@@ -57,7 +74,7 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void FirstMethod() {
-        fab = findViewById(R.id.room_fab);
+        fab = findViewById(R.id.room_fab_roll);
         imageButton = findViewById(R.id.room_image);
         pager = findViewById(R.id.room_pager);
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
@@ -68,6 +85,16 @@ public class RoomActivity extends AppCompatActivity {
         setTitle(myDataset.get(position).getRoom_name());
         imageButton.setImageResource(myDataset.get(position).getRoom_image_src());
         editTextPlus = findViewById(R.id.room_description);
+        roll_backgrounds = new Integer[]{
+                R.drawable.mini_roll3,
+                R.drawable.mini_roll6,
+                R.drawable.mini_roll10,
+                R.drawable.mini_roll20,
+                R.drawable.mini_roll30,
+                R.drawable.mini_roll100
+        };
+        range = new int[]{3,6,10,20,30,100};
+        range_index = 4;
     }
 
     public int getPosition() {

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RoomActivity"
+    android:id="@+id/coordinator"
     android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,12 +25,25 @@
     <include layout="@layout/content_room" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/room_fab"
+        android:id="@+id/room_fab_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ok_img"
+        android:backgroundTint="@color/colorPurple"
+        android:background="@color/colorPurple"
+        android:tint="@color/colorPurple"
+        app:borderWidth="0dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/room_fab_roll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/mini_roll30"
+        app:maxImageSize="56dp"
         android:backgroundTint="@color/colorPurple"
         android:background="@color/colorPurple"
         android:tint="@color/colorPurple"
