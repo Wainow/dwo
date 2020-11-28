@@ -24,7 +24,7 @@ public class RoomHeroesFragment extends Fragment {
     private ArrayList<Hero> heroes;
     private int RoomID;
     private RecyclerView recyclerView;
-    private My2Adapter mAdapter;
+    public My2Adapter mAdapter;
 
     public RoomHeroesFragment(ArrayList<Hero> heroes) {
         Log.d("DebugLogs", "RoomHeroesFragment: " + heroes);
@@ -48,7 +48,7 @@ public class RoomHeroesFragment extends Fragment {
         FirstMethod();
     }
 
-    private void FirstMethod() {
+    public void FirstMethod() {
         RoomID = (int) (Math.random() * 10000);
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_room_hero);
         recyclerView.setHasFixedSize(true);

@@ -31,8 +31,7 @@
         app:fabAnimationMode="slide"
         app:hideOnScroll="true"
         app:backgroundTint="@color/colorPurpleDark"
-        app:navigationContentDescription="@string/app_name"
-        app:navigationIcon="@drawable/menu"/>
+        app:navigationContentDescription="@string/app_name" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:id="@+id/play_fab"

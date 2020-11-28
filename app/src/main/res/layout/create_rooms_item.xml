@@ -45,6 +45,7 @@
             android:id="@+id/text_item3"
             android:layout_toRightOf="@id/circle_image"
             android:layout_below="@id/text_item2"
+            android:maxLines="1"
             android:text="Inventory: Armor, 250 Money, Bottle of Brown Water ..."
             android:textColor="@color/colorGray"
             android:textStyle="italic"/>

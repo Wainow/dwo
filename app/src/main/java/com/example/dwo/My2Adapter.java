@@ -73,10 +73,11 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
     public void onBindViewHolder(final My2ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Hero hero = mDataset.get(position);
+        final Hero hero = mDataset.get(position);
         if(!mDataset.get(position).getRole().equals("Add hero")) {
             holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
-            holder.inventory.setText(mDataset.get(position).getInventory() + "Money: " + mDataset.get(position).getMoney() + " ...");
+            Log.d("DebugLogs", "My2Adapter: inventory: " + mDataset.get(position).getInventory());
+            holder.inventory.setText(mDataset.get(position).getInventory() + "... Money: " + mDataset.get(position).getMoney() + " ...");
             holder.specifications.setText(
                     "Health: " + mDataset.get(position).getSpecifications().getHealth() + ", " +
                             "Strength: " + mDataset.get(position).getSpecifications().getStrength() + ", " +
@@ -138,7 +139,8 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
                 } else{
-                    dialogFragment = new ShowHeroDialog(holder.itemView.getContext(), mDataset.get(position));
+                    Log.d("DebugLogs", "My2Adapter: hero: " + mDataset.get(position).toString() );
+                    dialogFragment = new ShowHeroDialog(holder.itemView.getContext(), mDataset.get(position), position);
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
                 }

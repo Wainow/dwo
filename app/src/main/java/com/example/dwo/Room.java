@@ -57,6 +57,10 @@ public class Room {
         this.heroes = (ArrayList<Hero>) Arrays.asList(heroes);
     }
 
+    public void setHeroes(ArrayList<Hero> heroes) {
+        this.heroes = heroes;
+    }
+
     public int getNumber_of_players() {
         return number_of_players;
     }

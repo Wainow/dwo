@@ -2,7 +2,9 @@ package com.example.dwo;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,11 +15,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Observable;
+
+import static com.example.dwo.RoomActivity.observer_room;
+import static com.example.dwo.RoomVillainsFragment.observer;
 
 public class ShowHeroDialog extends DialogFragment {
     private Context context;
     private Hero hero;
+    private int position;
+    private Observable<TreeMap<Integer, Hero>> observable;
+    private TreeMap<Integer, Hero> treeMap = new TreeMap<>();
 
     private TextViewPlus showName;
     private CircleImageView heroImage;
@@ -33,9 +46,11 @@ public class ShowHeroDialog extends DialogFragment {
     private TextView textHealth;
 
 
-    public ShowHeroDialog(Context context, Hero hero){
+    public ShowHeroDialog(Context context, Hero hero, int position){
         this.context = context;
         this.hero = hero;
+        this.position = position;
+        treeMap.put(position, hero);
     }
 
 
@@ -61,7 +76,6 @@ public class ShowHeroDialog extends DialogFragment {
 
         showName.setText(hero.getName() + " [" + hero.getRole() + "]");
         showMoney.setText(String.valueOf(hero.getMoney()));
-        if(hero.getInventory().equals(""))
         showInventory.setText(hero.getInventory());
         if(hero.getStory().equals(""))
             showStory.setVisibility(View.GONE);
@@ -79,5 +93,25 @@ public class ShowHeroDialog extends DialogFragment {
         alertDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return alertDialog;
+    }
+
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        super.onCancel(dialog);
+        Log.d("DebugLogs", "ShowHeroDialog: Dialog is cancel");
+        Log.d("DebugLogs", "ShowHeroDialog: Inventory:" + showInventory.getText().toString());
+        this.hero.setMoney(Integer.parseInt(showMoney.getText().toString()));
+        this.hero.setInventory(showInventory.getText().toString());
+        this.hero.setStory(showStory.getText().toString());
+
+        observable = Observable.fromArray(treeMap);
+        observable.subscribe(observer_room);
+        treeMap.put(this.position, this.hero);
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Log.d("DebugLogs", "ShowHeroDialog: Dialog is dismiss");
     }
 }
