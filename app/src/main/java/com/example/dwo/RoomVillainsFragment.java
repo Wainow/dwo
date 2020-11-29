@@ -22,17 +22,24 @@ import io.reactivex.disposables.Disposable;
 
 public class RoomVillainsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private My2Adapter mAdapter;
+    public My2Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Hero> myDataset = new ArrayList<>();;
+    private ArrayList<Hero> myDataset = new ArrayList<>();
+    private Bundle args;
 
     private String TAG = "DebugLogs";
     private int RoomID;
     public static Observer<List<Hero>> observer;
     private SharedPreferencesHelper preferencesHelper;
 
-    public RoomVillainsFragment(int RoomID) {
-        this.RoomID = RoomID;
+    public RoomVillainsFragment(){}
+
+    public static RoomVillainsFragment newInstance(int RoomID){
+        RoomVillainsFragment fragment = new RoomVillainsFragment();
+        Bundle args = new Bundle();
+        args.putInt("RoomID", RoomID);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -49,6 +56,9 @@ public class RoomVillainsFragment extends Fragment {
     }
 
     public void FirstMethod(){
+        args = getArguments();
+        RoomID = args.getInt("RoomID");
+
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_room_villain);
 
         recyclerView.setHasFixedSize(true);
@@ -84,6 +94,7 @@ public class RoomVillainsFragment extends Fragment {
     }
 
     public void RefreshVillains(){
+        Log.d("DebugLogs", "RoomVillainsFragment: RoomID: " + RoomID);
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_room_villain);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());

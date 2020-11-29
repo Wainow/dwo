@@ -29,6 +29,8 @@ public class MapFragment extends Fragment {
     private int padding = 80;
     private CustomViewPager pager;
 
+    public MapFragment(){}
+
     public MapFragment(CustomViewPager pager) {
         this.pager = pager;
     }

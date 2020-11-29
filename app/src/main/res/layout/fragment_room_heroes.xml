@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RoomHeroesFragment"
+    android:id="@+id/fragment_room_heroes"
     android:background="@color/colorPrimaryPurpleDark">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_room_hero"

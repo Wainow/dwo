@@ -1,6 +1,9 @@
 package com.example.dwo;
 
-public class Hero {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Hero implements Parcelable {
     private String name;
     private Specifications specifications;
     private String role;
@@ -8,6 +11,7 @@ public class Hero {
     private String inventory;
     private int money;
     private Integer resID;
+    private boolean isEvil = false;
 
     public String getName() {
         return name;
@@ -85,21 +89,26 @@ public class Hero {
                 break;
             case 5 : this.role = "Evil1";
                 resID = R.drawable.mini_evil1;
+                isEvil = true;
                 break;
             case 6 : this.role = "Evil2";
                 resID = R.drawable.mini_evil2;
                 break;
             case 7 : this.role = "Evil3";
                 resID = R.drawable.mini_evil3;
+                isEvil = true;
                 break;
             case 8 : this.role = "Evil4";
                 resID = R.drawable.mini_evil4;
+                isEvil = true;
                 break;
             case 9 : this.role = "Evil6";
                 resID = R.drawable.mini_evil6;
+                isEvil = true;
                 break;
             case 10 : this.role = "Evil_download";
                 resID = R.drawable.mini_download;
+                isEvil = true;
                 break;
             default: this.role = "Add hero";
                 resID = R.drawable.mini_q;
@@ -122,6 +131,19 @@ public class Hero {
         this.resID = resID;
     }
 
+    public Hero(String name, String role, Specifications specifications, String inventory, String story, int money) {
+        this.name = name;
+        this.specifications = specifications;
+        this.inventory = inventory;
+        this.role = role;
+        this.story = story;
+        this.money = money;
+    }
+
+    public boolean isEvil() {
+        return isEvil;
+    }
+
     public Hero(String name, int role, Specifications specifications, String inventory, String story, int money) {
         this.name = name;
         this.specifications = specifications;
@@ -140,21 +162,27 @@ public class Hero {
                 break;
             case 5 : this.role = "Evil1";
                 resID = R.drawable.mini_evil1;
+                isEvil = true;
                 break;
             case 6 : this.role = "Evil2";
                 resID = R.drawable.mini_evil2;
+                isEvil = true;
                 break;
             case 7 : this.role = "Evil3";
                 resID = R.drawable.mini_evil3;
+                isEvil = true;
                 break;
             case 8 : this.role = "Evil4";
                 resID = R.drawable.mini_evil4;
+                isEvil = true;
                 break;
             case 9 : this.role = "Evil6";
                 resID = R.drawable.mini_evil6;
+                isEvil = true;
                 break;
             case 10 : this.role = "Evil_download";
                 resID = R.drawable.mini_download;
+                isEvil = true;
                 break;
             default: this.role = "Add hero";
                 resID = R.drawable.mini_q;
@@ -209,4 +237,81 @@ public class Hero {
     public void setInventory(String inventory) {
         this.inventory = inventory;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /*
+    * private String name;
+    private Specifications specifications;
+    private String role;
+    private String story;
+    private String inventory;
+    private int money;
+    private Integer resID;
+    *
+    *
+    * private int Strength;
+    private int Agility;
+    private int Intelligence;
+    private int Charisma;
+    private int Stamina;
+    private int Health;
+    private boolean isNull = false;
+    *
+    *
+    * public Hero(String name, String role, Specifications specifications, String inventory, String story, int money) {*/
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(role);
+        dest.writeString(story);
+        dest.writeString(inventory);
+        dest.writeInt(money);
+
+        dest.writeInt(specifications.getAgility());
+        dest.writeInt(specifications.getCharisma());
+        dest.writeInt(specifications.getHealth());
+        dest.writeInt(specifications.getIntelligence());
+        dest.writeInt(specifications.getStrength());
+        dest.writeInt(specifications.getStamina());
+    }
+
+    public static final Parcelable.Creator<Hero> CREATOR = new Parcelable.Creator<Hero>(){
+        @Override
+        public Hero createFromParcel(Parcel source) {
+            String name = source.readString();
+            String role = source.readString();
+            String story = source.readString();
+            String inventory = source.readString();
+            int money = source.readInt();
+
+            int agility = source.readInt();
+            int charisma = source.readInt();
+            int health = source.readInt();
+            int intelligence = source.readInt();
+            int strength = source.readInt();
+            int stamina = source.readInt();
+
+            return new Hero(
+                    name,
+                    role,
+                    new Specifications(strength, agility, intelligence, charisma, stamina, health),
+                    inventory,
+                    story,
+                    money);
+        }
+
+        /*
+        * public Specifications(int strength, int agility, int intelligence, int charisma, int stamina, int health) {
+        * */
+
+        @Override
+        public Hero[] newArray(int size) {
+            return new Hero[size];
+        }
+    };
 }

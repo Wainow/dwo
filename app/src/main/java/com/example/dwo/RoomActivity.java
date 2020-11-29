@@ -14,6 +14,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,6 +34,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 import static com.example.dwo.CreateDialog.photoUri;
+import static com.example.dwo.RoomHeroesFragment.newInstance;
 
 public class RoomActivity extends AppCompatActivity {
     private FloatingActionButton fab;
@@ -40,7 +43,7 @@ public class RoomActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private CustomViewPager pager;
     private PagerAdapter pagerAdapter;
-    private int position;
+    private int position = 0;
     private ArrayList<Room> myDataset;
     private DialogFragment dialogFragment;
     private int[] range;
@@ -90,6 +93,10 @@ public class RoomActivity extends AppCompatActivity {
         fab_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("DebugLogs", "RoomActivity: Fragment is 0 " + getSupportFragmentManager().getFragments().get(0).getClass().toString());
+                Log.d("DebugLogs", "RoomActivity: Fragment is 1 " + getSupportFragmentManager().getFragments().get(1).getClass().toString());
+                Log.d("DebugLogs", "RoomActivity: Fragment is 2 " + getSupportFragmentManager().getFragments().toString());
+
                 json = new Gson().toJson(myDataset);
                 Log.d("DebugLogs", "RoomActivity: " + json);
                 FileWorker fileWorker = new FileWorker(getApplicationContext());
@@ -104,6 +111,7 @@ public class RoomActivity extends AppCompatActivity {
         fab_ok = findViewById(R.id.room_fab_ok);
         imageButton = findViewById(R.id.room_image);
         pager = findViewById(R.id.room_pager);
+        pager.setOffscreenPageLimit(3);
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         position = getIntent().getIntExtra("position", 0);
@@ -129,12 +137,17 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onNext(TreeMap<Integer, Hero> integerHeroTreeMap) {
                 Log.d("DebugLogs", "RoomActivity: onNext");
-                ArrayList<Hero> heroes = myDataset.get(position).getHeroes();
-                heroes.set(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
-                Log.d("DebugLogs", "RoomActivity: heroes: " + heroes.toString());
-                myDataset.get(position).setHeroes(heroes);
-                RoomHeroes.FirstMethod();
-                RoomHeroes.mAdapter.notifyDataSetChanged();
+                Log.d("DebugLogs", "RoomActivity: hero isEvil? : " + integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil());
+                if(integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil()){
+                    ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(2)).mAdapter.notifyDataSetChanged();
+                }
+                else{
+                    ArrayList<Hero> heroes = myDataset.get(position).getHeroes();
+                    heroes.set(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
+                    Log.d("DebugLogs", "RoomActivity: heroes: " + heroes.toString());
+                    myDataset.get(position).setHeroes(heroes);
+                    ((RoomHeroesFragment) getSupportFragmentManager().getFragments().get(0)).mAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -143,10 +156,10 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onComplete() { }
         };
-
+        Log.d("DebugLogs", "RoomActivity: Init new Fragments");
         RoomMap = new MapFragment(pager);
-        RoomVillains = new RoomVillainsFragment(myDataset.get(getPosition()).getRoomID());
-        RoomHeroes = new RoomHeroesFragment(myDataset.get(getPosition()).getHeroes());
+        RoomVillains = RoomVillainsFragment.newInstance(myDataset.get(getPosition()).getRoomID());
+        RoomHeroes = newInstance(myDataset.get(getPosition()).getHeroes());
     }
 
     public int getPosition() {
