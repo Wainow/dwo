@@ -115,7 +115,7 @@ public class CreateDialog extends DialogFragment {
     public void startActivityForResult(Intent data, int requestCode) {
         if(requestCode == DataAdapter.REQUEST_CODE_GET_PHOTOS && data != null){
             photoUri = data.getData();
-            Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.toString());
+            Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.getPath());
             pagerAdapter.setRoleImage();
         }
         super.startActivityForResult(data, requestCode);

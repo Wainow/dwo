@@ -1,7 +1,10 @@
 package com.example.dwo;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.io.File;
 
 public class Hero implements Parcelable {
     private String name;
@@ -11,7 +14,9 @@ public class Hero implements Parcelable {
     private String inventory;
     private int money;
     private Integer resID;
+    private String uriResID;
     private boolean isEvil = false;
+    private boolean isDownloaded = false;
 
     public String getName() {
         return name;
@@ -123,6 +128,10 @@ public class Hero implements Parcelable {
         this.role = role;
     }
 
+    public boolean isDownloaded() {
+        return isDownloaded;
+    }
+
     public Integer getResID() {
         return resID;
     }
@@ -142,6 +151,27 @@ public class Hero implements Parcelable {
 
     public boolean isEvil() {
         return isEvil;
+    }
+
+    public Uri getUriResID() {
+        return Uri.parse(uriResID);
+    }
+
+    public String getStringUriResID(){
+        return uriResID;
+    }
+
+    public Hero(String name, Specifications specifications, String inventory, String story, int money, Uri resID) {
+        this.name = name;
+        this.specifications = specifications;
+        this.role = "Evil_download";
+        this.uriResID = resID.toString();
+        //this.uriResID = resID.getPath();
+        this.inventory = inventory;
+        this.story = story;
+        this.money = money;
+        this.isDownloaded = true;
+        this.isEvil = true;
     }
 
     public Hero(String name, int role, Specifications specifications, String inventory, String story, int money) {
@@ -200,6 +230,7 @@ public class Hero implements Parcelable {
         this.inventory = "";
         this.story = "...";
         this.money = 0;
+        this.resID = R.drawable.mini_q;
     }
 
     @Override
@@ -243,27 +274,6 @@ public class Hero implements Parcelable {
         return 0;
     }
 
-    /*
-    * private String name;
-    private Specifications specifications;
-    private String role;
-    private String story;
-    private String inventory;
-    private int money;
-    private Integer resID;
-    *
-    *
-    * private int Strength;
-    private int Agility;
-    private int Intelligence;
-    private int Charisma;
-    private int Stamina;
-    private int Health;
-    private boolean isNull = false;
-    *
-    *
-    * public Hero(String name, String role, Specifications specifications, String inventory, String story, int money) {*/
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
@@ -304,10 +314,6 @@ public class Hero implements Parcelable {
                     story,
                     money);
         }
-
-        /*
-        * public Specifications(int strength, int agility, int intelligence, int charisma, int stamina, int health) {
-        * */
 
         @Override
         public Hero[] newArray(int size) {

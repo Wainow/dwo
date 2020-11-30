@@ -4,8 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -61,6 +68,9 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private Hero hero;
     private String json;
     private int RoomID;
+    private int resID;
+    private Uri uriResID;
+    private boolean isDownloaded = false;
     private SampleTask mSampleTask;
 
     private SharedPreferencesHelper preferencesHelper;
@@ -132,14 +142,25 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                 public void onClick(View v) {
                     Log.d("DebugLogs", "Second2Fragment: Click!");
                     try {
-                        hero = new Hero(
-                                editName.getText().toString(),
-                                mAdapter.getRole(),
-                                specifications,
-                                "",
-                                editStory.getText().toString(),
-                                Integer.parseInt(editMoney.getText().toString())
-                        );
+                        if(!isDownloaded) {
+                            hero = new Hero(
+                                    editName.getText().toString(),
+                                    mAdapter.getRole(),
+                                    specifications,
+                                    "",
+                                    editStory.getText().toString(),
+                                    Integer.parseInt(editMoney.getText().toString())
+                            );
+                        } else{
+                            hero = new Hero(
+                                    editName.getText().toString(),
+                                    specifications,
+                                    "",
+                                    editStory.getText().toString(),
+                                    Integer.parseInt(editMoney.getText().toString()),
+                                    uriResID
+                            );
+                        }
                         if (!isEvil) {
                             json = new Gson().toJson(hero);
                             Log.d("DebugLogs", "Second2Fragment: " + json);
@@ -168,37 +189,44 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
 
     public void setRoleImage() {
         switch (mAdapter.getRole()){
-            case 1 : imageView.setImageResource(R.drawable.mini_knight);
+            case 1 : resID = R.drawable.mini_knight;
                 break;
-            case 2 : imageView.setImageResource(R.drawable.mini_mag);
+            case 2 : resID = R.drawable.mini_mag;
                 break;
-            case 3 : imageView.setImageResource(R.drawable.mini_row);
+            case 3 : resID = R.drawable.mini_row;
                 break;
-            case 4: imageView.setImageResource(R.drawable.mini_thief);
+            case 4: resID = R.drawable.mini_thief;
                 break;
-            case 5 : imageView.setImageResource(R.drawable.mini_evil1);
+            case 5 : resID = R.drawable.mini_evil1;
                 break;
-            case 6 : imageView.setImageResource(R.drawable.mini_evil2);
+            case 6 : resID = R.drawable.mini_evil2;
                 break;
-            case 7 : imageView.setImageResource(R.drawable.mini_evil3);
+            case 7 : resID = R.drawable.mini_evil3;
                 break;
-            case 8 : imageView.setImageResource(R.drawable.mini_evil4);
+            case 8 : resID = R.drawable.mini_evil4;
                 break;
-            case 9 : imageView.setImageResource(R.drawable.mini_evil6);
+            case 9 : resID = R.drawable.mini_evil6;
                 break;
             case 10 :
                 if(CreateDialog.photoUri != null) {
                     Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is not null");
-                    imageView.setImageURI(CreateDialog.photoUri);
+                    //imageView.setImageURI(CreateDialog.photoUri);
+                    uriResID = Uri.parse(CreateDialog.photoUri.toString());
+                    Log.d("DebugLogs", "MyFragmentPagerAdapter: Uri Path: " + CreateDialog.photoUri.toString());
+                    isDownloaded = true;
                 }
                 else {
                     Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is null");
-                    imageView.setImageResource(R.drawable.mini_download);
+                    resID = R.drawable.mini_download;
                 }
                 break;
-            default: imageView.setImageResource(R.drawable.mini_q);
+            default: resID = R.drawable.mini_q;
                 break;
         }
+        if(!isDownloaded)
+            imageView.setImageResource(resID);
+        else
+            imageView.setImageURI(uriResID);
     }
 
     @Override

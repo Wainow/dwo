@@ -30,7 +30,7 @@ public class RoomVillainsFragment extends Fragment {
     private String TAG = "DebugLogs";
     private int RoomID;
     public static Observer<List<Hero>> observer;
-    private SharedPreferencesHelper preferencesHelper;
+    public SharedPreferencesHelper preferencesHelper;
 
     public RoomVillainsFragment(){}
 

@@ -93,8 +93,6 @@ public class RoomActivity extends AppCompatActivity {
         fab_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DebugLogs", "RoomActivity: Fragment is 0 " + getSupportFragmentManager().getFragments().get(0).getClass().toString());
-                Log.d("DebugLogs", "RoomActivity: Fragment is 1 " + getSupportFragmentManager().getFragments().get(1).getClass().toString());
                 Log.d("DebugLogs", "RoomActivity: Fragment is 2 " + getSupportFragmentManager().getFragments().toString());
 
                 json = new Gson().toJson(myDataset);
@@ -139,12 +137,14 @@ public class RoomActivity extends AppCompatActivity {
                 Log.d("DebugLogs", "RoomActivity: onNext");
                 Log.d("DebugLogs", "RoomActivity: hero isEvil? : " + integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil());
                 if(integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil()){
-                    ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(2)).mAdapter.notifyDataSetChanged();
+                    RoomVillainsFragment fragment = ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(2));
+                    fragment.preferencesHelper.setVillain(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
+                    fragment.mAdapter.notifyDataSetChanged();
                 }
                 else{
                     ArrayList<Hero> heroes = myDataset.get(position).getHeroes();
-                    heroes.set(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     Log.d("DebugLogs", "RoomActivity: heroes: " + heroes.toString());
+                    heroes.set(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     myDataset.get(position).setHeroes(heroes);
                     ((RoomHeroesFragment) getSupportFragmentManager().getFragments().get(0)).mAdapter.notifyDataSetChanged();
                 }

@@ -80,7 +80,10 @@ public class ShowHeroDialog extends DialogFragment {
         if(hero.getStory().equals(""))
             showStory.setVisibility(View.GONE);
         showStory.setText(hero.getStory());
-        heroImage.setImageResource(hero.getResID());
+        if(!hero.isDownloaded())
+            heroImage.setImageResource(hero.getResID());
+        else
+            heroImage.setImageURI(hero.getUriResID());
         textAgility.setText("Agility: " + hero.getSpecifications().getAgility());
         textStamina.setText("Stamina: " + hero.getSpecifications().getStamina());
         textStrength.setText("Strength: " + hero.getSpecifications().getStrength());

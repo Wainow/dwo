@@ -20,6 +20,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +79,11 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
         // - replace the contents of the view with that element
         final Hero hero = mDataset.get(position);
         if(!mDataset.get(position).getRole().equals("Add hero")) {
-            holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
+            if(!mDataset.get(position).isEvil()) {
+                holder.textView.setText(mDataset.get(position).getName() + " [" + mDataset.get(position).getRole() + "]");
+            } else{
+                holder.textView.setText(mDataset.get(position).getName() + " [Evil]");
+            }
             Log.d("DebugLogs", "My2Adapter: inventory: " + mDataset.get(position).getInventory());
             holder.inventory.setText(mDataset.get(position).getInventory() + "... Money: " + mDataset.get(position).getMoney() + " ...");
             holder.specifications.setText(
@@ -94,41 +102,11 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
                 holder.textView.setText(" [" + "Add villain" + "]");
             }
         }
-        switch (mDataset.get(position).getRole()){
-            case "Knight":
-                holder.circleImageView.setImageResource(R.drawable.mini_knight);
-                break;
-            case "Mag":
-                holder.circleImageView.setImageResource(R.drawable.mini_mag);
-                break;
-            case "Rower":
-                holder.circleImageView.setImageResource(R.drawable.mini_row);
-                break;
-            case "Thief":
-                holder.circleImageView.setImageResource(R.drawable.mini_thief);
-                break;
-            case "Evil1":
-                holder.circleImageView.setImageResource(R.drawable.mini_evil1);
-                break;
-            case "Evil2":
-                holder.circleImageView.setImageResource(R.drawable.mini_evil2);
-                break;
-            case "Evil3":
-                holder.circleImageView.setImageResource(R.drawable.mini_evil3);
-                break;
-            case "Evil4":
-                holder.circleImageView.setImageResource(R.drawable.mini_evil4);
-                break;
-            case "Evil6":
-                holder.circleImageView.setImageResource(R.drawable.mini_evil6);
-                break;
-            case "Evil_download":
-                holder.circleImageView.setImageResource(R.drawable.mini_download);
-                break;
-            default:
-                holder.circleImageView.setImageResource(R.drawable.mini_q);
-                break;
-        };
+        if(!mDataset.get(position).isDownloaded()){
+            Glide.with(holder.itemView.getContext()).load(mDataset.get(position).getResID()).into(holder.circleImageView);
+        } else{
+            Glide.with(holder.itemView.getContext()).load(mDataset.get(position).getUriResID()).into(holder.circleImageView);
+        }
 
         holder.itemView.setOnClickListener (new View.OnClickListener() {
             @Override

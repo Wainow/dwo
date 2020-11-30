@@ -87,4 +87,10 @@ public class SharedPreferencesHelper {
         Log.d("DebugLogs", "SharedPreferences: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
         sendVillains();
     }
+
+    public void setVillain(int index, Hero villain){
+        villains = getVillains();
+        villains.set(index, villain);
+        mSharedPreferences.edit().putString(USERS_KEY, jsonAdapter.toJson(villains)).apply();
+    }
 }

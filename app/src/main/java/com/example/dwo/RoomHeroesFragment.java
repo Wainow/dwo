@@ -73,8 +73,4 @@ public class RoomHeroesFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
-
-    public void onRefresh(){
-
-    }
 }
