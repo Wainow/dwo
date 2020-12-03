@@ -72,6 +72,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private Uri uriResID;
     private boolean isDownloaded = false;
     private SampleTask mSampleTask;
+    private boolean isError = false;
 
     private SharedPreferencesHelper preferencesHelper;
 
@@ -179,6 +180,8 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         }
                     } catch (java.lang.NumberFormatException e){
                         Toast.makeText(layout.getContext(), "Not enough money", Toast.LENGTH_LONG).show();
+                    } catch (java.lang.NullPointerException e){
+                        Toast.makeText(context, "You can't create heroes after resize, reload dialog page please...", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -188,45 +191,58 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     }
 
     public void setRoleImage() {
-        switch (mAdapter.getRole()){
-            case 1 : resID = R.drawable.mini_knight;
-                break;
-            case 2 : resID = R.drawable.mini_mag;
-                break;
-            case 3 : resID = R.drawable.mini_row;
-                break;
-            case 4: resID = R.drawable.mini_thief;
-                break;
-            case 5 : resID = R.drawable.mini_evil1;
-                break;
-            case 6 : resID = R.drawable.mini_evil2;
-                break;
-            case 7 : resID = R.drawable.mini_evil3;
-                break;
-            case 8 : resID = R.drawable.mini_evil4;
-                break;
-            case 9 : resID = R.drawable.mini_evil6;
-                break;
-            case 10 :
-                if(CreateDialog.photoUri != null) {
-                    Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is not null");
-                    //imageView.setImageURI(CreateDialog.photoUri);
-                    uriResID = Uri.parse(CreateDialog.photoUri.toString());
-                    Log.d("DebugLogs", "MyFragmentPagerAdapter: Uri Path: " + CreateDialog.photoUri.toString());
-                    isDownloaded = true;
-                }
-                else {
-                    Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is null");
-                    resID = R.drawable.mini_download;
-                }
-                break;
-            default: resID = R.drawable.mini_q;
-                break;
+        try {
+            switch (mAdapter.getRole()) {
+                case 1:
+                    resID = R.drawable.mini_knight;
+                    break;
+                case 2:
+                    resID = R.drawable.mini_mag;
+                    break;
+                case 3:
+                    resID = R.drawable.mini_row;
+                    break;
+                case 4:
+                    resID = R.drawable.mini_thief;
+                    break;
+                case 5:
+                    resID = R.drawable.mini_evil1;
+                    break;
+                case 6:
+                    resID = R.drawable.mini_evil2;
+                    break;
+                case 7:
+                    resID = R.drawable.mini_evil3;
+                    break;
+                case 8:
+                    resID = R.drawable.mini_evil4;
+                    break;
+                case 9:
+                    resID = R.drawable.mini_evil6;
+                    break;
+                case 10:
+                    if (CreateDialog.photoUri != null) {
+                        Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is not null");
+                        //imageView.setImageURI(CreateDialog.photoUri);
+                        uriResID = Uri.parse(CreateDialog.photoUri.toString());
+                        Log.d("DebugLogs", "MyFragmentPagerAdapter: Uri Path: " + CreateDialog.photoUri.toString());
+                        isDownloaded = true;
+                    } else {
+                        Log.d("DebugLogs", "MyFragmentPagerAdapter: photoUri is null");
+                        resID = R.drawable.mini_download;
+                    }
+                    break;
+                default:
+                    resID = R.drawable.mini_q;
+                    break;
+            }
+            if (!isDownloaded)
+                imageView.setImageResource(resID);
+            else
+                imageView.setImageURI(uriResID);
+        } catch (java.lang.NullPointerException e){
+            Toast.makeText(context, "Your hero/villain has been deleted, please recreate hero/villain", Toast.LENGTH_LONG).show();
         }
-        if(!isDownloaded)
-            imageView.setImageResource(resID);
-        else
-            imageView.setImageURI(uriResID);
     }
 
     @Override
@@ -249,6 +265,8 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         return hero;
     }
 
+    /** ------------------------------------------ Inner class for counting specifications ------------------------------------------ */
+
     class SampleTask extends AsyncTask<Long, Specifications, Specifications> {
 
         @Override
@@ -261,149 +279,149 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         protected Specifications doInBackground(Long... longs) {
 
             while(!isCancelled()){
-                    specifications = new Specifications(
-                            (int) (Math.random() * 10),
-                            (int) (Math.random() * 10),
-                            (int) (Math.random() * 10),
-                            (int) (Math.random() * 10),
-                            (int) (Math.random() * 10),
-                            (int) (Math.random() * 10)
-                    );
-                    Log.d("DebugLogs", "MyFragmentPagerAdapter: if(!isEvil)");
-                    int sum = specifications.getAgility()
+                specifications = new Specifications(
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10),
+                        (int) (Math.random() * 10)
+                );
+                Log.d("DebugLogs", "MyFragmentPagerAdapter: if(!isEvil)");
+                int sum = specifications.getAgility()
+                        + specifications.getCharisma()
+                        + specifications.getHealth()
+                        + specifications.getStrength()
+                        + specifications.getIntelligence()
+                        + specifications.getStamina();
+                while(sum != 30) {
+                    Log.d("DebugLogs", "MyFragmentPagerAdapter: while(sum != 30)");
+                    int addTo = (int) (Math.random() * 5);
+                    if (sum < 30) {
+                        Log.d("DebugLogs", "MyFragmentPagerAdapter: if(sum < 30)");
+                        switch (addTo) {
+                            case 0:
+                                specifications.setAgility(specifications.getAgility() + 1);
+                                break;
+                            case 1:
+                                specifications.setCharisma(specifications.getCharisma() + 1);
+                                break;
+                            case 2:
+                                specifications.setHealth(specifications.getHealth() + 1);
+                                break;
+                            case 3:
+                                specifications.setIntelligence(specifications.getIntelligence() + 1);
+                                break;
+                            case 4:
+                                specifications.setStrength(specifications.getStrength() + 1);
+                                break;
+                            case 5:
+                                specifications.setStamina(specifications.getStamina() + 1);
+                                break;
+                        }
+                    } else{
+                        switch (addTo) {
+                            case 0:
+                                specifications.setAgility(specifications.getAgility() - 1);
+                                break;
+                            case 1:
+                                specifications.setCharisma(specifications.getCharisma() - 1);
+                                break;
+                            case 2:
+                                specifications.setHealth(specifications.getHealth() - 1);
+                                break;
+                            case 3:
+                                specifications.setIntelligence(specifications.getIntelligence() - 1);
+                                break;
+                            case 4:
+                                specifications.setStrength(specifications.getStrength() - 1);
+                                break;
+                            case 5:
+                                specifications.setStamina(specifications.getStamina() - 1);
+                                break;
+                        }
+                    }
+                    sum = specifications.getAgility()
                             + specifications.getCharisma()
                             + specifications.getHealth()
                             + specifications.getStrength()
                             + specifications.getIntelligence()
                             + specifications.getStamina();
-                    while(sum != 30) {
-                        Log.d("DebugLogs", "MyFragmentPagerAdapter: while(sum != 30)");
-                        int addTo = (int) (Math.random() * 5);
-                        if (sum < 30) {
-                            Log.d("DebugLogs", "MyFragmentPagerAdapter: if(sum < 30)");
-                            switch (addTo) {
-                                case 0:
-                                    specifications.setAgility(specifications.getAgility() + 1);
-                                    break;
-                                case 1:
-                                    specifications.setCharisma(specifications.getCharisma() + 1);
-                                    break;
-                                case 2:
-                                    specifications.setHealth(specifications.getHealth() + 1);
-                                    break;
-                                case 3:
-                                    specifications.setIntelligence(specifications.getIntelligence() + 1);
-                                    break;
-                                case 4:
-                                    specifications.setStrength(specifications.getStrength() + 1);
-                                    break;
-                                case 5:
-                                    specifications.setStamina(specifications.getStamina() + 1);
-                                    break;
-                            }
-                        } else{
-                            switch (addTo) {
-                                case 0:
-                                    specifications.setAgility(specifications.getAgility() - 1);
-                                    break;
-                                case 1:
-                                    specifications.setCharisma(specifications.getCharisma() - 1);
-                                    break;
-                                case 2:
-                                    specifications.setHealth(specifications.getHealth() - 1);
-                                    break;
-                                case 3:
-                                    specifications.setIntelligence(specifications.getIntelligence() - 1);
-                                    break;
-                                case 4:
-                                    specifications.setStrength(specifications.getStrength() - 1);
-                                    break;
-                                case 5:
-                                    specifications.setStamina(specifications.getStamina() - 1);
-                                    break;
-                            }
-                        }
-                        sum = specifications.getAgility()
-                                + specifications.getCharisma()
-                                + specifications.getHealth()
-                                + specifications.getStrength()
-                                + specifications.getIntelligence()
-                                + specifications.getStamina();
+                }
+                if(!isEvil){
+                    switch (mAdapter.getRole()){
+                        case 1:
+                            specifications.setStrength(
+                                    specifications.getStrength() + 1
+                            );
+                            specifications.setHealth(
+                                    specifications.getHealth() + 1
+                            );
+                            specifications.setIntelligence(
+                                    specifications.getIntelligence() - 1
+                            );
+                            specifications.setAgility(
+                                    specifications.getAgility() - 1
+                            );
+                            break;
+                        case 4:
+                            specifications.setStrength(
+                                    specifications.getStrength() - 1
+                            );
+                            specifications.setStamina(
+                                    specifications.getStamina() + 1
+                            );
+                            specifications.setHealth(
+                                    specifications.getHealth() - 1
+                            );
+                            specifications.setIntelligence(
+                                    specifications.getIntelligence() - 1
+                            );
+                            specifications.setAgility(
+                                    specifications.getAgility() + 1
+                            );
+                            specifications.setCharisma(
+                                    specifications.getCharisma() + 1
+                            );
+                            break;
+                        case 3:
+                            specifications.setStrength(
+                                    specifications.getStrength() - 1
+                            );
+                            specifications.setStamina(
+                                    specifications.getStamina() + 1
+                            );
+                            specifications.setIntelligence(
+                                    specifications.getIntelligence() + 1
+                            );
+                            specifications.setCharisma(
+                                    specifications.getCharisma() - 1
+                            );
+                            break;
+                        case 2:
+                            specifications.setStrength(
+                                    specifications.getStrength() - 1
+                            );
+                            specifications.setStamina(
+                                    specifications.getStamina() + 1
+                            );
+                            specifications.setIntelligence(
+                                    specifications.getIntelligence() + 1
+                            );
+                            specifications.setAgility(
+                                    specifications.getAgility() - 1
+                            );
+                            break;
+                        default:
+                            break;
                     }
-                    if(!isEvil){
-                        switch (mAdapter.getRole()){
-                            case 1:
-                                specifications.setStrength(
-                                        specifications.getStrength() + 1
-                                );
-                                specifications.setHealth(
-                                        specifications.getHealth() + 1
-                                );
-                                 specifications.setIntelligence(
-                                         specifications.getIntelligence() - 1
-                                 );
-                                 specifications.setAgility(
-                                         specifications.getAgility() - 1
-                                 );
-                                break;
-                            case 4:
-                                specifications.setStrength(
-                                        specifications.getStrength() - 1
-                                );
-                                specifications.setStamina(
-                                        specifications.getStamina() + 1
-                                );
-                                specifications.setHealth(
-                                        specifications.getHealth() - 1
-                                );
-                                specifications.setIntelligence(
-                                        specifications.getIntelligence() - 1
-                                );
-                                specifications.setAgility(
-                                        specifications.getAgility() + 1
-                                );
-                                specifications.setCharisma(
-                                        specifications.getCharisma() + 1
-                                );
-                                break;
-                            case 3:
-                                specifications.setStrength(
-                                        specifications.getStrength() - 1
-                                );
-                                specifications.setStamina(
-                                        specifications.getStamina() + 1
-                                );
-                                specifications.setIntelligence(
-                                        specifications.getIntelligence() + 1
-                                );
-                                specifications.setCharisma(
-                                        specifications.getCharisma() - 1
-                                );
-                                break;
-                            case 2:
-                                specifications.setStrength(
-                                        specifications.getStrength() - 1
-                                );
-                                specifications.setStamina(
-                                        specifications.getStamina() + 1
-                                );
-                                specifications.setIntelligence(
-                                        specifications.getIntelligence() + 1
-                                );
-                                specifications.setAgility(
-                                        specifications.getAgility() - 1
-                                );
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    publishProgress(specifications);
-                    try{
-                        TimeUnit.MILLISECONDS.sleep(10);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
+                }
+                publishProgress(specifications);
+                try{
+                    TimeUnit.MILLISECONDS.sleep(10);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
             }
             Log.d("DebugLogs", "AsyncTask: process is cancelled");
             return specifications;

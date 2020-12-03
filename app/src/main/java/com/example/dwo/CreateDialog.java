@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -42,11 +43,17 @@ public class CreateDialog extends DialogFragment {
     private boolean isEvil;
     private MyFragmentPagerAdapter pagerAdapter;
     public static Uri photoUri;
+    private Bundle args;
 
-    public CreateDialog(Context context, int RoomID, boolean isEvil){
-        this.context = context;
-        this.RoomID = RoomID;
-        this.isEvil = isEvil;
+    public CreateDialog(){}
+
+    public static CreateDialog newInstance(Context context, int RoomID, boolean isEvil){
+        CreateDialog fragment = new CreateDialog();
+        Bundle args = new Bundle();
+        args.putInt("RoomID", RoomID);
+        args.putBoolean("isEvil", isEvil);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -57,6 +64,11 @@ public class CreateDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        args = getArguments();
+        RoomID = args.getInt("RoomID");
+        isEvil = args.getBoolean("isEvil");
+        context = getContext();
+
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.create_dialog, null);
         AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context, R.style.Dialog_PurpleAppTheme_NoActionBar);

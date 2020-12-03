@@ -1,5 +1,6 @@
 package com.example.dwo;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -113,12 +114,12 @@ public class My2Adapter extends RecyclerView.Adapter<My2Adapter.My2ViewHolder>{
             public void onClick(View v) {
                 if (mDataset.get(position).getRole().equals("Add hero")) {
                     Log.d("DebugLogs", "My2Adapter: DialogFragment is created");
-                    dialogFragment = new CreateDialog(holder.itemView.getContext(), RoomID, isEvil);
+                    dialogFragment = CreateDialog.newInstance(holder.itemView.getContext(), RoomID, isEvil);
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
                 } else{
                     Log.d("DebugLogs", "My2Adapter: hero: " + mDataset.get(position).toString() );
-                    dialogFragment = new ShowHeroDialog(holder.itemView.getContext(), mDataset.get(position), position);
+                    dialogFragment = ShowHeroDialog.newInstance((Application) holder.itemView.getContext().getApplicationContext(), mDataset.get(position), position);
                     FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
                     dialogFragment.show(fragmentManager, "dlg");
                 }

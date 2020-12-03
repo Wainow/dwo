@@ -1,6 +1,7 @@
 package com.example.dwo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,6 +53,7 @@ public class RoomActivity extends AppCompatActivity {
 
     private String json;
     public static Observer<TreeMap<Integer, Hero>> observer_room;
+    public static Context context;
 
     private MapFragment RoomMap;
     private RoomHeroesFragment RoomHeroes;
@@ -105,6 +107,7 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void FirstMethod() {
+        context = RoomActivity.this;
         fab = findViewById(R.id.room_fab_roll);
         fab_ok = findViewById(R.id.room_fab_ok);
         imageButton = findViewById(R.id.room_image);
@@ -138,14 +141,17 @@ public class RoomActivity extends AppCompatActivity {
                 Log.d("DebugLogs", "RoomActivity: hero isEvil? : " + integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil());
                 if(integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil()){
                     RoomVillainsFragment fragment = ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(2));
+                    Log.d("DebugLogs", "RoomActivity: villain: " +  integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     fragment.preferencesHelper.setVillain(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     fragment.mAdapter.notifyDataSetChanged();
                 }
                 else{
                     ArrayList<Hero> heroes = myDataset.get(position).getHeroes();
-                    Log.d("DebugLogs", "RoomActivity: heroes: " + heroes.toString());
                     heroes.set(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     myDataset.get(position).setHeroes(heroes);
+                    Log.d("DebugLogs", "RoomActivity: heroes: " + heroes.toString());
+                    Log.d("DebugLogs", "RoomActivity: myDataset: " + myDataset.get(position).getHeroes().toString());
+                    ((RoomHeroesFragment) getSupportFragmentManager().getFragments().get(0)).refreshHeroes(heroes);
                     ((RoomHeroesFragment) getSupportFragmentManager().getFragments().get(0)).mAdapter.notifyDataSetChanged();
                 }
             }
@@ -206,5 +212,9 @@ public class RoomActivity extends AppCompatActivity {
             photoUri = data.getData();
             Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.toString());
         }
+    }
+
+    public static Context getRoomActivityContext(){
+        return RoomActivity.context;
     }
 }

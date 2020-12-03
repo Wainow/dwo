@@ -21,7 +21,9 @@
         <activity
             android:name=".CreateActivity"
             android:label="@string/title_activity_create"
-            android:theme="@style/PurpleAppTheme.NoActionBar" />
+            android:theme="@style/PurpleAppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:resizeableActivity="false"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"

@@ -73,4 +73,12 @@ public class RoomHeroesFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
+
+    public void refreshHeroes(ArrayList<Hero> heroes){
+        this.heroes = heroes;
+        mAdapter = new My2Adapter(getContext(), heroes, RoomID, false);
+        recyclerView.setAdapter(mAdapter);
+        args.putParcelableArrayList("heroes", (ArrayList<Hero>) heroes);
+        mAdapter.notifyDataSetChanged();
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.dwo;
 
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,8 +13,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.TransitionRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +33,11 @@ import static com.example.dwo.RoomActivity.observer_room;
 import static com.example.dwo.RoomVillainsFragment.observer;
 
 public class ShowHeroDialog extends DialogFragment {
-    private Context context;
     private Hero hero;
     private int position;
     private Observable<TreeMap<Integer, Hero>> observable;
     private TreeMap<Integer, Hero> treeMap = new TreeMap<>();
+    private HeroViewModel model;
 
     private TextViewPlus showName;
     private CircleImageView heroImage;
@@ -45,21 +52,41 @@ public class ShowHeroDialog extends DialogFragment {
     private TextView textStamina;
     private TextView textHealth;
 
+    public ShowHeroDialog(){
+    }
 
-    public ShowHeroDialog(Context context, Hero hero, int position){
-        this.context = context;
-        this.hero = hero;
-        this.position = position;
-        treeMap.put(position, hero);
+    public static ShowHeroDialog newInstance(Application application, Hero hero, int position){
+        HeroViewModel model = new HeroViewModel(application);
+        model.updateHero(position, hero);
+        return new ShowHeroDialog();
     }
 
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        LayoutInflater li = LayoutInflater.from(context);
+        //New code
+        model = ViewModelProviders.of(this).get(HeroViewModel.class);
+        LiveData<TreeMap<Integer, Hero>> data = model.getData();
+        data.observe(this, new Observer<TreeMap<Integer, Hero>>() {
+            @Override
+            public void onChanged(TreeMap<Integer, Hero> hero1) {
+                Log.d("DebugLogs", "ShowHeroDialog: onChanged");
+                treeMap = hero1;
+                //position = treeMap.firstKey();
+                //hero = treeMap.get(position);
+            }
+        });
+
+        treeMap = data.getValue();
+        position = treeMap.firstKey();
+        hero = treeMap.get(position);
+
+        Log.d("DebugLogs", "ShowHeroDialog: hero" + hero.toString());
+
+        LayoutInflater li = LayoutInflater.from(RoomActivity.getRoomActivityContext());
         View promptsView = li.inflate(R.layout.show_hero_dialog, null);
-        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context, R.style.Dialog_PurpleAppTheme_NoActionBar);
+        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(RoomActivity.getRoomActivityContext(), R.style.Dialog_PurpleAppTheme_NoActionBar);
         mDialogBuilder.setView(promptsView);
 
         showName = promptsView.findViewById(R.id.show_name);
@@ -81,9 +108,9 @@ public class ShowHeroDialog extends DialogFragment {
             showStory.setVisibility(View.GONE);
         showStory.setText(hero.getStory());
         if(!hero.isDownloaded())
-            heroImage.setImageResource(hero.getResID());
+            Glide.with(model.getContext()).load(hero.getResID()).into(heroImage);
         else
-            heroImage.setImageURI(hero.getUriResID());
+            Glide.with(model.getContext()).load(hero.getUriResID()).into(heroImage);
         textAgility.setText("Agility: " + hero.getSpecifications().getAgility());
         textStamina.setText("Stamina: " + hero.getSpecifications().getStamina());
         textStrength.setText("Strength: " + hero.getSpecifications().getStrength());
@@ -102,14 +129,13 @@ public class ShowHeroDialog extends DialogFragment {
     public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
         Log.d("DebugLogs", "ShowHeroDialog: Dialog is cancel");
-        Log.d("DebugLogs", "ShowHeroDialog: Inventory:" + showInventory.getText().toString());
+        Log.d("DebugLogs", "ShowHeroDialog: Inventory: " + showInventory.getText().toString());
         this.hero.setMoney(Integer.parseInt(showMoney.getText().toString()));
         this.hero.setInventory(showInventory.getText().toString());
         this.hero.setStory(showStory.getText().toString());
-
+        treeMap.put(position, this.hero);
         observable = Observable.fromArray(treeMap);
         observable.subscribe(observer_room);
-        treeMap.put(this.position, this.hero);
     }
 
     @Override

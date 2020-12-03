@@ -42,7 +42,7 @@ public class SharedPreferencesHelper {
     }
 
     public List<Hero> getVillains(){
-        Log.d("DebugLogs", "SharedPreferences: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
+        Log.d("DebugLogs", "SharedPreferences: getVillains: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
         try {
             villains = jsonAdapter.fromJson(mSharedPreferences.getString(USERS_KEY, USERS_KEY));
         } catch (JsonDataException | IOException e){
@@ -60,7 +60,7 @@ public class SharedPreferencesHelper {
             villains.add(villain);
         }
         mSharedPreferences.edit().putString(USERS_KEY, jsonAdapter.toJson(villains)).apply();
-        Log.d("DebugLogs", "SharedPreferences: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
+        Log.d("DebugLogs", "SharedPreferences: AddVillain: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
         sendVillains();
         return true;
     }
@@ -84,7 +84,7 @@ public class SharedPreferencesHelper {
         villains = getVillains();
         villains.remove(position);
         mSharedPreferences.edit().putString(USERS_KEY, jsonAdapter.toJson(villains)).apply();
-        Log.d("DebugLogs", "SharedPreferences: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
+        Log.d("DebugLogs", "SharedPreferences: deleteVillains: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
         sendVillains();
     }
 
@@ -92,5 +92,7 @@ public class SharedPreferencesHelper {
         villains = getVillains();
         villains.set(index, villain);
         mSharedPreferences.edit().putString(USERS_KEY, jsonAdapter.toJson(villains)).apply();
+        Log.d("DebugLogs", "SharedPreferences: setVillain: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
+        sendVillains();
     }
 }
