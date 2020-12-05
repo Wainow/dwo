@@ -31,7 +31,7 @@ public class CreateActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Hero> myDataset;
     private String TAG = "DebugLogs";
-    private int RoomID;
+    private int RoomID = -1;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
@@ -49,6 +49,7 @@ public class CreateActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private ArrayList<Integer> images;
     private Integer room_image_src;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,15 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("Create your room");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         FirstMethod();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +98,7 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     public void FirstMethod(){
+        context = CreateActivity.this;
         RoomID = (int) (Math.random() * 10000);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_hero);
         recyclerView.setHasFixedSize(true);
@@ -153,6 +163,7 @@ public class CreateActivity extends AppCompatActivity {
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "CreateActivity: MyBroadcastReceiver: OnReceive!");
             RefreshHeroes();
         }
     }

@@ -10,6 +10,16 @@ public class Room {
     private Integer room_image_src;
     private int RoomID;
 
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    private String Description = "Some information";
+
     public Integer getRoom_image_src() {
         return room_image_src;
     }

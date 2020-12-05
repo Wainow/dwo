@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,10 @@ public class RollingDialog extends DialogFragment {
         //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = alertDialog.getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
-        alertDialog.getWindow().setLayout(915, 700);
+        alertDialog.getWindow().setLayout(
+                CreateDialog.getDP(context, 320),
+                CreateDialog.getDP(context, 300)
+        );
         return alertDialog;
     }
 
@@ -92,17 +96,21 @@ public class RollingDialog extends DialogFragment {
         numbers_anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                Log.d("DebugLogs", "RollingDialog: numbers_anim: start");
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                Log.d("DebugLogs", "RollingDialog: numbers_anim: end");
                 if(i[0] != 0) {
                     numbers.startAnimation(numbers_anim);
-                    double num = (double) Math.random() * range;
+                    double num = (double) Math.random() * range + 1;
                     general_number = (int) num;
+                    double color_num = Math.random() * 10;
                     String s = String.valueOf(general_number);
                     numbers.setText(s);
-                    shadow_rolling.setTextColor(Color.parseColor(colors[(int) Math.random() * 10]));
+                    shadow_rolling.setTextColor(Color.parseColor(colors[(int) color_num]));
+                    Log.d("DebugLogs", "RollingDialog: color: " + color_num);
                     if(words != null){
                         text_roll.setText(words[general_number]);
                     } else{
@@ -114,11 +122,12 @@ public class RollingDialog extends DialogFragment {
                     numbers_anim_end.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
-
+                            Log.d("DebugLogs", "RollingDialog: numbers_anim_end: start");
                         }
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
+                            Log.d("DebugLogs", "RollingDialog: numbers_anim_end: end");
                             c_white.startAnimation(circle_white);
                             c_alpha.startAnimation(circle_alpha);
                             really_circle.start();

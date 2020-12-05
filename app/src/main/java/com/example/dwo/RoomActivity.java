@@ -65,6 +65,14 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         FirstMethod();
 
         fab.setOnLongClickListener(new View.OnLongClickListener() {
@@ -96,7 +104,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("DebugLogs", "RoomActivity: Fragment is 2 " + getSupportFragmentManager().getFragments().toString());
-
+                myDataset.get(position).setDescription(editTextPlus.getText().toString());
                 json = new Gson().toJson(myDataset);
                 Log.d("DebugLogs", "RoomActivity: " + json);
                 FileWorker fileWorker = new FileWorker(getApplicationContext());
@@ -121,6 +129,7 @@ public class RoomActivity extends AppCompatActivity {
         setTitle(myDataset.get(position).getRoom_name());
         imageButton.setImageResource(myDataset.get(position).getRoom_image_src());
         editTextPlus = findViewById(R.id.room_description);
+        editTextPlus.setText(myDataset.get(position).getDescription());
         roll_backgrounds = new Integer[]{
                 R.drawable.mini_roll3,
                 R.drawable.mini_roll6,
@@ -212,9 +221,5 @@ public class RoomActivity extends AppCompatActivity {
             photoUri = data.getData();
             Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.toString());
         }
-    }
-
-    public static Context getRoomActivityContext(){
-        return RoomActivity.context;
     }
 }

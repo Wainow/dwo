@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,8 +30,10 @@ public class DataAdapter extends BaseAdapter {
     private boolean isEvil;
     public	Integer[] mThumbIds;
     public static final int REQUEST_CODE_GET_PHOTOS = 101;
+    private CreateHeroViewModel model;
 
-    public DataAdapter(Context c, ViewPager viewPager, boolean isEvil) {
+    public DataAdapter(CreateHeroViewModel model, Context c, ViewPager viewPager, boolean isEvil) {
+        this.model = model;
         this.mContext = c;
         this.pager = viewPager;
         this.isEvil = isEvil;
@@ -59,7 +62,7 @@ public class DataAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageButton(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
+            imageView.setLayoutParams(new GridView.LayoutParams(CreateDialog.getDP(mContext, 100), CreateDialog.getDP(mContext, 100)));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             int color = ContextCompat.getColor(mContext, R.color.colorPrimaryPurpleDark);
             imageView.setBackgroundColor(color);
@@ -134,6 +137,9 @@ public class DataAdapter extends BaseAdapter {
                 }
             });
         }
+        Hero hero = model.getData().getValue().get(model.getData().getValue().firstKey());
+        hero.setRole(role);
+        model.updateHero(model.getData().getValue().firstKey(), hero);
         return imageView;
     }
 

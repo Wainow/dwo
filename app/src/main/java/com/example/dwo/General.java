@@ -71,7 +71,7 @@ public class General extends AppCompatActivity {
                         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                         fab.setImageResource(R.drawable.play);
                         setTitle("General");
-                        pager.setPadding(0, 0,0,0);
+                        //pager.setPadding(0, 0,0,0);
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -84,7 +84,7 @@ public class General extends AppCompatActivity {
                         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                         fab.setImageResource(R.drawable.plus);
                         setTitle("List of Rooms");
-                        pager.setPadding(0, 170,0,0);
+                        //pager.setPadding(0, 170,0,0);
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:background="@drawable/cloud_background2"
@@ -24,10 +24,9 @@
 
     <ImageButton
         android:id="@+id/mag_img"
-        android:layout_alignTop="@id/textview_first"
         android:layout_width="230dp"
         android:layout_height="250dp"
-        android:layout_marginTop="100dp"
+        android:layout_below="@id/textview_first"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:background="@color/colorPrimaryPurpleDark"/>

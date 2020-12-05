@@ -3,6 +3,7 @@ package com.example.dwo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -82,10 +83,13 @@ public class SharedPreferencesHelper {
 
     public void deleteOneVillain(int position){
         villains = getVillains();
-        villains.remove(position);
-        mSharedPreferences.edit().putString(USERS_KEY, jsonAdapter.toJson(villains)).apply();
-        Log.d("DebugLogs", "SharedPreferences: deleteVillains: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
-        sendVillains();
+        try {
+            villains.remove(position);
+            mSharedPreferences.edit().putString(USERS_KEY, jsonAdapter.toJson(villains)).apply();
+            Log.d("DebugLogs", "SharedPreferences: deleteVillains: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
+            sendVillains();
+        } catch (java.lang.IndexOutOfBoundsException e){
+        }
     }
 
     public void setVillain(int index, Hero villain){

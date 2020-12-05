@@ -9,7 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +29,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -73,15 +82,19 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private boolean isDownloaded = false;
     private SampleTask mSampleTask;
     private boolean isError = false;
+    private TreeMap<Integer, Boolean> map;
+    private CreateHeroViewModel model;
 
     private SharedPreferencesHelper preferencesHelper;
 
 
-    public MyFragmentPagerAdapter(Context context, ViewPager pager, int RoomID, boolean isEvil) {
+    public MyFragmentPagerAdapter(CreateHeroViewModel model, Context context, ViewPager pager, int RoomID, boolean isEvil) {
         this.context = context;
         this.pager = pager;
         this.RoomID = RoomID;
         this.isEvil = isEvil;
+        this.model = model;
+        Log.d("DebugLogs", "MyFragmentPagerAdapter: RoomID: " + RoomID);
     }
 
     public DataAdapter getmAdapter() {
@@ -101,10 +114,11 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             case 2:
                 resId = R.layout.fragment_second2;
         }
+
         final ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
         if(resId == R.layout.fragment_first3) {
             GridView g = layout.findViewById(R.id.gridView);
-            mAdapter = new DataAdapter(layout.getContext(), pager, isEvil);
+            mAdapter = new DataAdapter(model, layout.getContext(), pager, isEvil);
             g.setAdapter(mAdapter);
             Log.d("DebugLogs", "First3Fragment: GridView created");
         } else if(resId == R.layout.fragment_second){
@@ -116,7 +130,21 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             text_intelligence = layout.findViewById(R.id.text_intelligence);
             text_charisma = layout.findViewById(R.id.text_charisma);
             text_stamina = layout.findViewById(R.id.text_stamina);
-            text_health = layout.findViewById(R.id.text_health);;
+            text_health = layout.findViewById(R.id.text_health);
+
+            specifications = model.getData().getValue().get(model.getData().getValue().firstKey()).getSpecifications();
+
+            if(!specifications.isNull()) {
+                text_strength.setText(" Strength:      " + specifications.getStrength());
+                text_agility.setText(" Agility:           " + specifications.getAgility());
+                text_intelligence.setText(" Intelligence: " + specifications.getIntelligence());
+                text_charisma.setText(" Charisma:     " + specifications.getCharisma());
+                text_stamina.setText(" Stamina:      " + specifications.getStamina());
+                text_health.setText(" Health:          " + specifications.getHealth());
+                btn.setText("Next");
+                count = 2;
+            } else
+                count = 0;
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,6 +152,10 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         mSampleTask.execute();
                     } else if(count == 1){
                         mSampleTask.cancel(true);
+                        hero = model.getData().getValue().get(model.getData().getValue().firstKey());
+                        hero.setSpecifications(specifications);
+                        model.updateHero(RoomID, hero);
+                        Log.d("DebugLogs", "SecondFragment: CreateViewModel: hero: " + model.getData().getValue().get(model.getData().getValue().firstKey()));
                     } else if(count == 2){
                         pager.setCurrentItem(2);
                         setRoleImage();
@@ -133,10 +165,73 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
         } else{
             imageView = layout.findViewById(R.id.create_circle_image);
             setRoleImage();
+            hero = model.getData().getValue().get(model.getData().getValue().firstKey());
             final EditText editName = layout.findViewById(R.id.create_name);
             final EditText editStory = layout.findViewById(R.id.create_story);
             final EditText editMoney = layout.findViewById(R.id.create_money);
             FloatingActionButton fab = layout.findViewById(R.id.create_fab);
+
+            editName.setText(hero.getName());
+            if(!hero.getStory().equals("..."))
+                editStory.setText(hero.getStory());
+            editMoney.setText(String.valueOf(hero.getMoney()));
+
+            editName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.d("DebugLogs", "Second2Fragment: editStory: onTextChanged");
+                    hero = model.getData().getValue().get(model.getData().getValue().firstKey());
+                    hero.setName(editName.getText().toString());
+                    model.updateHero(RoomID, hero);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+            editStory.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.d("DebugLogs", "Second2Fragment: editStory: onTextChanged");
+                    hero = model.getData().getValue().get(model.getData().getValue().firstKey());
+                    hero.setStory(editStory.getText().toString());
+                    model.updateHero(RoomID, hero);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+            editMoney.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    Log.d("DebugLogs", "Second2Fragment: editStory: beforeTextChanged");
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.d("DebugLogs", "Second2Fragment: editStory: onTextChanged");
+                    hero = model.getData().getValue().get(model.getData().getValue().firstKey());
+                    if(!editMoney.getText().toString().equals("")) {
+                        hero.setMoney(Integer.parseInt(editMoney.getText().toString()));
+                    }
+                    model.updateHero(RoomID, hero);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Log.d("DebugLogs", "Second2Fragment: editStory: afterTextChanged");
+                }
+            });
+
             final Intent intentAddHeroService = new Intent(layout.getContext(), AddHeroService.class);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,23 +240,24 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                     try {
                         if(!isDownloaded) {
                             hero = new Hero(
-                                    editName.getText().toString(),
-                                    mAdapter.getRole(),
-                                    specifications,
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getName(), //CreateDialog.getName()
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getRole(), //old: mAdapter.getRole();
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getSpecifications(), //old: specifications;
                                     "",
-                                    editStory.getText().toString(),
-                                    Integer.parseInt(editMoney.getText().toString())
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getStory(), //CreateDialog.getStory();
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getMoney() //CreateDialog.getRole();
                             );
                         } else{
                             hero = new Hero(
-                                    editName.getText().toString(),
-                                    specifications,
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getName(),
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getSpecifications(), //old: specifications;
                                     "",
-                                    editStory.getText().toString(),
-                                    Integer.parseInt(editMoney.getText().toString()),
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getStory(),
+                                    model.getData().getValue().get(model.getData().getValue().firstKey()).getMoney(),
                                     uriResID
                             );
                         }
+                        model.updateHero(RoomID, hero);
                         if (!isEvil) {
                             json = new Gson().toJson(hero);
                             Log.d("DebugLogs", "Second2Fragment: " + json);
@@ -173,7 +269,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                             Log.d("DebugLogs", "Second2Fragment: RoomID: " + String.valueOf(RoomID));
                             preferencesHelper = new SharedPreferencesHelper(context, RoomID);
                             try {
-                                preferencesHelper.addVillain(hero);
+                                preferencesHelper.addVillain(model.getData().getValue().get(model.getData().getValue().firstKey()));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -182,7 +278,10 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         Toast.makeText(layout.getContext(), "Not enough money", Toast.LENGTH_LONG).show();
                     } catch (java.lang.NullPointerException e){
                         Toast.makeText(context, "You can't create heroes after resize, reload dialog page please...", Toast.LENGTH_LONG).show();
+                        layout.getContext().startService(intentAddHeroService);
                     }
+                    mSampleTask.cancel(true);
+                    model.updateHero(RoomID, null);
                 }
             });
         }
@@ -191,8 +290,8 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     }
 
     public void setRoleImage() {
-        try {
-            switch (mAdapter.getRole()) {
+        try { // old: mAdapter.getRole()
+            switch (model.getData().getValue().get(model.getData().getValue().firstKey()).getRoleInt()) {
                 case 1:
                     resID = R.drawable.mini_knight;
                     break;
@@ -287,7 +386,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         (int) (Math.random() * 10),
                         (int) (Math.random() * 10)
                 );
-                Log.d("DebugLogs", "MyFragmentPagerAdapter: if(!isEvil)");
+                //Log.d("DebugLogs", "MyFragmentPagerAdapter: if(!isEvil)");
                 int sum = specifications.getAgility()
                         + specifications.getCharisma()
                         + specifications.getHealth()
@@ -295,10 +394,10 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                         + specifications.getIntelligence()
                         + specifications.getStamina();
                 while(sum != 30) {
-                    Log.d("DebugLogs", "MyFragmentPagerAdapter: while(sum != 30)");
+                    //Log.d("DebugLogs", "MyFragmentPagerAdapter: while(sum != 30)");
                     int addTo = (int) (Math.random() * 5);
                     if (sum < 30) {
-                        Log.d("DebugLogs", "MyFragmentPagerAdapter: if(sum < 30)");
+                        //Log.d("DebugLogs", "MyFragmentPagerAdapter: if(sum < 30)");
                         switch (addTo) {
                             case 0:
                                 specifications.setAgility(specifications.getAgility() + 1);
@@ -424,11 +523,16 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                 }
             }
             Log.d("DebugLogs", "AsyncTask: process is cancelled");
+
+            //old: return specifications
             return specifications;
         }
 
         @Override
         protected void onProgressUpdate(Specifications... values) {
+            //old: just specifications
+            //model.getData().getValue().get(model.getData().getValue().firstKey()).setSpecifications(specifications);
+
             text_strength.setText(" Strength:      " + specifications.getStrength());
             text_agility.setText(" Agility:           " + specifications.getAgility());
             text_intelligence.setText(" Intelligence: " + specifications.getIntelligence());

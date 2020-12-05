@@ -19,7 +19,7 @@
         android:layout_marginTop="9dp"
         android:layout_toLeftOf="@id/shadow"
         android:id="@+id/shadow_rolling1"
-        android:layout_marginRight="2dp"
+        android:layout_marginRight="3dp"
         android:typeface="serif"
         android:textSize="60dp"
         android:text="Rolling"

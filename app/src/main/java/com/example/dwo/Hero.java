@@ -17,6 +17,7 @@ public class Hero implements Parcelable {
     private String uriResID;
     private boolean isEvil = false;
     private boolean isDownloaded = false;
+    private int roleInt;
 
     public String getName() {
         return name;
@@ -38,40 +39,56 @@ public class Hero implements Parcelable {
         return role;
     }
 
+    public int getRoleInt(){
+        return roleInt;
+    }
+
     public void setRole(int role) {
+        this.roleInt = role;
         switch (role){
             case 1 : this.role = "Knight";
                 resID = R.drawable.mini_knight;
+                isEvil = false;
                 break;
             case 2 : this.role = "Mag";
                 resID = R.drawable.mini_mag;
+                isEvil = false;
                 break;
             case 3 : this.role = "Rower";
                 resID = R.drawable.mini_row;
+                isEvil = false;
                 break;
             case 4 : this.role = "Thief";
                 resID = R.drawable.mini_thief;
+                isEvil = false;
                 break;
             case 5 : this.role = "Evil1";
                 resID = R.drawable.mini_evil1;
+                isEvil = true;
                 break;
             case 6 : this.role = "Evil2";
                 resID = R.drawable.mini_evil2;
+                isEvil = true;
                 break;
             case 7 : this.role = "Evil3";
                 resID = R.drawable.mini_evil3;
+                isEvil = true;
                 break;
             case 8 : this.role = "Evil4";
                 resID = R.drawable.mini_evil4;
+                isEvil = true;
                 break;
             case 9 : this.role = "Evil6";
                 resID = R.drawable.mini_evil6;
+                isEvil = true;
                 break;
             case 10 : this.role = "Evil_download";
                 resID = R.drawable.mini_download;
+                isEvil = true;
                 break;
             default: this.role = "Add hero";
                 resID = R.drawable.mini_q;
+                isEvil = true;
                 break;
         }
     }
@@ -79,6 +96,7 @@ public class Hero implements Parcelable {
     public Hero(String name, int role, Specifications specifications) {
         this.name = name;
         this.specifications = specifications;
+        this.roleInt = role;
         switch (role){
             case 1 : this.role = "Knight";
                 resID = R.drawable.mini_knight;
@@ -98,6 +116,7 @@ public class Hero implements Parcelable {
                 break;
             case 6 : this.role = "Evil2";
                 resID = R.drawable.mini_evil2;
+                isEvil = true;
                 break;
             case 7 : this.role = "Evil3";
                 resID = R.drawable.mini_evil3;
@@ -147,6 +166,57 @@ public class Hero implements Parcelable {
         this.role = role;
         this.story = story;
         this.money = money;
+        switch (role){
+            case "Knight" : this.roleInt = 1;
+                resID = R.drawable.mini_knight;
+                isEvil = false;
+                break;
+            case "Mag" : this.roleInt = 2;
+                resID = R.drawable.mini_mag;
+                isEvil = false;
+                break;
+            case "Rower" : this.roleInt = 3;
+                resID = R.drawable.mini_row;
+                isEvil = false;
+                break;
+            case "Thief" : this.roleInt = 4;
+                resID = R.drawable.mini_thief;
+                isEvil = false;
+                break;
+            case "Evil1" :
+                this.roleInt = 5;
+                resID = R.drawable.mini_evil1;
+                isEvil = true;
+                break;
+            case "Evil2" :
+                resID = R.drawable.mini_evil2;
+                this.roleInt = 6;
+                isEvil = true;
+                break;
+            case "Evil3" :
+                resID = R.drawable.mini_evil3;
+                this.roleInt = 7;
+                isEvil = true;
+                break;
+            case "Evil4" :
+                resID = R.drawable.mini_evil4;
+                this.roleInt = 8;
+                isEvil = true;
+                break;
+            case "Evil6" :
+                resID = R.drawable.mini_evil6;
+                this.roleInt = 9;
+                isEvil = true;
+                break;
+            case "Evil_download" :
+                resID = R.drawable.mini_download;
+                this.roleInt = 10;
+                isEvil = true;
+                break;
+            default:
+                this.roleInt = 0;
+                break;
+        }
     }
 
     public boolean isEvil() {
@@ -164,6 +234,7 @@ public class Hero implements Parcelable {
     public Hero(String name, Specifications specifications, String inventory, String story, int money, Uri resID) {
         this.name = name;
         this.specifications = specifications;
+        this.roleInt = 0;
         this.role = "Evil_download";
         this.uriResID = resID.toString();
         //this.uriResID = resID.getPath();
@@ -177,6 +248,7 @@ public class Hero implements Parcelable {
     public Hero(String name, int role, Specifications specifications, String inventory, String story, int money) {
         this.name = name;
         this.specifications = specifications;
+        this.roleInt = role;
         switch (role){
             case 1 : this.role = "Knight";
                 resID = R.drawable.mini_knight;
@@ -230,6 +302,7 @@ public class Hero implements Parcelable {
         this.inventory = "";
         this.story = "...";
         this.money = 0;
+        this.roleInt = 0;
         this.resID = R.drawable.mini_q;
     }
 
