@@ -87,4 +87,17 @@
         android:tint="@color/colorPurple"
         app:borderWidth="0dp"
         android:layout_alignParentRight="true" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/generate_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/mini_roll"
+        android:backgroundTint="@color/colorPurple"
+        android:background="@color/colorPurple"
+        android:tint="@color/colorPurple"
+        app:borderWidth="0dp"
+        app:maxImageSize="56dp"
+        android:layout_alignParentLeft="true" />
 </RelativeLayout>

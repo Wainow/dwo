@@ -92,7 +92,7 @@ public class RoomActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("DebugLogs", "My2Adapter: DialogFragment is created");
+                Log.d("DebugLogs", "RoomActivity: DialogFragment is created");
                 //dialogFragment = new RollingDialog(RoomActivity.this, new String[]{"yes", "no", "after", "get"});
                 dialogFragment = new RollingDialog(RoomActivity.this, range[range_index]);
                 FragmentManager fragmentManager = getSupportFragmentManager();

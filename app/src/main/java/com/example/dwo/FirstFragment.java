@@ -56,6 +56,7 @@ public class FirstFragment extends Fragment {
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("DebugLogs", "RoomActivity: quest:" + new QuestGenerator().GenerateQuest());
                 getActivity().startService(intentMyIntentService.putExtra("step", step));
                 step++;
                 Log.d("DebugLogs", "step is" + String.valueOf(step));

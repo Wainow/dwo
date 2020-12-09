@@ -56,6 +56,8 @@ import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.view.View.VISIBLE;
+
 public class MyFragmentPagerAdapter extends PagerAdapter {
     private Context context;
     private int resId = 0;
@@ -84,6 +86,8 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
     private boolean isError = false;
     private TreeMap<Integer, Boolean> map;
     private CreateHeroViewModel model;
+    private StoryGenerator generator_story;
+    private ItemGenerator generator_item;
 
     private SharedPreferencesHelper preferencesHelper;
 
@@ -170,11 +174,34 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
             final EditText editStory = layout.findViewById(R.id.create_story);
             final EditText editMoney = layout.findViewById(R.id.create_money);
             FloatingActionButton fab = layout.findViewById(R.id.create_fab);
+            final FloatingActionButton generate_fab = layout.findViewById(R.id.generate_fab);
+            generate_fab.setVisibility(View.GONE);
 
             editName.setText(hero.getName());
             if(!hero.getStory().equals("..."))
                 editStory.setText(hero.getStory());
             editMoney.setText(String.valueOf(hero.getMoney()));
+
+            if(editMoney.getText().toString().equals("0") && editStory.getText().toString().equals("")){
+                generate_fab.setVisibility(VISIBLE);
+            }
+            generate_fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isEvil){
+                        generator_story = new StoryGenerator();
+                    } else{
+                        generator_story = new StoryGenerator(hero.getRoleInt());
+                    }
+                    editStory.setText(generator_story.GenerateStory());
+                    editMoney.setText(String.valueOf((int) (Math.random() * 5000)));
+
+                    hero.setStory(editStory.getText().toString());
+                    hero.setMoney(Integer.parseInt(editMoney.getText().toString()));
+                    model.updateHero(RoomID, hero);
+                    generate_fab.setVisibility(View.GONE);
+                }
+            });
 
             editName.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -237,13 +264,18 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                 @Override
                 public void onClick(View v) {
                     Log.d("DebugLogs", "Second2Fragment: Click!");
+                    hero = model.getData().getValue().get(model.getData().getValue().firstKey());
+                    if(hero.isEvil())
+                        generator_item = new ItemGenerator();
+                    else
+                        generator_item = new ItemGenerator(hero.getRoleInt());
                     try {
                         if(!isDownloaded) {
                             hero = new Hero(
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getName(), //CreateDialog.getName()
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getRole(), //old: mAdapter.getRole();
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getSpecifications(), //old: specifications;
-                                    "",
+                                    generator_item.Generate(),//generator_item.Generate(),
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getStory(), //CreateDialog.getStory();
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getMoney() //CreateDialog.getRole();
                             );
@@ -251,7 +283,7 @@ public class MyFragmentPagerAdapter extends PagerAdapter {
                             hero = new Hero(
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getName(),
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getSpecifications(), //old: specifications;
-                                    "",
+                                    generator_item.Generate(),//generator_item.Generate(),
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getStory(),
                                     model.getData().getValue().get(model.getData().getValue().firstKey()).getMoney(),
                                     uriResID
