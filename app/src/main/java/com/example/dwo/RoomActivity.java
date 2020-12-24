@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -21,8 +22,13 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,8 +60,10 @@ public class RoomActivity extends AppCompatActivity {
     private String json;
     public static Observer<TreeMap<Integer, Hero>> observer_room;
     public static Context context;
+    private Boolean isQuest = false;
 
     private MapFragment RoomMap;
+    private QuestFragment RoomQuest;
     private RoomHeroesFragment RoomHeroes;
     private RoomVillainsFragment RoomVillains;
 
@@ -73,30 +81,38 @@ public class RoomActivity extends AppCompatActivity {
                 finish();
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         FirstMethod();
 
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                range_index++;
-                if(range_index == 6)
-                    range_index = 0;
-                fab.setImageResource(roll_backgrounds[range_index]);
-                Snackbar.make(findViewById(R.id.coordinator),
-                        "Rolling D" + range[range_index], Snackbar.LENGTH_SHORT)
-                        .show();
-                return  true;
+                if(!isQuest) {
+                    range_index++;
+                    if (range_index == 6)
+                        range_index = 0;
+                    fab.setImageResource(roll_backgrounds[range_index]);
+                    Snackbar.make(findViewById(R.id.coordinator),
+                            "Rolling D" + range[range_index], Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+                return true;
             }
         });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("DebugLogs", "RoomActivity: DialogFragment is created");
-                //dialogFragment = new RollingDialog(RoomActivity.this, new String[]{"yes", "no", "after", "get"});
-                dialogFragment = new RollingDialog(RoomActivity.this, range[range_index]);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialogFragment.show(fragmentManager, "dlg");
+                if(!isQuest) {
+                    Log.d("DebugLogs", "RoomActivity: DialogFragment is created");
+                    //dialogFragment = new RollingDialog(RoomActivity.this, new String[]{"yes", "no", "after", "get"});
+                    dialogFragment = new RollingDialog(RoomActivity.this, range[range_index]);
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    dialogFragment.show(fragmentManager, "dlg");
+                } else{
+                    ((QuestFragment)getSupportFragmentManager().getFragments().get(1)).addQuest();
+                }
             }
         });
 
@@ -112,6 +128,43 @@ public class RoomActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0) {
+                    isQuest = true;
+                    Glide.with(getApplicationContext()).load(R.drawable.mini_roll_quest1).into(fab);
+                } else {
+                    isQuest = false;
+                    Glide.with(getApplicationContext()).load(roll_backgrounds[range_index]).into(fab);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_quest:
+                pager.setCurrentItem(0);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_room, menu);
+        return true;
     }
 
     private void FirstMethod() {
@@ -120,10 +173,10 @@ public class RoomActivity extends AppCompatActivity {
         fab_ok = findViewById(R.id.room_fab_ok);
         imageButton = findViewById(R.id.room_image);
         pager = findViewById(R.id.room_pager);
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(4);
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
-        position = getIntent().getIntExtra("position", 0);
+        position = getIntent().getIntExtra("position", 1);
         Log.d("DebugLogs", "RoomActivity: " + position);
         setMyDataset();
         setTitle(myDataset.get(position).getRoom_name());
@@ -149,7 +202,7 @@ public class RoomActivity extends AppCompatActivity {
                 Log.d("DebugLogs", "RoomActivity: onNext");
                 Log.d("DebugLogs", "RoomActivity: hero isEvil? : " + integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil());
                 if(integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil()){
-                    RoomVillainsFragment fragment = ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(2));
+                    RoomVillainsFragment fragment = ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(3));
                     Log.d("DebugLogs", "RoomActivity: villain: " +  integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     fragment.preferencesHelper.setVillain(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     fragment.mAdapter.notifyDataSetChanged();
@@ -175,6 +228,9 @@ public class RoomActivity extends AppCompatActivity {
         RoomMap = new MapFragment(pager);
         RoomVillains = RoomVillainsFragment.newInstance(myDataset.get(getPosition()).getRoomID());
         RoomHeroes = newInstance(myDataset.get(getPosition()).getHeroes());
+        RoomQuest = QuestFragment.newInstance(myDataset.get(getPosition()).getRoomID());
+
+        pager.setCurrentItem(1);
     }
 
     public int getPosition() {
@@ -190,9 +246,11 @@ public class RoomActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 1:
-                    return RoomMap;
+                case 0:
+                    return RoomQuest;
                 case 2:
+                    return RoomMap;
+                case 3:
                     return RoomVillains;
                 default:
                     return RoomHeroes;
@@ -201,7 +259,7 @@ public class RoomActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
     }

@@ -23,7 +23,7 @@ import static com.example.dwo.RoomVillainsFragment.observer;
 
 public class SharedPreferencesHelper {
     public static String USERS_KEY;
-    public static final String SHARED_PREF_NAME = "SHARED_PREF_NAME";
+    public static final String SHARED_PREF_NAME = "SHARED_PREF_VILLAIN";
     private SharedPreferences mSharedPreferences;
     private Moshi moshi = new Moshi.Builder().build();
     public static final Type VILLAINS_TYPE = new TypeToken<List<Hero>>(){}.getType();
@@ -89,6 +89,8 @@ public class SharedPreferencesHelper {
             Log.d("DebugLogs", "SharedPreferences: deleteVillains: json: " + mSharedPreferences.getString(USERS_KEY, USERS_KEY));
             sendVillains();
         } catch (java.lang.IndexOutOfBoundsException e){
+            Log.d("DebugLogs", "SharedPreferences: deleteVillains: IndexOutOfBoundsException");
+
         }
     }
 

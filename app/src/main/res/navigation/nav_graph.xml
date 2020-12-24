@@ -3,30 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/First3Fragment">
+    app:startDestination="@id/QuestFragment">
 
     <fragment
-        android:id="@+id/First3Fragment"
-        android:name="com.example.dwo.First3Fragment"
-        android:label="First3Fragment"
-        tools:layout="@layout/fragment_first3">
-
+        android:id="@+id/QuestFragment"
+        android:name="com.example.dwo.QuestFragment"
+        android:label="QuestFragment"
+        tools:layout="@layout/fragment_quest">
         <action
-            android:id="@+id/action_First3Fragment_to_SecondFragment"
-            app:destination="@id/SecondFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.dwo.SecondFragment"
-        android:label="SecondFragment"
-        tools:layout="@layout/fragment_second">
-        <action
-            android:id="@+id/action_SecondFragment_to_First3Fragment"
-            app:destination="@id/First3Fragment"
+            android:id="@+id/action_QuestFragment_to_First4Fragment"
+            app:destination="@id/First4Fragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -34,22 +20,15 @@
     </fragment>
     <fragment
         android:id="@+id/First4Fragment"
-        android:name="com.example.dwo.First4Fragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first4">
-
+        android:name="com.example.dwo.QuestRoom"
+        android:label="First4Fragment"
+        tools:layout="@layout/fragment_quest_room">
         <action
-            android:id="@+id/action_First4Fragment_to_Second3Fragment"
-            app:destination="@id/Second3Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/Second3Fragment"
-        android:name="com.example.dwo.Second3Fragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second3">
-
-        <action
-            android:id="@+id/action_Second3Fragment_to_First4Fragment"
-            app:destination="@id/First4Fragment" />
+            android:id="@+id/action_First4Fragment_to_QuestFragment"
+            app:destination="@id/QuestFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

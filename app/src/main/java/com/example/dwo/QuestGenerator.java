@@ -3,16 +3,16 @@ package com.example.dwo;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class QuestGenerator {
-    private String customer;
 
     public QuestGenerator(){
     }
 
-    public String GenerateQuest(){
-        StringBuilder quest = new StringBuilder();
+    public String GenerateDescription(){
+        StringBuilder description = new StringBuilder();
         Task task = new Task();
         Start start = new Start();
         String place = start.getStartPlace();
@@ -21,12 +21,25 @@ public class QuestGenerator {
         String difficultyString = start.getStringDifficulty(difficulty);
         Random random = new Random();
         int roll = Math.abs((int) random.nextGaussian()*10 + 1);
-        quest.append(GenerateCustomer() + "\n");
-        quest.append("start place: " + place + "\n" + start.getStringDistance(distance) + "\n" + difficultyString + "\n");
-        quest.append("task: " + task.getTask() + "\n" + task.getSeveralDescriptions(roll) + "\n");
-        quest.append(new Reward().getReward(distance, difficulty));
+        description.append(GenerateCustomer() + "\n");
+        description.append("start place: " + place + "\n" + start.getStringDistance(distance) + "\n" + difficultyString + "\n");
+        description.append("task: " + task.getTask() + "\n" + task.getSeveralDescriptions(roll) + "\n");
+        description.append(new Reward().getReward(distance, difficulty));
 
-        return quest.toString();
+        return description.toString();
+    }
+
+    public String GenerateName(){
+        QuestName questName = new QuestName();
+        return questName.getQuestName();
+    }
+
+    public Quest GenerateQuest(){
+        return new Quest(
+                GenerateName(),
+                GenerateDescription(),
+                ""
+        );
     }
 
     public String GenerateCustomer(){
@@ -433,6 +446,356 @@ public class QuestGenerator {
             } else{
                 return "reward: trash";
             }
+        }
+    }
+
+    private static class QuestName{
+        private ArrayList<String> names;
+        private ArrayList<String> adjectives;
+        private ArrayList<String> noun;
+
+        private QuestName(){
+            names = new ArrayList<>();
+            adjectives = new ArrayList<>();
+            noun = new ArrayList<>();
+
+            setDefaultAdjectives();
+            setDefaultNames();
+            setDefaultNouns();
+        }
+
+        private String getQuestName(){
+            return getName() + " " + getAdjective() + " " + getNoun();
+        }
+
+        private String getName(){
+            int roll = (int) (Math.random() * names.size()-1);
+            return names.get(roll);
+        }
+
+        public String getAdjective() {
+            int roll = (int) (Math.random() * adjectives.size()-1);
+            return adjectives.get(roll);
+        }
+
+        public String getNoun(){
+            int roll = (int) (Math.random() * noun.size()-1);
+            return noun.get(roll);
+        }
+
+        private void setDefaultNames(){
+            names.add("Royal's");
+            names.add("Peasant's");
+            names.add("Witcher's");
+            names.add("Warrior's");
+            names.add("Rower's");
+            names.add("Dragon's");
+            names.add("Knight's");
+            names.add("Mag's");
+            names.add("Org's");
+            names.add("Dwarf's");
+            names.add("Human's");
+            names.add("Genasi's");
+            names.add("Awakened's");
+            names.add("Vampire's");
+            names.add("Dragon-born's");
+            names.add("Undead's");
+            names.add("Daughter's");
+            names.add("Mother's");
+            names.add("Father's");
+            names.add("Nan's");
+            names.add("Grandparent's");
+            names.add("Elf's");
+            names.add("Pet's");
+            names.add("Goblin's");
+            names.add("Merchant's");
+            names.add("Scholar's");
+            names.add("Kid's");
+            names.add("Adult's");
+            names.add("Hero's");
+            names.add("Villain's");
+            names.add("Animal's");
+            names.add("Farmer's");
+            names.add("Doctor's");
+            names.add("Blacksmith's");
+            names.add("Guard's");
+            names.add("Bartender's");
+            names.add("Waiter's");
+            names.add("Whore's");
+            names.add("Fortune teller's");
+            names.add("Fraudster's");
+            names.add("Thief's");
+            names.add("Homeless's");
+            names.add("Student's");
+            names.add("Murderer's");
+            names.add("Kidnapper's");
+            names.add("Arsonist's");
+            names.add("Healer's");
+            names.add("Saint's");
+            names.add("Ghost's");
+            names.add("Monster's");
+            names.add("Fairy-tale character's");
+            names.add("Imaginary character's");
+        }
+
+        private void setDefaultAdjectives(){
+            adjectives.add("beautiful");
+            adjectives.add("terrible");
+            adjectives.add("frightening");
+            adjectives.add("smelly");
+            adjectives.add("dirty");
+            adjectives.add("ugly");
+            adjectives.add("slimy");
+            adjectives.add("strange");
+            adjectives.add("invisible");
+            adjectives.add("magic");
+            adjectives.add("torn");
+            adjectives.add("worn");
+            adjectives.add("exhausted");
+            adjectives.add("sparkling");
+            adjectives.add("incredible");
+            adjectives.add("cool");
+            adjectives.add("stupid");
+            adjectives.add("sweet");
+            adjectives.add("delicious");
+            adjectives.add("bitter");
+            adjectives.add("sour");
+            adjectives.add("moronic");
+            adjectives.add("stupid");
+            adjectives.add("slop");
+            adjectives.add("hell");
+            adjectives.add("paradise");
+            adjectives.add("magic");
+            adjectives.add("flying");
+            adjectives.add("silk");
+            adjectives.add("iron");
+            adjectives.add("gear");
+            adjectives.add("solid");
+            adjectives.add("soft");
+            adjectives.add("gentle");
+            adjectives.add("edible");
+            adjectives.add("brown");
+            adjectives.add("blue");
+            adjectives.add("yellow");
+            adjectives.add("red");
+            adjectives.add("purple");
+            adjectives.add("white");
+            adjectives.add("black");
+            adjectives.add("foreign");
+            adjectives.add("Royal");
+            adjectives.add("arab");
+            adjectives.add("dirty");
+            adjectives.add("dusted");
+            adjectives.add("fucked");
+            adjectives.add("cocks");
+            adjectives.add("chic");
+            adjectives.add("wonderful");
+            adjectives.add("transparent");
+            adjectives.add("unimaginable");
+            adjectives.add("passionate");
+            adjectives.add("sexy");
+            adjectives.add("gay");
+            adjectives.add("faggot");
+            adjectives.add("ass");
+            adjectives.add("leather");
+            adjectives.add("general");
+            adjectives.add("officer");
+            adjectives.add("soldier");
+            adjectives.add("hero");
+            adjectives.add("military");
+            adjectives.add("coconut");
+            adjectives.add("banana");
+            adjectives.add("apple");
+            adjectives.add("meat");
+            adjectives.add("bony");
+            adjectives.add("selfish");
+            adjectives.add("loving");
+            adjectives.add("jealous");
+            adjectives.add("temporary");
+            adjectives.add("understanding");
+            adjectives.add("maternal");
+            adjectives.add("talking");
+            adjectives.add("screaming");
+            adjectives.add("water");
+            adjectives.add("ice");
+            adjectives.add("swamp");
+            adjectives.add("sand");
+            adjectives.add("stolen");
+            adjectives.add("lovers");
+            adjectives.add("returning");
+            adjectives.add("poison");
+            adjectives.add("animal");
+            adjectives.add("smart");
+            adjectives.add("genius");
+            adjectives.add("stitched");
+            adjectives.add("chewed");
+            adjectives.add("bitten");
+            adjectives.add("torn");
+            adjectives.add("inhuman");
+            adjectives.add("rotten");
+            adjectives.add("shitty");
+            adjectives.add("new");
+            adjectives.add("old");
+            adjectives.add("young");
+            adjectives.add("men");
+            adjectives.add("women");
+        }
+
+        private void setDefaultNouns(){
+            noun.add("roll");
+            noun.add("banana");
+            noun.add("boot");
+            noun.add("sword");
+            noun.add("spear");
+            noun.add("axe");
+            noun.add("true");
+            noun.add("lie");
+            noun.add("experiment");
+            noun.add("road");
+            noun.add("word");
+            noun.add("crown");
+            noun.add("shit");
+            noun.add("cum");
+            noun.add("honor");
+            noun.add("eye");
+            noun.add("eye view");
+            noun.add("coin");
+            noun.add("friend");
+            noun.add("enemy");
+            noun.add("belly");
+            noun.add("leg");
+            noun.add("sense");
+            noun.add("horse");
+            noun.add("stash");
+            noun.add("color");
+            noun.add("potion");
+            noun.add("hoof");
+            noun.add("horns");
+            noun.add("grass");
+            noun.add("food");
+            noun.add("luxury");
+            noun.add("pillar");
+            noun.add("weapons");
+            noun.add("forest");
+            noun.add("girlfriend");
+            noun.add("mistress");
+            noun.add("queen");
+            noun.add("prince");
+            noun.add("king");
+            noun.add("thief");
+            noun.add("knight");
+            noun.add("magician");
+            noun.add("jet");
+            noun.add("fire");
+            noun.add("water");
+            noun.add("meat");
+            noun.add("shield");
+            noun.add("armor");
+            noun.add("work");
+            noun.add("word");
+            noun.add("puddle");
+            noun.add("luck");
+            noun.add("failure");
+            noun.add("fear");
+            noun.add("courage");
+            noun.add("blood");
+            noun.add("vomit");
+            noun.add("alcohol");
+            noun.add("underpants");
+            noun.add("condom");
+            noun.add("genitals");
+            noun.add("egg");
+            noun.add("eggs");
+            noun.add("mountain");
+            noun.add("land");
+            noun.add("inhale");
+            noun.add("exhale");
+            noun.add("song");
+            noun.add("bird");
+            noun.add("turtle");
+            noun.add("animal");
+            noun.add("shark");
+            noun.add("parrot");
+            noun.add("alien");
+            noun.add("potion");
+            noun.add("blow");
+            noun.add("news");
+            noun.add("rumor");
+            noun.add("dungeon");
+            noun.add("dragon");
+            noun.add("nature");
+            noun.add("death");
+            noun.add("courage");
+            noun.add("reward");
+            noun.add("ugliness");
+            noun.add("beauty");
+            noun.add("love");
+            noun.add("excitement");
+            noun.add("scales");
+            noun.add("magic");
+            noun.add("danger");
+            noun.add("resurrection");
+            noun.add("resilience");
+            noun.add("mood");
+            noun.add("contest");
+            noun.add("information");
+            noun.add("math");
+            noun.add("shovel");
+            noun.add("axe");
+            noun.add("ruler");
+            noun.add("wood");
+            noun.add("iron");
+            noun.add("gold");
+            noun.add("diamond");
+            noun.add("ball");
+            noun.add("circle");
+            noun.add("garbage");
+            noun.add("dump");
+            noun.add("dirt");
+            noun.add("nails");
+            noun.add("hair skin");
+            noun.add("mouth");
+            noun.add("hands");
+            noun.add("toes");
+            noun.add("socks");
+            noun.add("shirt");
+            noun.add("notebook");
+            noun.add("paper");
+            noun.add("pen");
+            noun.add("cone");
+            noun.add("cardboard");
+            noun.add("map");
+            noun.add("mystery");
+            noun.add("wall");
+            noun.add("castle");
+            noun.add("cap");
+            noun.add("color");
+            noun.add("cold");
+            noun.add("winter");
+            noun.add("strangeness");
+            noun.add("light");
+            noun.add("candle");
+            noun.add("dark");
+            noun.add("coffee");
+            noun.add("drink");
+            noun.add("lion");
+            noun.add("music");
+            noun.add("science");
+            noun.add("anaconda");
+            noun.add("crocodile");
+            noun.add("drug");
+            noun.add("carpet");
+            noun.add("material");
+            noun.add("glass");
+            noun.add("shard");
+            noun.add("dress");
+            noun.add("cloth");
+            noun.add("clothing");
+            noun.add("tea");
+            noun.add("mission");
+            noun.add("task");
+            noun.add("justification");
+            noun.add("quest");
         }
     }
 }

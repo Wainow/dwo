@@ -17,7 +17,8 @@
         <activity
             android:name=".RoomActivity"
             android:label="@string/title_activity_room"
-            android:theme="@style/PurpleAppTheme.NoActionBar"/>
+            android:theme="@style/PurpleAppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize|adjustPan"/>
         <activity
             android:name=".CreateActivity"
             android:label="@string/title_activity_create"
