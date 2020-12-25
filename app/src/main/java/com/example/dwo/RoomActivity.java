@@ -6,6 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.example.dwo.Create.CreateClassDataAdapter;
+import com.example.dwo.Custom.CustomViewPager;
+import com.example.dwo.Custom.EditTextPlus;
+import com.example.dwo.Custom.FileWorker;
+import com.example.dwo.Hero.Hero;
+import com.example.dwo.Hero.HeroesFragment;
+import com.example.dwo.Quest.QuestFragment;
+import com.example.dwo.Villain.VillainsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -16,8 +24,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,20 +34,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.TreeMap;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-import static com.example.dwo.CreateDialog.photoUri;
-import static com.example.dwo.RoomHeroesFragment.newInstance;
+import static com.example.dwo.Create.CreateDialog.photoUri;
+import static com.example.dwo.Hero.HeroesFragment.newInstance;
 
 public class RoomActivity extends AppCompatActivity {
     private FloatingActionButton fab;
@@ -64,8 +66,8 @@ public class RoomActivity extends AppCompatActivity {
 
     private MapFragment RoomMap;
     private QuestFragment RoomQuest;
-    private RoomHeroesFragment RoomHeroes;
-    private RoomVillainsFragment RoomVillains;
+    private HeroesFragment RoomHeroes;
+    private VillainsFragment RoomVillains;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +204,7 @@ public class RoomActivity extends AppCompatActivity {
                 Log.d("DebugLogs", "RoomActivity: onNext");
                 Log.d("DebugLogs", "RoomActivity: hero isEvil? : " + integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil());
                 if(integerHeroTreeMap.get(integerHeroTreeMap.firstKey()).isEvil()){
-                    RoomVillainsFragment fragment = ((RoomVillainsFragment) getSupportFragmentManager().getFragments().get(3));
+                    VillainsFragment fragment = ((VillainsFragment) getSupportFragmentManager().getFragments().get(3));
                     Log.d("DebugLogs", "RoomActivity: villain: " +  integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     fragment.preferencesHelper.setVillain(integerHeroTreeMap.firstKey(), integerHeroTreeMap.get(integerHeroTreeMap.firstKey()));
                     fragment.mAdapter.notifyDataSetChanged();
@@ -213,8 +215,8 @@ public class RoomActivity extends AppCompatActivity {
                     myDataset.get(position).setHeroes(heroes);
                     Log.d("DebugLogs", "RoomActivity: heroes: " + heroes.toString());
                     Log.d("DebugLogs", "RoomActivity: myDataset: " + myDataset.get(position).getHeroes().toString());
-                    ((RoomHeroesFragment) getSupportFragmentManager().getFragments().get(0)).refreshHeroes(heroes);
-                    ((RoomHeroesFragment) getSupportFragmentManager().getFragments().get(0)).mAdapter.notifyDataSetChanged();
+                    ((HeroesFragment) getSupportFragmentManager().getFragments().get(0)).refreshHeroes(heroes);
+                    ((HeroesFragment) getSupportFragmentManager().getFragments().get(0)).mAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -226,7 +228,7 @@ public class RoomActivity extends AppCompatActivity {
         };
         Log.d("DebugLogs", "RoomActivity: Init new Fragments");
         RoomMap = new MapFragment(pager);
-        RoomVillains = RoomVillainsFragment.newInstance(myDataset.get(getPosition()).getRoomID());
+        RoomVillains = VillainsFragment.newInstance(myDataset.get(getPosition()).getRoomID());
         RoomHeroes = newInstance(myDataset.get(getPosition()).getHeroes());
         RoomQuest = QuestFragment.newInstance(myDataset.get(getPosition()).getRoomID());
 
@@ -275,7 +277,7 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == DataAdapter.REQUEST_CODE_GET_PHOTOS && data != null && resultCode == Activity.RESULT_OK){
+        if(requestCode == CreateClassDataAdapter.REQUEST_CODE_GET_PHOTOS && data != null && resultCode == Activity.RESULT_OK){
             photoUri = data.getData();
             Log.d("DebugLogs", "CreateDialog: photoUri:" + photoUri.toString());
         }

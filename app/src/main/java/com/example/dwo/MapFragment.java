@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.dwo.Custom.CustomViewPager;
+import com.example.dwo.Custom.DrawingView;
 
 public class MapFragment extends Fragment {
 

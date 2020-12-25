@@ -2,6 +2,7 @@ package com.example.dwo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -11,6 +12,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.dwo.General.GeneralActivity;
 
 public class StartActivity extends AppCompatActivity {
     private static int general_number;
@@ -44,7 +47,6 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void StartAnim(){
-        //numbers.setVisibility(View.GONE);
         final int[] i = {50};
         final String[] colors = {"#0033CC", "#006699", "#009933", "#CC9900", "#CC0000", "#CC0099", "#6600FF", "#990099", "#339966", "#990000"};
         numbers.startAnimation(numbers_anim);
@@ -53,11 +55,12 @@ public class StartActivity extends AppCompatActivity {
             public void onAnimationStart(Animation animation) {
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onAnimationEnd(Animation animation) {
                 if(i[0] != 0) {
                     numbers.startAnimation(numbers_anim);
-                    double num = (double) Math.random() * 10;
+                    double num = Math.random() * 10;
                     general_number = (int) num;
                     String s = String.valueOf(general_number);
                     numbers.setText(s);
@@ -67,7 +70,7 @@ public class StartActivity extends AppCompatActivity {
                             break;
                         case 1: text_roll.setText("Ooops, the big Ork can defeat you!");
                             break;
-                        case 2: text_roll.setText("You are barerly alive!");
+                        case 2: text_roll.setText("You are barely alive!");
                             break;
                         case 3: text_roll.setText("You feel something wrong");
                             break;
@@ -95,8 +98,6 @@ public class StartActivity extends AppCompatActivity {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            //c_white.setVisibility(View.VISIBLE);
-                            //c_alpha.setVisibility(View.VISIBLE);
                             c_white.startAnimation(circle_white);
                             c_alpha.startAnimation(circle_alpha);
                             really_circle.start();
@@ -110,7 +111,6 @@ public class StartActivity extends AppCompatActivity {
                                 @Override
                                 public void onAnimationEnd(Animation animation) {
                                     c_white.setVisibility(View.INVISIBLE);
-                                    //really_circle.addFrame(really_circle.getFrame(19), 20);
                                     really_circle.stop();
                                     numbers_fake.setVisibility(View.GONE);
 
@@ -124,7 +124,7 @@ public class StartActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onAnimationEnd(Animation animation) {
-                                            Intent intent = new Intent(StartActivity.this, General.class);
+                                            Intent intent = new Intent(StartActivity.this, GeneralActivity.class);
                                             startActivity(intent);
                                         }
 
@@ -133,8 +133,6 @@ public class StartActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    //Integer result = Integer.parseInt(String.valueOf(numbers.getText()));
-                                    //result++;
                                 }
 
                                 @Override
@@ -142,7 +140,6 @@ public class StartActivity extends AppCompatActivity {
 
                                 }
                             });
-                            //c_alpha.startAnimation(circle_alpha);
                         }
 
                         @Override
@@ -152,7 +149,6 @@ public class StartActivity extends AppCompatActivity {
                     });
                 }
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
 
