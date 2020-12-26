@@ -10,7 +10,7 @@
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true">
     <TableRow>
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:layout_marginTop="25dp"
         android:id="@+id/text_strength"
         android:textSize="17dp"
@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         />
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_strength"
         android:id="@+id/text_agility"
@@ -38,7 +38,7 @@
         android:layout_marginLeft="20dp"/>
     </TableRow>
     <TableRow>
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_agility"
         android:id="@+id/text_intelligence"
@@ -51,7 +51,7 @@
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"/>
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_intelligence"
         android:id="@+id/text_charisma"
@@ -66,7 +66,7 @@
         android:layout_marginLeft="20dp"/>
     </TableRow>
     <TableRow>
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_charisma"
         android:id="@+id/text_stamina"
@@ -79,7 +79,7 @@
         android:background="@drawable/cloud_background_purple"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"/>
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:layout_marginTop="25dp"
         android:layout_below="@+id/text_stamina"
         android:id="@+id/text_health"

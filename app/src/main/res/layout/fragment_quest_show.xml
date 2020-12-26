@@ -29,7 +29,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/close"
                     android:background="@color/colorPrimaryPurple"/>
-                <com.example.dwo.Custom.TextViewPlus
+                <com.launcher.dwo.Custom.TextViewPlus
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/quest_title"
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/quest_appbar">
-        <com.example.dwo.Custom.EditTextPlus
+        <com.launcher.dwo.Custom.EditTextPlus
             android:id="@+id/quest_story"
             android:layout_width="match_parent"
             android:textSize="15dp"
@@ -67,7 +67,7 @@
             android:layout_height="1dp"
             android:layout_below="@id/quest_story"
             android:background="@color/colorReallyBlack"/>
-        <com.example.dwo.Custom.EditTextPlus
+        <com.launcher.dwo.Custom.EditTextPlus
             android:layout_width="wrap_content"
             android:editable="false"
             android:layout_height="wrap_content"

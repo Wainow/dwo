@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MapFragment"
     android:background="@color/colorWhite">
-    <com.example.dwo.Custom.DrawingView
+    <com.launcher.dwo.Custom.DrawingView
         android:id="@+id/DrawingView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

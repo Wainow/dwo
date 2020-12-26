@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/colorPrimaryPurpleDark">
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:layout_toRightOf="@id/room_image"
         android:layout_width="wrap_content"
         android:text="Some information"
@@ -37,7 +37,7 @@
         android:layout_below="@+id/room_description"
         android:layout_width = "match_parent"
         android:layout_height="1dp"/>
-    <com.example.dwo.Custom.CustomViewPager
+    <com.launcher.dwo.Custom.CustomViewPager
         android:id="@+id/room_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -15,7 +15,7 @@
         android:src="@drawable/mini_q"
         app:civ_border_width="2dp"
         app:civ_border_color="#FF000000"/>
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:textSize="19sp"
         app:customFont1="fonts/Righteous-Regular.ttf"
         android:layout_marginTop="20dp"
@@ -32,7 +32,7 @@
         android:paddingRight="10dp"
         android:textStyle="italic"
         />
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:id="@+id/create_story"
         app:customFont1="fonts/Calligraffitti-Regular.ttf"
         android:layout_marginTop="10dp"
@@ -47,7 +47,7 @@
         android:paddingRight="10dp"
         android:textStyle="italic"
         android:maxLines="5" />
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         app:customFont="fonts/PressStart2P-Regular.ttf"
         android:id="@+id/create_text_money"
         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_below="@id/create_circle_image"/>
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:id="@+id/create_money"
         app:customFont1="fonts/PressStart2P-Regular.ttf"
         android:layout_marginLeft="20dp"

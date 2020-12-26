@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dwo">
+    package="com.launcher.dwo">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,24 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".General.GeneralStoryService" />
-        <service android:name=".Create.CreateHeroService" />
+        <service android:name="com.launcher.dwo.General.GeneralStoryService" />
+        <service android:name="com.launcher.dwo.Create.CreateHeroService" />
         <activity
-            android:name=".RoomActivity"
+            android:name="com.launcher.dwo.RoomActivity"
             android:label="@string/title_activity_room"
             android:theme="@style/PurpleAppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize|adjustPan"/>
         <activity
-            android:name=".Create.CreateActivity"
+            android:name="com.launcher.dwo.Create.CreateActivity"
             android:label="@string/title_activity_create"
             android:theme="@style/PurpleAppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:resizeableActivity="false"/>
         <activity
-            android:name=".General.GeneralActivity"
+            android:name="com.launcher.dwo.General.GeneralActivity"
             android:theme="@style/PurpleAppTheme.NoActionBar" />
         <activity
-            android:name=".StartActivity"
+            android:name="com.launcher.dwo.StartActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

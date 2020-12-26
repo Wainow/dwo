@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/colorPrimaryPurpleDark">
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:layout_toRightOf="@id/image_room"
         android:layout_width="wrap_content"
         android:text="Guest's Room"

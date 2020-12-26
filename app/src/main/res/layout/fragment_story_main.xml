@@ -8,7 +8,7 @@
     android:id="@+id/fragment_first"
     android:background="@color/colorPrimaryPurpleDark">
 
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:id="@+id/textview_first"
         android:layout_width="wrap_content"
         android:layout_marginLeft="50dp"

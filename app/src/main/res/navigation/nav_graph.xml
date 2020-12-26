@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/QuestFragment"
-        android:name="com.example.dwo.Quest.QuestFragment"
+        android:name="com.launcher.dwo.Quest.QuestFragment"
         android:label="QuestFragment"
         tools:layout="@layout/fragment_quest">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/First4Fragment"
-        android:name="com.example.dwo.Quest.QuestShow"
+        android:name="com.launcher.dwo.Quest.QuestShow"
         android:label="First4Fragment"
         tools:layout="@layout/fragment_quest_show">
         <action

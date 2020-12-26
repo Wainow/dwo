@@ -18,7 +18,7 @@
             android:src="@drawable/mini_knight"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/colorAccent"/>
-        <com.example.dwo.Custom.TextViewPlus
+        <com.launcher.dwo.Custom.TextViewPlus
             android:layout_toRightOf="@id/circle_image"
             android:padding="3dp"
             android:textSize="14dp"

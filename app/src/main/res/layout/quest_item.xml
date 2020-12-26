@@ -11,7 +11,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryPurpleDark">
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:padding="3dp"
         android:textSize="14dp"
         android:id="@+id/quest_text_item"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         app:customFont="fonts/DMSerifText-Regular.ttf" />
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="3dp"

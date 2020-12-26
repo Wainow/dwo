@@ -4,7 +4,7 @@
     android:layout_height="400dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryPurpleDark">
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:id="@+id/text_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

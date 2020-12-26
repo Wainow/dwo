@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryPurpleDark"
     android:focusableInTouchMode="true">
-    <com.example.dwo.Custom.TextViewPlus
+    <com.launcher.dwo.Custom.TextViewPlus
         android:id="@+id/show_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:src="@drawable/mini_knight"
         app:civ_border_width="2dp"
         app:civ_border_color="@color/colorPrimaryPurpleDark"/>
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:id="@+id/show_money"
         app:customFont1="fonts/PressStart2P-Regular.ttf"
         android:layout_marginLeft="20dp"
@@ -61,7 +61,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp">
         <TableRow>
-            <com.example.dwo.Custom.TextViewPlus
+            <com.launcher.dwo.Custom.TextViewPlus
                 android:id="@+id/show_text_strength"
                 app:customFont="fonts/Righteous-Regular.ttf"
                 android:textSize="13dp"
@@ -72,7 +72,7 @@
                 android:background="@drawable/cloud_background_purple"
                 android:layout_marginRight="30dp"
                 />
-            <com.example.dwo.Custom.TextViewPlus
+            <com.launcher.dwo.Custom.TextViewPlus
                 android:layout_below="@+id/text_strength"
                 app:customFont="fonts/Righteous-Regular.ttf"
                 android:id="@+id/show_text_agility"
@@ -87,7 +87,7 @@
                 android:background="@drawable/cloud_background_purple" />
         </TableRow>
         <TableRow>
-            <com.example.dwo.Custom.TextViewPlus
+            <com.launcher.dwo.Custom.TextViewPlus
                 android:layout_below="@+id/text_agility"
                 android:layout_marginTop="15dp"
                 app:customFont="fonts/Righteous-Regular.ttf"
@@ -101,7 +101,7 @@
                 android:background="@drawable/cloud_background_purple"
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="40dp"/>
-            <com.example.dwo.Custom.TextViewPlus
+            <com.launcher.dwo.Custom.TextViewPlus
                 android:layout_below="@+id/text_intelligence"
                 android:id="@+id/show_text_charisma"
                 app:customFont="fonts/Righteous-Regular.ttf"
@@ -118,7 +118,7 @@
                 android:layout_marginLeft="-60dp"/>
         </TableRow>
         <TableRow>
-            <com.example.dwo.Custom.TextViewPlus
+            <com.launcher.dwo.Custom.TextViewPlus
                 android:layout_below="@+id/text_charisma"
                 android:id="@+id/show_text_stamina"
                 android:layout_marginTop="15dp"
@@ -132,7 +132,7 @@
                 android:background="@drawable/cloud_background_purple"
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="30dp"/>
-            <com.example.dwo.Custom.TextViewPlus
+            <com.launcher.dwo.Custom.TextViewPlus
                 android:layout_below="@+id/text_stamina"
                 android:id="@+id/show_text_health"
                 android:layout_marginTop="15dp"
@@ -156,7 +156,7 @@
         android:layout_below="@+id/show_money"
         android:layout_width = "match_parent"
         android:layout_height="1dp"/>
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:id="@+id/show_inventory"
         app:customFont1="fonts/Righteous-Regular.ttf"
         android:layout_marginTop="10dp"
@@ -174,7 +174,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:textStyle="normal"/>
-    <com.example.dwo.Custom.EditTextPlus
+    <com.launcher.dwo.Custom.EditTextPlus
         android:id="@+id/show_story"
         app:customFont1="fonts/Calligraffitti-Regular.ttf"
         android:layout_marginTop="5dp"
